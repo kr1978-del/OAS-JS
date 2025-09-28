@@ -1,0 +1,56 @@
+Requested Features & Enhancements
+1. All Graph Types:
+
+Support for: boxplot, histogram, scatter, heatmap, line, bar, pie, donut, gauge, waterfall, bubble, violin (all Plotly-compatible).
+2. Menu Bar & Modebar:
+
+Menubar: Properties, Export, Add plot, Remove plot, List attributes/measures, etc.
+Modebar: Chart actions, toggles, theme, status, insights, fullscreen, etc.
+Dynamic: Icons/buttons shown or hidden based on edit/read mode and chart type.
+3. Attribute/Measure Selectors:
+
+In Properties, show all available attribute columns (categorical) and measure columns (numeric) for X/Y selection.
+Allow per-plot selection of which fields to use.
+4. Multiple Plots:
+
+PV (Parameter Variable) for initial number of plots.
+“Add plot” button in edit mode to append more plots.
+5. Edit vs Read Mode:
+
+In edit mode: show all menus/buttons, allow customization.
+In read/dashboard mode: hide editing features, only show charts and limited actions.
+6. Persistence:
+
+Save all settings for each plot (type, axes, filters, colors, etc.) in localStorage per user.
+“Set as default” option for each plot’s properties.
+7. Enhancements:
+
+Robust error handling.
+All Plotly chart types selectable.
+Per-plot settings for axes, colors, chart type, etc.
+Export options: PNG, CSV.
+Attribute and measure selection per plot.
+Add/Remove plots in edit mode.
+Modebar/menubar dynamic visibility.
+Responsive/mobile friendly.
+Dark/light theme.
+Full inline documentation.
+What’s Included vs Pending
+Included:
+All major Plotly chart types
+Dynamic menu and modebar (contextual per chart type/mode)
+Attribute/measure selection per plot
+PV for initial plot count
+Add/Remove plot in edit mode
+Edit/Read mode distinction with dynamic menu/modebar
+Full local persistence per plot
+Export options (PNG/CSV)
+Responsive and theme support
+Inline documentation/comments
+Pending/Future:
+Advanced charts (e.g., D3 custom types, gauge/donut via custom logic if not natively supported)
+PDF/ZIP export (can be added next)
+Server/cloud persistence (currently only local)
+Real-time OAS PV update listeners (stub included)
+Accessibility/WCAG audit
+Full onboarding/user manual
