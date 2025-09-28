@@ -1,0 +1,23 @@
+Prefix:<div id="box-data" style="display:none">[
+Narrative:{"dt":"@1","line":"@2","cell":"@3","m1":"@4","m2":"@5","m3":"@6","m4":"@7"}
+Row separator:,
+Rows to display:100000
+Postfix:]]</div>
+
+<div id="oas-params" style="display:none" 
+  data-gpr="@{GraphsPerRow}{1}"
+  data-attr-title="@{PV_Attribute01}{Week}"
+  data-mtitles="@{PV_MeasureTitles}{}"
+  data-p1="@{PV_Met01}{AE}"
+  data-p2="@{PV_Met02}{CE}"
+  data-p3="@{PV_Met03}{NVP}"
+  data-p4="@{PV_Met04}{BR}"
+></div>
+<script src="/analyticsRes/custom/echarts.min.js"></script>
+<style>
+------------
+</style>
+
+<script>
+------------------
+</script>
