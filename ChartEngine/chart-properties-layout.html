@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Engine - Properties Panel Layout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+            font-size: 14px;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Left Panel - Dataset */
+        .dataset-panel {
+            width: 280px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 10;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+        }
+
+        .panel-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-header i {
+            font-size: 18px;
+        }
+
+        .dataset-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .field-section {
+            margin-bottom: 24px;
+        }
+
+        .field-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #718096;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .field-item {
+            padding: 10px 12px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: move;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .field-item:hover {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .field-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .field-icon {
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #667eea;
+        }
+
+        .field-name {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .field-type {
+            font-size: 11px;
+            color: #a0aec0;
+            background: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Right Panel - Properties */
+        .properties-panel {
+            flex: 1;
+            margin-left: 280px;
+            background: #f8fafc;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .properties-header {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .chart-type-selector {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .chart-type-selector label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .chart-type-selector select {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .chart-type-selector select:hover {
+            border-color: #cbd5e0;
+        }
+
+        .chart-type-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Property Sections */
+        .property-section {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .property-section.collapsed {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .property-section-header {
+            padding: 14px 20px;
+            background: #fafbfc;
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .property-section-header:hover {
+            background: #f7f9fc;
+        }
+
+        .property-section-header.active {
+            background: linear-gradient(to right, #f7f9fc, #fafbfc);
+            border-bottom-color: #667eea;
+        }
+
+        .section-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 2px;
+        }
+
+        .section-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0aec0;
+            transition: transform 0.3s ease;
+        }
+
+        .property-section.collapsed .section-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .property-section-content {
+            padding: 20px;
+            display: block;
+        }
+
+        .property-section.collapsed .property-section-content {
+            display: none;
+        }
+
+        /* Form Controls */
+        .property-group {
+            margin-bottom: 20px;
+        }
+
+        .property-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .property-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #4a5568;
+            font-size: 13px;
+        }
+
+        .property-label.required::after {
+            content: "*";
+            color: #f56565;
+            margin-left: 4px;
+        }
+
+        .drop-zone {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 12px;
+            background: #f8fafc;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .drop-zone.dragover {
+            border-color: #667eea;
+            background: #eef2ff;
+        }
+
+        .drop-zone.has-value {
+            border-style: solid;
+            background: white;
+        }
+
+        .drop-placeholder {
+            color: #a0aec0;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropped-field {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .manual-input-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #718096;
+            transition: all 0.2s;
+        }
+
+        .manual-input-btn:hover {
+            border-color: #cbd5e0;
+            color: #4a5568;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .select-field {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 13px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .slider-control {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .slider-value {
+            min-width: 45px;
+            text-align: center;
+            padding: 4px 8px;
+            background: #f7fafc;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-picker {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .color-code {
+            flex: 1;
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Sub-groups */
+        .property-subgroup {
+            margin-left: 20px;
+            padding-left: 20px;
+            border-left: 2px solid #e2e8f0;
+            margin-top: 16px;
+        }
+
+        .inline-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b4199 100%);
+        }
+
+        .btn-add {
+            color: #667eea;
+            border-color: #667eea;
+        }
+
+        .btn-add:hover {
+            background: #eef2ff;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: #eef2ff;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #4c51bf;
+            margin-top: 8px;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #c53030;
+            margin-top: 8px;
+        }
+
+        /* Multi-value fields */
+        .multi-value-container {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            background: #fafbfc;
+        }
+
+        .multi-value-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin: 4px;
+            font-size: 13px;
+        }
+
+        .multi-value-item .remove-btn {
+            cursor: pointer;
+            color: #a0aec0;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .multi-value-item .remove-btn:hover {
+            color: #f56565;
+        }
+
+        /* Scrollbar Styling */
+        .dataset-content::-webkit-scrollbar,
+        .properties-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .dataset-content::-webkit-scrollbar-track,
+        .properties-panel::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .dataset-content::-webkit-scrollbar-thumb,
+        .properties-panel::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
+        }
+
+        .dataset-content::-webkit-scrollbar-thumb:hover,
+        .properties-panel::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .inline-fields {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel - Dataset -->
+        <div class="dataset-panel">
+            <div class="panel-header">
+                <i class="fas fa-database"></i>
+                <span>Dataset Fields</span>
+            </div>
+            
+            <div class="dataset-content">
+                <!-- Measures Section -->
+                <div class="field-section">
+                    <div class="field-section-title">
+                        <i class="fas fa-chart-line"></i>
+                        Measures (Numeric)
+                    </div>
+                    <div class="field-item" draggable="true" data-field="sales" data-type="measure">
+                        <div class="field-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <span class="field-name">Sales</span>
+                        <span class="field-type">number</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="profit" data-type="measure">
+                        <div class="field-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <span class="field-name">Profit</span>
+                        <span class="field-type">number</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="quantity" data-type="measure">
+                        <div class="field-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <span class="field-name">Quantity</span>
+                        <span class="field-type">number</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="discount" data-type="measure">
+                        <div class="field-icon">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <span class="field-name">Discount</span>
+                        <span class="field-type">percent</span>
+                    </div>
+                </div>
+
+                <!-- Attributes Section -->
+                <div class="field-section">
+                    <div class="field-section-title">
+                        <i class="fas fa-tags"></i>
+                        Attributes (Dimensions)
+                    </div>
+                    <div class="field-item" draggable="true" data-field="date" data-type="attribute">
+                        <div class="field-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <span class="field-name">Date</span>
+                        <span class="field-type">date</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="category" data-type="attribute">
+                        <div class="field-icon">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                        <span class="field-name">Category</span>
+                        <span class="field-type">string</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="region" data-type="attribute">
+                        <div class="field-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <span class="field-name">Region</span>
+                        <span class="field-type">string</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="product" data-type="attribute">
+                        <div class="field-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <span class="field-name">Product</span>
+                        <span class="field-type">string</span>
+                    </div>
+                    <div class="field-item" draggable="true" data-field="customer" data-type="attribute">
+                        <div class="field-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="field-name">Customer</span>
+                        <span class="field-type">string</span>
+                    </div>
+                </div>
+
+                <!-- Calculated Fields Section -->
+                <div class="field-section">
+                    <div class="field-section-title">
+                        <i class="fas fa-calculator"></i>
+                        Calculated Fields
+                    </div>
+                    <button class="btn btn-add" style="width: 100%;">
+                        <i class="fas fa-plus"></i>
+                        Add Calculated Field
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Properties -->
+        <div class="properties-panel">
+            <!-- Chart Type Selection -->
+            <div class="properties-header">
+                <div class="chart-type-selector">
+                    <label for="chartType">Chart Type:</label>
+                    <select id="chartType" class="select-field">
+                        <option value="line">📈 Line Chart</option>
+                        <option value="bar">📊 Bar Chart</option>
+                        <option value="scatter">⚡ Scatter Plot</option>
+                        <option value="pie">🥧 Pie Chart</option>
+                        <option value="area">📐 Area Chart</option>
+                        <option value="histogram">📊 Histogram</option>
+                        <option value="box">📦 Box Plot</option>
+                        <option value="heatmap">🔥 Heatmap</option>
+                        <option value="treemap">🌳 Treemap</option>
+                        <option value="waterfall">💧 Waterfall</option>
+                        <option value="funnel">🔻 Funnel</option>
+                        <option value="gauge">🎯 Gauge</option>
+                        <option value="candlestick">🕯️ Candlestick</option>
+                        <option value="radar">🕸️ Radar Chart</option>
+                        <option value="sankey">🔀 Sankey Diagram</option>
+                        <option value="3dscatter">🎲 3D Scatter</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 1: Data Mapping -->
+            <div class="property-section">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Data Mapping</div>
+                            <div class="section-subtitle">Configure data fields and aggregations</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <label class="property-label required">X-Axis</label>
+                        <div class="drop-zone" id="xAxisDrop">
+                            <div class="drop-placeholder">
+                                <i class="fas fa-hand-pointer"></i>
+                                Drag field here or enter manually
+                            </div>
+                            <button class="manual-input-btn" title="Manual Input">
+                                <i class="fas fa-keyboard"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label required">Y-Axis</label>
+                        <div class="drop-zone" id="yAxisDrop">
+                            <div class="drop-placeholder">
+                                <i class="fas fa-hand-pointer"></i>
+                                Drag field here or enter manually
+                            </div>
+                            <button class="manual-input-btn" title="Manual Input">
+                                <i class="fas fa-keyboard"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Color By</label>
+                        <div class="drop-zone" id="colorByDrop">
+                            <div class="drop-placeholder">
+                                <i class="fas fa-palette"></i>
+                                Drag field for color grouping
+                            </div>
+                            <button class="manual-input-btn" title="Manual Input">
+                                <i class="fas fa-keyboard"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Size By (Bubble)</label>
+                        <div class="drop-zone" id="sizeByDrop">
+                            <div class="drop-placeholder">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                Drag field for size variation
+                            </div>
+                            <button class="manual-input-btn" title="Manual Input">
+                                <i class="fas fa-keyboard"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Aggregation</label>
+                        <select class="select-field">
+                            <option value="sum">Sum</option>
+                            <option value="avg">Average</option>
+                            <option value="count">Count</option>
+                            <option value="min">Minimum</option>
+                            <option value="max">Maximum</option>
+                            <option value="median">Median</option>
+                            <option value="stddev">Std Deviation</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Axes Configuration -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Axes Configuration</div>
+                            <div class="section-subtitle">Scale, range, and formatting options</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <label class="property-label">X-Axis Type</label>
+                        <select class="select-field">
+                            <option value="linear">Linear</option>
+                            <option value="log">Logarithmic</option>
+                            <option value="date">Date/Time</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Y-Axis Type</label>
+                        <select class="select-field">
+                            <option value="linear">Linear</option>
+                            <option value="log">Logarithmic</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="startFromZero">
+                            <label for="startFromZero">Start Y-Axis from Zero</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">X-Axis Range</label>
+                        <div class="inline-fields">
+                            <input type="text" class="input-field" placeholder="Min (Auto)">
+                            <input type="text" class="input-field" placeholder="Max (Auto)">
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Y-Axis Range</label>
+                        <div class="inline-fields">
+                            <input type="text" class="input-field" placeholder="Min (Auto)">
+                            <input type="text" class="input-field" placeholder="Max (Auto)">
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">X-Axis Label</label>
+                        <input type="text" class="input-field" placeholder="Enter axis label">
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Y-Axis Label</label>
+                        <input type="text" class="input-field" placeholder="Enter axis label">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 3: Visual Properties -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Visual Properties</div>
+                            <div class="section-subtitle">Colors, styles, and appearance</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <label class="property-label">Color Scheme</label>
+                        <select class="select-field">
+                            <option value="plotly">Plotly Default</option>
+                            <option value="viridis">Viridis</option>
+                            <option value="blues">Blues</option>
+                            <option value="reds">Reds</option>
+                            <option value="greens">Greens</option>
+                            <option value="spectral">Spectral</option>
+                            <option value="custom">Custom Colors</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Primary Color</label>
+                        <div class="color-picker-wrapper">
+                            <input type="color" class="color-picker" value="#667eea">
+                            <input type="text" class="color-code" value="#667eea">
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Opacity</label>
+                        <div class="slider-control">
+                            <input type="range" class="slider" min="0" max="100" value="80">
+                            <span class="slider-value">80%</span>
+                        </div>
+                    </div>
+
+                    <!-- Line Properties (conditional) -->
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Line Type</label>
+                            <select class="select-field">
+                                <option value="solid">Solid</option>
+                                <option value="dash">Dashed</option>
+                                <option value="dot">Dotted</option>
+                                <option value="dashdot">Dash-Dot</option>
+                            </select>
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Line Width</label>
+                            <div class="slider-control">
+                                <input type="range" class="slider" min="1" max="10" value="2">
+                                <span class="slider-value">2px</span>
+                            </div>
+                        </div>
+
+                        <div class="property-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="showMarkers">
+                                <label for="showMarkers">Show Markers</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bar Properties (conditional) -->
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Orientation</label>
+                            <select class="select-field">
+                                <option value="vertical">Vertical</option>
+                                <option value="horizontal">Horizontal</option>
+                            </select>
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Stack Mode</label>
+                            <select class="select-field">
+                                <option value="none">None</option>
+                                <option value="stack">Stack</option>
+                                <option value="percent">100% Stack</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 4: Statistical Features -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Statistical Features</div>
+                            <div class="section-subtitle">Regression, trends, and analysis</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showRegression">
+                            <label for="showRegression">Show Regression Line</label>
+                        </div>
+                    </div>
+
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Regression Type</label>
+                            <select class="select-field">
+                                <option value="linear">Linear</option>
+                                <option value="polynomial">Polynomial</option>
+                                <option value="exponential">Exponential</option>
+                                <option value="logarithmic">Logarithmic</option>
+                                <option value="lowess">LOWESS</option>
+                            </select>
+                        </div>
+
+                        <div class="property-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="showRSquared">
+                                <label for="showRSquared">Show R² Value</label>
+                            </div>
+                        </div>
+
+                        <div class="property-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="showConfidence">
+                                <label for="showConfidence">Show Confidence Interval</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showAverage">
+                            <label for="showAverage">Show Average Line</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showMedian">
+                            <label for="showMedian">Show Median Line</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showDensity">
+                            <label for="showDensity">Show Density Curve</label>
+                        </div>
+                    </div>
+
+                    <!-- Histogram specific -->
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Number of Bins</label>
+                            <input type="number" class="input-field" placeholder="Auto" min="1" max="100">
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Normalization</label>
+                            <select class="select-field">
+                                <option value="count">Count</option>
+                                <option value="percent">Percent</option>
+                                <option value="density">Density</option>
+                                <option value="probability">Probability</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Conditional Formatting -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Conditional Formatting</div>
+                            <div class="section-subtitle">Rules-based visual formatting</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enableConditional">
+                            <label for="enableConditional">Enable Conditional Formatting</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Format Type</label>
+                        <select class="select-field">
+                            <option value="colorscale">Color Scale</option>
+                            <option value="databars">Data Bars</option>
+                            <option value="icons">Icons</option>
+                            <option value="custom">Custom Rules</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Conditional Rules</label>
+                        <div class="multi-value-container">
+                            <div class="multi-value-item">
+                                Value > 1000 → Green
+                                <span class="remove-btn">×</span>
+                            </div>
+                            <div class="multi-value-item">
+                                Value < 0 → Red
+                                <span class="remove-btn">×</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-add" style="margin-top: 8px;">
+                            <i class="fas fa-plus"></i>
+                            Add Rule
+                        </button>
+                    </div>
+
+                    <div class="info-box">
+                        <i class="fas fa-info-circle"></i>
+                        Conditional formatting will be applied based on the defined rules and data values.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Events & Annotations -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Events & Annotations</div>
+                            <div class="section-subtitle">Time series events and custom annotations</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showEvents">
+                            <label for="showEvents">Show Events on Timeline</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Events</label>
+                        <div class="multi-value-container">
+                            <div class="multi-value-item">
+                                📅 2024-01-15: Product Launch
+                                <span class="remove-btn">×</span>
+                            </div>
+                            <div class="multi-value-item">
+                                🎯 2024-03-31: Q1 Target Met
+                                <span class="remove-btn">×</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-add" style="margin-top: 8px;">
+                            <i class="fas fa-plus"></i>
+                            Add Event
+                        </button>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Event Position</label>
+                        <select class="select-field">
+                            <option value="above">Above Line</option>
+                            <option value="below">Below Line</option>
+                            <option value="online">On Line</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Annotations</label>
+                        <div class="button-group">
+                            <button class="btn">
+                                <i class="fas fa-font"></i>
+                                Add Text
+                            </button>
+                            <button class="btn">
+                                <i class="fas fa-shapes"></i>
+                                Add Shape
+                            </button>
+                            <button class="btn">
+                                <i class="fas fa-image"></i>
+                                Add Image
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 7: Grid & Layout -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-th"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Grid & Layout</div>
+                            <div class="section-subtitle">Grid lines, small multiples, and spacing</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showXGrid" checked>
+                            <label for="showXGrid">Show X-Axis Grid</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showYGrid" checked>
+                            <label for="showYGrid">Show Y-Axis Grid</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Grid Line Style</label>
+                        <select class="select-field">
+                            <option value="solid">Solid</option>
+                            <option value="dash">Dashed</option>
+                            <option value="dot">Dotted</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enableTrellis">
+                            <label for="enableTrellis">Enable Small Multiples (Trellis)</label>
+                        </div>
+                    </div>
+
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Trellis Rows</label>
+                            <div class="drop-zone">
+                                <div class="drop-placeholder">
+                                    <i class="fas fa-grip-horizontal"></i>
+                                    Drag field for row grouping
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Trellis Columns</label>
+                            <div class="drop-zone">
+                                <div class="drop-placeholder">
+                                    <i class="fas fa-grip-vertical"></i>
+                                    Drag field for column grouping
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Chart Margins</label>
+                        <div class="inline-fields">
+                            <input type="number" class="input-field" placeholder="Top (px)">
+                            <input type="number" class="input-field" placeholder="Right (px)">
+                        </div>
+                        <div class="inline-fields" style="margin-top: 8px;">
+                            <input type="number" class="input-field" placeholder="Bottom (px)">
+                            <input type="number" class="input-field" placeholder="Left (px)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Labels & Legends -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-text-height"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Labels & Legends</div>
+                            <div class="section-subtitle">Titles, data labels, and legend settings</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <label class="property-label">Chart Title</label>
+                        <input type="text" class="input-field" placeholder="Enter chart title">
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Subtitle</label>
+                        <input type="text" class="input-field" placeholder="Enter subtitle">
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showDataLabels">
+                            <label for="showDataLabels">Show Data Labels</label>
+                        </div>
+                    </div>
+
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Label Position</label>
+                            <select class="select-field">
+                                <option value="auto">Auto</option>
+                                <option value="inside">Inside</option>
+                                <option value="outside">Outside</option>
+                                <option value="center">Center</option>
+                            </select>
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Label Format</label>
+                            <input type="text" class="input-field" placeholder="e.g., {value:.2f}">
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showLegend" checked>
+                            <label for="showLegend">Show Legend</label>
+                        </div>
+                    </div>
+
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Legend Position</label>
+                            <select class="select-field">
+                                <option value="right">Right</option>
+                                <option value="top">Top</option>
+                                <option value="bottom">Bottom</option>
+                                <option value="left">Left</option>
+                            </select>
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Legend Orientation</label>
+                            <select class="select-field">
+                                <option value="vertical">Vertical</option>
+                                <option value="horizontal">Horizontal</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 9: Thresholds & Targets -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Thresholds & Targets</div>
+                            <div class="section-subtitle">Reference lines, targets, and zones</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showTarget">
+                            <label for="showTarget">Show Target Line</label>
+                        </div>
+                    </div>
+
+                    <div class="property-subgroup">
+                        <div class="property-group">
+                            <label class="property-label">Target Value</label>
+                            <input type="number" class="input-field" placeholder="Enter target value">
+                        </div>
+
+                        <div class="property-group">
+                            <label class="property-label">Target Label</label>
+                            <input type="text" class="input-field" placeholder="e.g., Goal: $1M">
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Threshold Zones</label>
+                        <div class="multi-value-container">
+                            <div class="multi-value-item" style="background: #c6f6d5;">
+                                0-500: Low Risk
+                                <span class="remove-btn">×</span>
+                            </div>
+                            <div class="multi-value-item" style="background: #fed7aa;">
+                                500-1000: Medium Risk
+                                <span class="remove-btn">×</span>
+                            </div>
+                            <div class="multi-value-item" style="background: #fed7d7;">
+                                >1000: High Risk
+                                <span class="remove-btn">×</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-add" style="margin-top: 8px;">
+                            <i class="fas fa-plus"></i>
+                            Add Zone
+                        </button>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">KPI Reference</label>
+                        <select class="select-field">
+                            <option value="none">None</option>
+                            <option value="previous">Previous Period</option>
+                            <option value="target">Target Value</option>
+                            <option value="average">Average</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 10: Interaction Options -->
+            <div class="property-section collapsed">
+                <div class="property-section-header">
+                    <div class="section-header-left">
+                        <div class="section-icon">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </div>
+                        <div>
+                            <div class="section-title">Interaction Options</div>
+                            <div class="section-subtitle">User interactions and chart controls</div>
+                        </div>
+                    </div>
+                    <div class="section-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="property-section-content">
+                    <div class="property-group">
+                        <label class="property-label">Hover Mode</label>
+                        <select class="select-field">
+                            <option value="closest">Closest Point</option>
+                            <option value="x">X-Axis</option>
+                            <option value="y">Y-Axis</option>
+                            <option value="false">Disabled</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Tooltip Template</label>
+                        <textarea class="input-field" rows="3" placeholder="<b>{label}</b><br>Value: {value}"></textarea>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enableZoom" checked>
+                            <label for="enableZoom">Enable Zoom</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enablePan" checked>
+                            <label for="enablePan">Enable Pan</label>
+                        </div>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Selection Mode</label>
+                        <select class="select-field">
+                            <option value="none">None</option>
+                            <option value="box">Box Select</option>
+                            <option value="lasso">Lasso Select</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <label class="property-label">Click Action</label>
+                        <select class="select-field">
+                            <option value="none">None</option>
+                            <option value="select">Select Point</option>
+                            <option value="drill">Drill Down</option>
+                            <option value="custom">Custom Action</option>
+                        </select>
+                    </div>
+
+                    <div class="property-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="showToolbar" checked>
+                            <label for="showToolbar">Show Export Toolbar</label>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Some interaction options may impact performance with large datasets.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize collapsible sections
+        document.querySelectorAll('.property-section-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const section = this.closest('.property-section');
+                section.classList.toggle('collapsed');
+                this.classList.toggle('active');
+            });
+        });
+
+        // Initialize drag and drop
+        let draggedElement = null;
+
+        document.querySelectorAll('.field-item').forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                draggedElement = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'copy';
+                e.dataTransfer.setData('text/html', this.innerHTML);
+            });
+
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            zone.addEventListener('dragleave', function() {
+                this.classList.remove('dragover');
+            });
+
+            zone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                if (draggedElement) {
+                    const fieldName = draggedElement.querySelector('.field-name').textContent;
+                    const fieldType = draggedElement.dataset.type;
+                    
+                    // Replace placeholder with dropped field
+                    this.classList.add('has-value');
+                    this.innerHTML = `
+                        <div class="dropped-field">
+                            <i class="fas fa-grip-vertical"></i>
+                            ${fieldName}
+                            <span style="margin-left: auto; cursor: pointer;" onclick="clearDropZone(this)">×</span>
+                        </div>
+                    `;
+                }
+            });
+        });
+
+        // Clear drop zone function
+        function clearDropZone(element) {
+            const dropZone = element.closest('.drop-zone');
+            dropZone.classList.remove('has-value');
+            dropZone.innerHTML = `
+                <div class="drop-placeholder">
+                    <i class="fas fa-hand-pointer"></i>
+                    Drag field here or enter manually
+                </div>
+                <button class="manual-input-btn" title="Manual Input">
+                    <i class="fas fa-keyboard"></i>
+                </button>
+            `;
+        }
+
+        // Initialize sliders
+        document.querySelectorAll('.slider').forEach(slider => {
+            const valueDisplay = slider.nextElementSibling;
+            slider.addEventListener('input', function() {
+                const value = this.value;
+                const suffix = valueDisplay.textContent.includes('%') ? '%' : 'px';
+                valueDisplay.textContent = value + suffix;
+            });
+        });
+
+        // Initialize color pickers
+        document.querySelectorAll('.color-picker').forEach(picker => {
+            picker.addEventListener('input', function() {
+                const codeInput = this.nextElementSibling;
+                if (codeInput && codeInput.classList.contains('color-code')) {
+                    codeInput.value = this.value;
+                }
+            });
+        });
+
+        // Initialize chart type change
+        document.getElementById('chartType').addEventListener('change', function() {
+            // Here you would show/hide relevant property sections based on chart type
+            console.log('Chart type changed to:', this.value);
+            // Implementation would update the visibility and enabled state of various properties
+        });
+
+        // Manual input toggle (simplified example)
+        document.querySelectorAll('.manual-input-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const dropZone = this.closest('.drop-zone');
+                const currentContent = dropZone.innerHTML;
+                
+                // Toggle to manual input
+                dropZone.innerHTML = `
+                    <input type="text" class="input-field" placeholder="Enter value or expression" style="margin: 0;">
+                    <button class="manual-input-btn" title="Back to drag-drop">
+                        <i class="fas fa-hand-pointer"></i>
+                    </button>
+                `;
+                
+                // Focus on the input
+                dropZone.querySelector('input').focus();
+            });
+        });
+
+        // Add smooth scrolling
+        document.querySelector('.properties-panel').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            this.scrollTop += e.deltaY * 0.8;
+        });
+    </script>
+</body>
+</html>
