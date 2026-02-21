@@ -1,0 +1,3916 @@
+Prefix
+<div id="box-data" style="display:none">[
+
+Narrative
+{"dt":"@1",
+"line":"@2",
+"cell":"@3",
+"Amperage (kA)":"@4",
+"CE 7 Day Running (%)":"@5",
+"Aluminium (%)":"@6",
+"Iron (%)":"@7",
+"BFT (sec)":"@8",
+"UF(min)":"@9",
+"UF No (no)":"@10",
+"Silicon (%)":"@11",
+"Base RSP (µΩ)":"@12",
+"Nett Sp Engy 7 Dy Run (kWh/kg Al)":"@13",
+"Nett Volts Per Pot (V)":"@14",
+"Anode Problems (No)":"@15",
+"Anode Shift Life (shifts)":"@16",
+"Actual AlF3 Cons (kg AlF3/pd)":"@17",
+"Bath Temp (°C)":"@18",
+"Excess AlF3 (%)":"@19",
+"Metal Height (cm)":"@20",
+"Bath Height (cm)":"@21",
+"AE Frequency (AE/pd)":"@22",
+"AE Duration (secs)":"@23",
+"Noise Volts (V)":"@24",
+"Noise Activations (No/pd)":"@25",
+"Alumina Dumps (No/pd)":"@26",
+"CVD (mV)":"@27",
+"Bath Temp (°C)":"@28",
+"AE Volts (V)":"@29",
+"SPAR":"@30",
+"Called Wt (kg)":"@31",
+"Cruce Weight (kg)":"@32",
+"Sm RES (µΩ)":"@33",
+"TRSP (µΩ)":"@34",
+"TRSP TIME (min)":"@35",
+"Current Effeciency(%)":"@36",
+"Net Specific Energy (kWh/kg Al)":"@37",
+"NAE Activations (No)":"@38",
+"Combined Voltage Drop":"@39",
+"Bath Temp (°C)":"@40",
+"Metal Produced (kg)":"@41",
+"Cell Age (days)":"@42",
+"Metal Tapped 7 Dy Run (kg/pd)":"@43"}
+
+Row separator	
+,
+
+Postfix
+]</div> 
+<!-- ============ OAS Trend v2.0.0  (rev 2026-02-02) ============ -->
+
+<!-- Params (PV) -->
+<div id="oas-params" style="display:none"
+  data-gpr="@{GraphsPerRow}{2}"
+
+  data-grid-gap="@{PV_GridGap}{6}"
+
+  data-report-title="@{PV_ReportTitle}{Trend Analysis}"
+  data-report-subtitle="@{PV_ReportSubtitle}{}"
+  data-show-header="@{PV_ShowHeader}{1}"
+
+  data-date-title="@{PV_Attribute01}{Date}"
+  data-line-title="@{PV_Attribute02}{Line}"
+  data-cell-title="@{PV_Attribute03}{Cell}"
+
+  data-legend-pos="@{PV_LegendPos}{auto}"
+  data-legend-show="@{PV_LegendShow}{1}"
+
+  data-chart-type="@{PV_ChartType}{line}"      <!-- line|area|bar -->
+  data-line-style="@{PV_LineStyle}{curved}"    <!-- curved|straight|dashed|dotted|dashdot -->
+  data-gap-mode="@{PV_GapMode}{break}"         <!-- break|connect|interp -->
+
+  data-show-values="@{PV_ShowValues}{0}"       <!-- labels default -->
+  data-point-mode="@{PV_PointMode}{all}"  <!-- none|extremes|all -->
+  data-rotate-ticks="@{PV_RotateTicks}{auto}"
+  data-hov-dig="@{PV_HoverDigits}{3}"
+  data-value-digits="@{PV_ValueDigits}{}"
+
+  data-card-border="@{PV_CardBorder}{1}"
+  data-card-radius="@{PV_CardRadius}{14}"
+  data-card-color="@{PV_CardColor}{#6b7280}"
+
+  data-chart-height="@{PV_ChartHeight}{320px}"
+  data-chart-width="@{PV_ChartWidth}{100%}"
+
+  data-plot-min="@{PV_PlotMeasuresCount}{0}"
+  data-meas-modes="@{PV_MeasureModes}{}"       <!-- per-measure type e.g. "m4:bar,Iron (%):area" -->
+  data-overlays="@{PV_Overlays}{}"             <!-- "m4+m5:sameY:line,bar ; Iron|Aluminium:dualY:line,area" -->
+
+  data-y-digits-map="@{PV_YDigitsPerMeasure}{}"
+  data-hov-digits-map="@{PV_HovDigitsPerMeasure}{}"
+
+  data-month-hints="@{PV_MonthHints}{1}"
+
+  data-max-pts="@{PV_MaxPointsPerLine}{1200}"  <!-- downsample target per line -->
+  data-hover-cell="@{PV_ShowCellInHover}{0}"   <!-- show/hide Cell in hover -->
+  data-hover-mode="@{PV_HoverMode}{focused}"        <!-- focused(closest)|compare|unified -->
+  data-hover-show-x="@{PV_ShowXAxisInHover}{1}"     <!-- show/hide axis value in hover -->
+  data-hover-highlight="@{PV_HoverHighlight}{1}"    <!-- show ring around nearest point when in compare/unified -->
+
+  data-time-x-mode="@{PV_TimeXMode}{auto}"     <!-- auto|date|category -->
+  data-max-groups="@{PV_MaxGroups}{60}"        <!-- limit groups; friendly message if exceeded -->
+  data-max-cats="@{PV_MaxCategories}{0}"       <!-- optional limit for X categories/dates (0 = unlimited) -->
+
+  data-report-title-color="@{PV_ReportTitleColor}{}"         <!-- optional CSS color (e.g. #111827) -->
+  data-report-subtitle-color="@{PV_ReportSubtitleColor}{}"   <!-- optional CSS color -->
+  data-report-title-size="@{PV_ReportTitleSize}{18}"         <!-- px -->
+  data-report-subtitle-size="@{PV_ReportSubtitleSize}{12}"   <!-- px -->
+  data-report-sep-color="@{PV_ReportSepColor}{}"             <!-- optional CSS color -->
+
+  data-x-scrollbar="@{PV_XScrollbar}{0}"          <!-- show x-axis scrollbar (range slider) -->
+  data-trellis-default="@{PV_TrellisDefault}{0}"  <!-- 1 to default trellis on -->
+  data-trellis-cols="@{PV_TrellisCols}{3}"        <!-- 1..4 -->
+  data-max-trellis="@{PV_MaxTrellis}{12}"         <!-- max groups shown in trellis mode -->
+></div>
+
+<style>
+  html,body{margin:0;padding:0}
+  #chart-grid{width:100%}
+  .grid{display:grid;gap:var(--grid-gap, 6px);width:100%;grid-auto-flow:row}
+  .cols1{grid-template-columns:repeat(1,minmax(0,1fr))}
+  .cols2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cols3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .cols4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .sec{border:1.5px solid var(--card-bc,#6b7280);border-radius:var(--card-br,14px);background:var(--sec-bg,#fff);position:relative;overflow:hidden}
+  [data-theme="dark"] .sec{border-color:#2b3447}
+  .sec .js-plotly-plot{width:100%!important}
+
+  .oas-status{position:absolute;left:8px;right:8px;bottom:8px;z-index:2;border:1px solid #cbd5e1;border-radius:10px;background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(6px);padding:8px 10px;font:12px/1.35 system-ui;color:#111827;max-height:46%;overflow:auto}
+  [data-theme="dark"] .oas-status{border-color:#334155;background:rgba(11,18,32,.92);color:#e5e7eb}
+  .oas-status table{width:max-content;max-width:100%;border-collapse:collapse;font-size:11px}
+  .oas-status td{padding:2px 6px;vertical-align:top}
+  .oas-status td.k{opacity:.75;width:38%}
+
+  /* Fullscreen status table */
+  .oas-status.fs{position:relative;left:auto;right:auto;bottom:auto;max-height:none;overflow:visible;background:transparent;border:0;border-radius:0;backdrop-filter:none;padding:0}
+  .oas-status .status-actions{display:flex;align-items:center;gap:6px}
+  .oas-status .status-btn{width:26px;height:26px;line-height:24px;text-align:center;border:1px solid #cdd0d4;border-radius:10px;background:rgba(255,255,255,.9);cursor:pointer;font:14px/1 system-ui;color:#111827;display:inline-flex;align-items:center;justify-content:center}
+  .oas-status .status-btn:hover{background:#f3f4f6}
+  [data-theme="dark"] .oas-status .status-btn{border-color:#334155;color:#e5e7eb;background:rgba(15,23,42,.9)}
+  [data-theme="dark"] .oas-status .status-btn:hover{background:#111827}
+
+  .js-plotly-plot .modebar{position:absolute!important;top:4px!important;right:2px!important;background:transparent!important;z-index:3!important;scale:.9;padding:0!important}
+  .js-plotly-plot .modebar-group{margin:0!important;padding:0!important}
+  .js-plotly-plot .modebar-btn{margin:0!important}
+  .js-plotly-plot .modebar-group .modebar-btn:last-child{margin-right:0!important;padding-right:2px!important}
+  .js-plotly-plot .modebar-group:last-child{margin-right:0!important;padding-right:0!important}
+  .js-plotly-plot .modebar-btn .icon path{fill:none!important;stroke:#6b7280!important;stroke-width:80!important}
+  .js-plotly-plot .modebar-btn:hover .icon path{stroke:#111827!important}
+  [data-theme="dark"] .js-plotly-plot .modebar-btn .icon path{stroke:#9aa4b2!important}
+  [data-theme="dark"] .js-plotly-plot .modebar-btn:hover .icon path{stroke:#e5e7eb!important}
+  .js-plotly-plot .modebar-btn[data-on="1"] .icon path{stroke:#111827!important}
+  [data-theme="dark"] .js-plotly-plot .modebar-btn[data-on="1"] .icon path{stroke:#e5e7eb!important}
+
+  /* Highlight: applied filter/remove (persistent state) */
+  .js-plotly-plot .modebar-btn[data-applied="1"][data-kind="filter"] .icon path{stroke:#2563eb!important}
+  [data-theme="dark"] .js-plotly-plot .modebar-btn[data-applied="1"][data-kind="filter"] .icon path{stroke:#60a5fa!important}
+  .js-plotly-plot .modebar-btn[data-applied="1"][data-kind="remove"] .icon path{stroke:#dc2626!important}
+  [data-theme="dark"] .js-plotly-plot .modebar-btn[data-applied="1"][data-kind="remove"] .icon path{stroke:#f87171!important}
+
+  .js-plotly-plot .scatterlayer path{cursor:pointer!important}
+  .js-plotly-plot .barlayer rect{cursor:pointer!important}
+  .js-plotly-plot.remove-mode .svg-container{cursor:pointer!important}
+
+  .oas-removal-hint{position:fixed;z-index:2147483646;background:rgba(15,23,42,.92);color:#fff;padding:6px 10px;border-radius:8px;font:11px/1.4 system-ui;box-shadow:0 8px 20px rgba(15,23,42,.35);opacity:0;transform:translateY(-6px);transition:opacity .2s ease, transform .2s ease}
+  .oas-removal-hint.show{opacity:1;transform:translateY(0)}
+  .oas-removal-hint.fade{opacity:0;transform:translateY(-6px)}
+  [data-theme="light"] .oas-removal-hint{background:rgba(15,23,42,.9)}
+  [data-theme="dark"] .oas-removal-hint{background:rgba(15,23,42,.92)}
+
+  .oas-pop{position:fixed;z-index:2147483646;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px;box-shadow:0 6px 24px rgba(0,0,0,.12);min-width:200px;max-width:340px}
+  [data-theme="dark"] .oas-pop{background:#0f172a;border-color:#2b3447;color:#e5e7eb;box-shadow:0 6px 24px rgba(0,0,0,.4)}
+  .oas-pop, .oas-pop *{box-sizing:border-box}
+  .oas-pop .hdr{font-weight:700;margin-bottom:6px;width:100%}
+  .oas-pop .hdr.hdr-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .oas-pop .hdr.hdr-top .ttl{flex:1;min-width:0}
+  .oas-pop .xbtn{width:22px !important;height:22px;line-height:20px;padding:0;border-radius:999px;text-align:center;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+  .oas-pop .xbtn:hover{background:#f3f4f6}
+  [data-theme="dark"] .oas-pop .xbtn:hover{background:#1f2937}
+  .oas-pop .group{display:flex;flex-direction:column;gap:8px}
+  .oas-pop .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .oas-pop input[type="text"], .oas-pop input[type="number"], .oas-pop input[type="range"]{width:100%;max-width:100%;padding:6px 8px;border:1px solid #d0d0d0;border-radius:8px}
+  .oas-pop button{padding:6px 10px;border:1px solid #cdd0d4;border-radius:8px;background:#fff;cursor:pointer}
+  .oas-pop button:hover{background:#f3f4f6}
+  [data-theme="dark"] .oas-pop button{background:#0f172a;border-color:#334155;color:#e5e7eb}
+  [data-theme="dark"] .oas-pop button:hover{background:#111827}
+  .oas-pop label{display:flex;align-items:center;gap:6px}
+  .oas-pop label.seg{display:inline-flex;align-items:center;gap:0}
+  .oas-pop label.seg input{position:absolute;opacity:0;pointer-events:none}
+  .oas-pop label.seg span{display:inline-block;padding:6px 10px;border:1px solid #cdd0d4;border-radius:999px;background:#fff;cursor:pointer;white-space:nowrap;font:12px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#111827}
+  .oas-pop label.seg span:hover{background:#f3f4f6}
+  .oas-pop label.seg input:checked + span{background:#e5e7eb;border-color:#9ca3af;font-weight:700}
+  [data-theme="dark"] .oas-pop label.seg span{background:#0f172a;border-color:#334155;color:#e5e7eb}
+  [data-theme="dark"] .oas-pop label.seg span:hover{background:#111827}
+  [data-theme="dark"] .oas-pop label.seg input:checked + span{background:#1f2937;border-color:#475569}
+
+  /* BoxPlot_v2-style vertical list menus */
+  .oas-pop.vlist{padding:0;overflow:hidden;min-width:220px}
+  .oas-pop.vlist .hdr{margin:0;padding:10px 10px 6px 10px}
+  .oas-pop.vlist button{width:100%;text-align:left;border:0;border-top:1px solid #e5e7eb;border-radius:0;background:transparent;padding:10px 12px}
+  .oas-pop.vlist button:hover{background:#f3f4f6}
+  [data-theme="dark"] .oas-pop.vlist button{border-top-color:#2b3447}
+  [data-theme="dark"] .oas-pop.vlist button:hover{background:#111827}
+
+  .pl-fs-overlay{position:fixed;inset:0;background:var(--overlay-bg,#fff);z-index:2147483645;display:flex;flex-direction:column}
+  .pl-fs-overlay .fs-row{display:flex;flex-direction:column;height:100%}
+  .pl-fs-overlay .fs-chart{flex:1 1 auto}
+  [data-theme="dark"] .pl-fs-overlay{background:var(--overlay-bg,#0b1220)}
+
+  /* Report titlebar (non-sticky; scrolls like charts) */
+  #report-header{position:relative;top:auto;z-index:1}
+  .oas-titlebar{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:10px 6px 8px 6px}
+  .oas-titlebar .txt{min-width:0}
+  .oas-titlebar .ttl{font:700 18px/1.2 system-ui}
+  .oas-titlebar .sub{margin-top:2px;font:12px/1.3 system-ui;opacity:.8}
+  .oas-titlebar .acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+  .oas-titlebar button{padding:6px 10px;border:1px solid #cdd0d4;border-radius:10px;background:rgba(255,255,255,.9);cursor:pointer;font:12px/1 system-ui;white-space:nowrap;color:#111827}
+  .oas-titlebar button:hover{background:#f3f4f6}
+  [data-theme="dark"] .oas-titlebar button{border-color:#334155;color:#e5e7eb;background:rgba(15,23,42,.9)}
+  [data-theme="dark"] .oas-titlebar button:hover{background:#111827}
+
+  .oas-titlebar .icoBtn{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+  .oas-titlebar .icoBtn svg{width:18px;height:18px;display:block}
+  .oas-titlebar .icoBtn svg path{fill:none;stroke:currentColor;stroke-width:80;stroke-linecap:round;stroke-linejoin:round}
+  .oas-title-sep{height:1px;margin:0 0 10px 0;opacity:1}
+</style>
+
+<div id="report-header" style="display:none"></div>
+<div id="chart-grid" class="grid cols1"></div>
+
+<script src="/analyticsRes/custom/plotly.min.js"></script>
+<script src="/analyticsRes/vendor/export/jspdf.umd.min.js"></script>
+<script src="/analyticsRes/vendor/export/html2canvas.min.js"></script>
+<script src="/analyticsRes/vendor/export/xlsx.full.min.js"></script>
+
+<script>
+(function(){
+  const VERSION='v2.0.0 / rev 2026-02-02';
+  if(typeof Plotly==='undefined'){ document.getElementById('chart-grid').innerHTML='<div class="sec" style="padding:8px">Plotly not found</div>'; return; }
+
+  /* ----------------- parameters ----------------- */
+  const p=document.getElementById('oas-params')||{dataset:{}};
+  const pvNum = (val, fallback) => {
+    const s = String(val ?? '');
+    const m = s.match(/-?\d+(?:\.\d+)?/g);
+    if(!m || !m.length) return fallback;
+    const n = parseFloat(m[m.length-1]);
+    return Number.isFinite(n) ? n : fallback;
+  };
+  const pvInt = (val, fallback) => {
+    const n = pvNum(val, fallback);
+    return Number.isFinite(n) ? Math.trunc(n) : fallback;
+  };
+
+  const GPR=Math.min(4,Math.max(1,pvInt(p.dataset.gpr,1)));
+
+  const GRID_GAP_DEFAULT = Math.max(0, Math.min(40, pvInt(p.dataset.gridGap, 6)));
+  let GRID_GAP = GRID_GAP_DEFAULT;
+
+  const SHOW_HEADER = (pvInt(p.dataset.showHeader, 1) !== 0);
+  const REPORT_TITLE = (p.dataset.reportTitle || '').trim();
+  const REPORT_SUBTITLE = (p.dataset.reportSubtitle || '').trim();
+
+  const REPORT_TITLE_COLOR = (p.dataset.reportTitleColor || '').trim();
+  const REPORT_SUBTITLE_COLOR = (p.dataset.reportSubtitleColor || '').trim();
+  const REPORT_TITLE_SIZE = Math.max(10, Math.min(42, pvInt(p.dataset.reportTitleSize, 18)));
+  const REPORT_SUBTITLE_SIZE = Math.max(9, Math.min(28, pvInt(p.dataset.reportSubtitleSize, 12)));
+  const REPORT_SEP_COLOR = (p.dataset.reportSepColor || '').trim();
+
+  const DATE_TITLE=(p.dataset.dateTitle||'Date').trim();
+  const LINE_TITLE=(p.dataset.lineTitle||'Line').trim();
+  const CELL_TITLE=(p.dataset.cellTitle||'Cell').trim();
+
+  const LEG_SHOW=(String(p.dataset.legendShow||'1')!=='0');
+  const normLegendPos = (pos) => {
+    const v = String(pos || 'auto').toLowerCase();
+    if(v==='top-left' || v==='top-center' || v==='top-right') return 'top';
+    if(v==='top' || v==='bottom' || v==='left' || v==='right' || v==='auto') return v;
+    return 'auto';
+  };
+  const LEG_POS=normLegendPos(p.dataset.legendPos||'auto');
+
+  const CHART_TYPE=(p.dataset.chartType||'line').toLowerCase();
+  const LINE_STYLE=(p.dataset.lineStyle||'curved').toLowerCase();
+  const GAP_MODE=(p.dataset.gapMode||'break').toLowerCase();
+
+  const SHOW_VALUES_DEFAULT=(String(p.dataset.showValues||'0')==='1');
+  const POINT_MODE_DEFAULT=(p.dataset.pointMode||'all').toLowerCase(); // none|extremes|all
+  const ROTATE_TICKS=(p.dataset.rotateTicks||'auto').toLowerCase();
+  const HOV_DIG=Math.max(0, Math.min(6, pvInt(p.dataset.hovDig,3)));
+  const VAL_DIG=(p.dataset.valueDigits??'').trim();
+
+  const MONTH_HINTS=(String(p.dataset.monthHints||'1')!=='0');
+  const MAX_PTS=Math.max(300, pvInt(p.dataset.maxPts,1200));
+  const HOVER_SHOW_CELL=(String(p.dataset.hoverCell||'0')!=='0');
+  let HOVER_MODE=(p.dataset.hoverMode||'focused').toLowerCase(); // focused(closest)|compare|unified
+  let HOVER_SHOW_X = (pvInt(p.dataset.hoverShowX, 1) !== 0);
+  let HOVER_HIGHLIGHT = (pvInt(p.dataset.hoverHighlight, 1) !== 0);
+
+  const TIME_X_MODE=(p.dataset.timeXMode||'auto').toLowerCase();   // auto|date|category
+  const MAX_GROUPS_RAW = pvInt(p.dataset.maxGroups,60);
+  const MAX_GROUPS = (MAX_GROUPS_RAW <= 0) ? 0 : Math.max(1, MAX_GROUPS_RAW);
+  const MAX_CATS = Math.max(0, pvInt(p.dataset.maxCats,0));
+
+  const X_SCROLLBAR_DEFAULT = (pvInt(p.dataset.xScrollbar, 0) !== 0);
+  const TRELLIS_DEFAULT = (pvInt(p.dataset.trellisDefault, 0) !== 0);
+  const TRELLIS_COLS_DEFAULT = Math.max(1, Math.min(4, pvInt(p.dataset.trellisCols, 3)));
+  const MAX_TRELLIS = Math.max(1, pvInt(p.dataset.maxTrellis, 12));
+
+  const CARD_BORDER=(String(p.dataset.cardBorder||'1')!=='0');
+  const CARD_RADIUS=(p.dataset.cardRadius||'14');
+  const CARD_COLOR =(p.dataset.cardColor || '#6b7280');
+  const normalizeCssSize = (val, fallback) => {
+    let s = String(val ?? '').trim();
+    if(!s) return fallback;
+    // If OAS prompt substitution didn't run, we might see a literal "@{PV_Name}{default}".
+    const pv = s.match(/^@\{[^}]*\}\{([^}]*)\}$/);
+    if(pv) s = String(pv[1] ?? '').trim();
+    if(!s) return fallback;
+    if(/^-?\d+(?:\.\d+)?$/.test(s)) return s + 'px';
+    return s;
+  };
+  const parsePx = (val, fallbackPx) => {
+    const s = normalizeCssSize(val, '').trim();
+    const m = s.match(/^(-?\d+(?:\.\d+)?)px$/i);
+    if(m) return Math.round(+m[1]);
+    if(/^-?\d+(?:\.\d+)?$/.test(s)) return Math.round(+s);
+    return fallbackPx;
+  };
+
+  const CHART_H_PX = parsePx(p.dataset.chartHeight, 320);
+  const CHART_H = CHART_H_PX + 'px';
+  const CHART_W = normalizeCssSize(p.dataset.chartWidth, '100%');
+
+  function baseChartHeightPx(){
+    return parsePx(p.dataset.chartHeight, CHART_H_PX || 320);
+  }
+
+  /* ----------------- data ingest ----------------- */
+  const host=document.getElementById('box-data'); if(!host){ return; }
+  let raw=[]; try{ raw=JSON.parse(host.textContent||'[]'); }catch(e){}
+  if(!raw.length){
+    const gridEl = document.getElementById('chart-grid');
+    if(gridEl) gridEl.innerHTML = `<div class="sec" style="padding:14px">
+      <div style="font:600 14px system-ui; margin-bottom:6px">No data rows returned.</div>
+      <div style="font:12px/1.4 system-ui; opacity:.8">Try adjusting prompts/filters, or verify the analysis is returning rows.</div>
+    </div>`;
+    return;
+  }
+
+  function svgIcon(icon){
+    if(!icon || !icon.path) return '';
+    return `<svg viewBox="0 0 1000 1000" aria-hidden="true" focusable="false"><path d="${icon.path}"></path></svg>`;
+  }
+
+  function hexToRgba(hex, a){
+    const s=String(hex||'').trim();
+    const alpha = (a==null ? 1 : Math.max(0, Math.min(1, +a||0)));
+    const m = s.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if(!m) return `rgba(0,0,0,${alpha})`;
+    let h=m[1];
+    if(h.length===3) h=h.split('').map(ch=>ch+ch).join('');
+    const r=parseInt(h.slice(0,2),16);
+    const g=parseInt(h.slice(2,4),16);
+    const b=parseInt(h.slice(4,6),16);
+    return `rgba(${r},${g},${b},${alpha})`;
+  }
+
+  // ---- report header (sticky titlebar) ----
+  function renderHeader(themeOrKey){
+    const el = document.getElementById('report-header');
+    if(!el) return;
+    if(!SHOW_HEADER){ el.style.display='none'; el.innerHTML=''; return; }
+
+    const th = (typeof THEMES!=='undefined' && THEMES && THEMES[themeOrKey]) ? THEMES[themeOrKey] : null;
+    const t = (th && th.mode) ? th.mode : ((themeOrKey==='dark') ? 'dark' : 'light');
+    const bcBase = t === 'dark' ? '#334155' : '#cbd5e1';
+    const txtBase = t === 'dark' ? '#e5e7eb' : '#111827';
+    const subBase = t === 'dark' ? '#9aa4b2' : '#6b7280';
+    const bc = REPORT_SEP_COLOR || bcBase;
+    const txt = REPORT_TITLE_COLOR || txtBase;
+    const sub = REPORT_SUBTITLE_COLOR || subBase;
+
+    const headerBg = th
+      ? hexToRgba(th.BG, 0.92)
+      : (t==='dark' ? 'rgba(11,18,32,.92)' : 'rgba(255,255,255,.92)');
+
+    const titleText = REPORT_TITLE || 'Trend';
+    const subtitleText = REPORT_SUBTITLE || '';
+
+    el.style.display='block';
+    const iconsReady = (typeof homeI!=='undefined');
+    const b = (act, title, icon, fallbackText) => {
+      if(iconsReady && icon) return `<button class="icoBtn" data-act="${act}" title="${escapeHtml(title)}" aria-label="${escapeHtml(title)}">${svgIcon(icon)}</button>`;
+      return `<button data-act="${act}" title="${escapeHtml(title)}">${escapeHtml(fallbackText||title)}</button>`;
+    };
+
+    el.innerHTML = `
+      <div class="oas-titlebar" style="background:${headerBg};backdrop-filter:saturate(140%) blur(6px)">
+        <div class="txt">
+          <div class="ttl" style="color:${txt};font-size:${REPORT_TITLE_SIZE}px">${escapeHtml(titleText)}</div>
+          ${subtitleText ? `<div class="sub" style="color:${sub};font-size:${REPORT_SUBTITLE_SIZE}px">${escapeHtml(subtitleText)}</div>` : ''}
+        </div>
+        <div class="acts" aria-label="Report controls">
+          ${b('tb-home','Reset all charts',homeI,'Reset')}
+          ${b('tb-view','Chart type (all charts)',typeI,'Chart type')}
+          ${b('tb-points','Points/Labels/Legend (all charts)',ptsI,'Points')}
+          ${b('tb-status','Status/Stats (all charts)',statusI,'Status')}
+          ${b('tb-layout','Layout & size (all charts)',gridI,'Layout & Size')}
+          ${b('tb-theme','Theme',themeI,'Theme')}
+          ${b('tb-dl','Downloads',downI,'Download')}
+          ${b('tb-help','Help',helpI,'Help')}
+          ${b('tb-fs','Fullscreen report',fsI,'Fullscreen')}
+        </div>
+      </div>
+      <div class="oas-title-sep" style="background:${bc}"></div>
+    `;
+
+    const firstChart = () => document.querySelector('#chart-grid .js-plotly-plot');
+    el.querySelectorAll('button[data-act]').forEach(btn=>{
+      btn.onclick = ()=>{
+        const gd = firstChart();
+        const id = gd && gd.id;
+        if(!gd || !id) return;
+        const act = btn.getAttribute('data-act');
+        const anchor = btn.getBoundingClientRect();
+        if(act==='tb-home'){ resetAllChartsToDefaults(); return; }
+        if(act==='tb-view'){ openViewMenu(gd, id, true, anchor); return; }
+        if(act==='tb-points'){ openPointsMenu(gd, id, true, anchor); return; }
+        if(act==='tb-status'){ openStatusMenu(gd, id, true, anchor); return; }
+        if(act==='tb-layout'){ openLayoutMenu(anchor); return; }
+        if(act==='tb-fs'){ openFullscreenMenu(anchor); return; }
+        if(act==='tb-theme'){ openThemeMenu(anchor); return; }
+        if(act==='tb-help'){ openHelpMenu(gd, anchor); return; }
+        if(act==='tb-dl'){ openDownloadMenu(gd, id, anchor); return; }
+      };
+    });
+  }
+
+  const FAST_NUM_RE=/^-?\d+(\.\d+)?$/;
+  function toNum(s){
+    if(s==null) return null; let t=(''+s).trim(); if(!t) return null;
+    if(FAST_NUM_RE.test(t)) return parseFloat(t);
+    t=t.replace(/[^\d.,\-]/g,'');
+    const d=t.lastIndexOf('.'), c=t.lastIndexOf(',');
+    if(d!==-1&&c!==-1) t=(c>d)?t.replace(/\./g,'').replace(',', '.'):t.replace(/,/g,'');
+    else if(c!==-1) t=t.replace(',', '.'); else t=t.replace(/,/g,'');
+    const v=parseFloat(t); return Number.isFinite(v)?v:null;
+  }
+
+  function rawDecimalsCount(v){
+    if(v==null) return null;
+    let s=String(v).trim();
+    if(!s) return null;
+    s=s.replace(/,/g,'');
+    const m=s.match(/^[-+]?\d+(?:\.(\d+))?(?:[eE][-+]?\d+)?$/);
+    if(!m) return null;
+    return m[1] ? m[1].length : 0;
+  }
+
+  function rawNumericString(v){
+    if(v==null) return '';
+    let s=String(v).trim();
+    if(!s) return '';
+    s=s.replace(/,/g,'');
+    if(/^[-+]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?$/.test(s)) return s;
+    return '';
+  }
+
+  function fmtLooseNum(v, maxDp){
+    if(v==null || !Number.isFinite(v)) return '';
+    const dp = Math.max(0, Math.min(10, maxDp==null?6:Math.floor(+maxDp||0)));
+    if(dp===0) return String(Math.round(+v));
+    const s=(+v).toFixed(dp);
+    return s.replace(/\.?0+$/,'');
+  }
+
+  const lite=new Array(raw.length);
+  const linesSet=new Set(), datesSet=new Set();
+  for(let i=0;i<raw.length;i++){ const r=raw[i]; const d=String(r.dt); const ln=String(r.line??'—'); const cell=(r.cell??''); lite[i]={d,ln,cell}; linesSet.add(ln); datesSet.add(d); }
+  const lines=[...linesSet], dates=[...datesSet];
+
+  // ---- category/date limit guard (optional) ----
+  if (MAX_CATS > 0 && dates.length > MAX_CATS) {
+    const gridEl = document.getElementById('chart-grid');
+    if (gridEl) {
+      gridEl.innerHTML = `
+        <div class="sec" style="padding:14px">
+          <div style="font:600 14px system-ui; margin-bottom:6px">Too many ${escapeHtml(DATE_TITLE)} values selected (${dates.length}).</div>
+          <div style="font:12px/1.4 system-ui; opacity:.8">
+            For performance and readability, this view is limited to <b>${MAX_CATS}</b> X values
+            (<code>PV_MaxCategories</code>). Please filter to a smaller date/week range.
+          </div>
+        </div>`;
+    }
+    return;
+  }
+
+  // ---- group limit guard ----
+  if (MAX_GROUPS > 0 && lines.length > MAX_GROUPS) {
+    const gridEl = document.getElementById('chart-grid');
+    if (gridEl) {
+      const sample = lines.slice(0, Math.min(10, lines.length)).join(', ');
+      gridEl.innerHTML = `
+        <div class="sec" style="padding:14px">
+          <div style="font:600 14px system-ui; margin-bottom:6px">Too many ${escapeHtml(LINE_TITLE)} groups selected (${lines.length}).</div>
+          <div style="font:12px/1.4 system-ui; opacity:.8">
+            For performance and readability, this view is limited to <b>${MAX_GROUPS}</b> groups
+            (<code>PV_MaxGroups</code>). Please filter or select fewer groups for a clearer visual.
+          </div>
+          <div style="font:12px/1.4 system-ui; opacity:.75; margin-top:8px">
+            Examples: ${escapeHtml(sample)}${lines.length>10?' …':''}
+          </div>
+        </div>`;
+    }
+    return; // stop here; skip plotting
+  }
+
+  let allKeys=[]; for(const r of raw){ for(const k in r){ if(k!=='dt'&&k!=='line'&&k!=='cell') allKeys.push(k); } if(allKeys.length) break; }
+  if(!allKeys.length){ const s=new Set(); for(const r of raw){ for(const k in r){ if(k!=='dt'&&k!=='line'&&k!=='cell') s.add(k); } } allKeys=[...s]; }
+  const pref=Array.from({length:160},(_,i)=>'m'+(i+1));
+  const measureKeys=allKeys.sort((a,b)=> (pref.indexOf(a)<0?9e9:pref.indexOf(a)) - (pref.indexOf(b)<0?9e9:pref.indexOf(b)));
+  const PLOT_MIN=Math.max(0, parseInt(p.dataset.plotMin||'0',10));
+  const mKeys=measureKeys.slice(0, Math.max(PLOT_MIN, measureKeys.length));
+  if(!mKeys.length){ document.getElementById('chart-grid').innerHTML='<div class="sec" style="padding:8px">No measure columns detected.</div>'; return; }
+
+  /* ---- date vs category ---- */
+  const HINTS_DATE = ['date','datetime','day'];               // only these trigger date mode in auto
+  const TITLE_LOOKS_DATE = HINTS_DATE.some(h => (DATE_TITLE||'').toLowerCase().includes(h));
+  const parsable = s => Number.isFinite(+new Date(s));
+  const sample = lite.slice(0, Math.min(40, lite.length)).map(r => r.d);
+  const DATA_MOSTLY_DATE = (sample.filter(parsable).length >= Math.ceil(sample.length*0.6));
+
+  let USE_TIME_X;
+  if (TIME_X_MODE === 'date')      USE_TIME_X = true;
+  else if (TIME_X_MODE === 'category') USE_TIME_X = false;
+  else /* auto */                  USE_TIME_X = (TITLE_LOOKS_DATE && DATA_MOSTLY_DATE);
+
+  const isoCache=new Map();
+  const toISO=d=>{ if(!USE_TIME_X) return d; const s=String(d); if(isoCache.has(s)) return isoCache.get(s); const t=new Date(s); const v=Number.isFinite(+t)?t.toISOString().slice(0,10):s; isoCache.set(s,v); return v; };
+  const ISO_DATES_UNIQ = USE_TIME_X ? [...new Set(lite.map(r=>toISO(r.d)))] : [];
+
+  /* ---- month labels row ---- */
+  function computeMonthBand(list){
+    const mon=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const pts=list.map(d=>({d,t:+new Date(d)})).filter(o=>Number.isFinite(o.t)).sort((a,b)=>a.t-b.t);
+    const out=[]; for(let i=0;i<pts.length;){ const dt=new Date(pts[i].d), m=dt.getMonth(), y=dt.getFullYear(); let j=i; while(j<pts.length){ const d2=new Date(pts[j].d); if(d2.getMonth()!==m||d2.getFullYear()!==y) break; j++; }
+      const a=new Date(pts[i].d), b=new Date(pts[Math.max(j-1,i)].d); const cx=new Date((a.getTime()+b.getTime())/2).toISOString().slice(0,10);
+      out.push({x:cx, text:mon[m]+' '+String(y).slice(2)}); i=j; }
+    return out;
+  }
+  const MONTH_BAND=(USE_TIME_X && MONTH_HINTS && ISO_DATES_UNIQ.length && ISO_DATES_UNIQ.length<=200)?computeMonthBand(ISO_DATES_UNIQ):null;
+
+  /* ---- config maps ---- */
+  const MEAS_MODE_MAP={};
+  (p.dataset.measModes||'').split(/[,;]+/).map(s=>s.trim()).filter(Boolean).forEach(pair=>{
+    const m=pair.split(':');
+    if(m.length<2) return;
+    const key=m[0].trim();
+    const v=(m[1]||'').trim().toLowerCase();
+    const norm = (v==='bar' || v==='area' || v==='line' || v==='scatter' || v==='scatterjitter' || v==='markers' || v==='points')
+      ? (v==='points' ? 'scatter' : (v==='markers' ? 'scatter' : v))
+      : 'line';
+    MEAS_MODE_MAP[key]=norm;
+  });
+  const YDIG_MAP={}; (p.dataset.yDigitsMap||'').split(/[;,]+/).map(s=>s.trim()).filter(Boolean).forEach(pair=>{ const m=pair.split(':'); if(m.length===2) YDIG_MAP[m[0].trim()]=Math.max(0,parseInt(m[1],10)||0); });
+  const HOV_MAP={}; (p.dataset.hovDigitsMap||'').split(/[;,]+/).map(s=>s.trim()).filter(Boolean).forEach(pair=>{ const m=pair.split(':'); if(m.length===2) HOV_MAP[m[0].trim()]=Math.max(0,parseInt(m[1],10)||0); });
+  // Infer decimals from raw dataset per measure (used when hover digits aren't explicitly configured)
+  const DATA_DEC_MAP=Object.create(null);
+  (mKeys||[]).forEach((k)=>{
+    let mx=0;
+    const scan=Math.min(raw.length, 3000);
+    for(let i=0;i<scan;i++){
+      const dc=rawDecimalsCount(raw[i] && raw[i][k]);
+      if(dc==null) continue;
+      mx=Math.max(mx, Math.min(6, dc));
+      if(mx>=6) break;
+    }
+    DATA_DEC_MAP[k]=mx;
+  });
+  const hovDigitsFor=k=> (HOV_MAP[k]!=null ? HOV_MAP[k] : (DATA_DEC_MAP[k]!=null ? DATA_DEC_MAP[k] : HOV_DIG));
+  const yFmtFor=(k,f)=> { if (YDIG_MAP[k]==null) return f; const n=Math.max(0,Math.min(6,+YDIG_MAP[k])); return ',.'+n+'f'; };
+  const chartTypeFor=k=> MEAS_MODE_MAP[k] || CHART_TYPE || 'line';
+
+  /* ---- overlays ---- */
+  const OVERLAYS_RAW=(p.dataset.overlays||'').trim();
+  const overlayGroups=[], overlayMembers=new Set();
+  const resolveKey = nameOrKey => measureKeys.includes(nameOrKey)? nameOrKey
+                                 : measureKeys.find(k=>k.toLowerCase()===String(nameOrKey).toLowerCase()) || null;
+  if(OVERLAYS_RAW){
+    OVERLAYS_RAW.split(';').map(s=>s.trim()).filter(Boolean).forEach((grp,gi)=>{
+      const parts=grp.split(':').map(s=>s.trim());
+      const L=(parts[0]||'').split('|')[0]||''; const R=(parts[0]||'').split('|')[1]||'';
+      const left=(L||'').split('+').map(x=>x.trim()).filter(Boolean).map(resolveKey).filter(Boolean);
+      const right=(R||'').split('+').map(x=>x.trim()).filter(Boolean).map(resolveKey).filter(Boolean);
+      if(!left.length && !right.length) return;
+      left.forEach(k=>overlayMembers.add(k)); right.forEach(k=>overlayMembers.add(k));
+      overlayGroups.push({id:'ov_'+gi, axisMode:(parts[1]||'sameY').toLowerCase(), left, right, types:(parts[2]||'').toLowerCase().split(/[,\s]+/).filter(Boolean)});
+    });
+  }
+
+  const singleMeasures=mKeys.filter(k=>!overlayMembers.has(k));
+  const plan=[ ...overlayGroups.map(meta=>({kind:'overlay',meta})), ...singleMeasures.map(k=>({kind:'single',key:k})) ];
+
+  /* ----------------- DOM ----------------- */
+  const grid=document.getElementById('chart-grid');
+  let USER_COLS = GPR;
+  const applyCols=n=>{ grid.classList.toggle('cols1',n===1); grid.classList.toggle('cols2',n===2); grid.classList.toggle('cols3',n===3); grid.classList.toggle('cols4',n===4); };
+  applyCols(USER_COLS);
+
+  const clampGapPx = (px)=> Math.max(0, Math.min(40, Math.round(+px||0)));
+  const applyGridGap = (px)=>{
+    GRID_GAP = clampGapPx(px);
+    try{ if(grid) grid.style.setProperty('--grid-gap', GRID_GAP + 'px'); }catch(_){ }
+  };
+  applyGridGap(GRID_GAP_DEFAULT);
+
+  function makeSec(title, dataAttr){
+    const id='t_'+Math.random().toString(36).slice(2,9);
+    const sec=document.createElement('div'); sec.className='sec';
+    sec.style.setProperty('--card-bc', CARD_COLOR); sec.style.setProperty('--card-br', (CARD_BORDER?CARD_RADIUS:0)+'px'); sec.style.borderWidth = CARD_BORDER ? '1.5px' : '0';
+    sec.innerHTML=`<div id="${id}" ${dataAttr} data-title="${encodeURIComponent(title)}" style="width:${CHART_W};height:${CHART_H};position:relative"></div>`;
+    grid.appendChild(sec); return id;
+  }
+  const measureSectionMap=new Map();
+  const registerSection=(measure, secId)=>{
+    if(!measure) return;
+    if(!measureSectionMap.has(measure)) measureSectionMap.set(measure, new Set());
+    measureSectionMap.get(measure).add(secId);
+  };
+  const sections=plan.map(pl=>{
+    if(pl.kind==='overlay'){
+      const title=[...pl.meta.left,...pl.meta.right].join(' + ');
+      const id=makeSec(title, `data-overlay="${encodeURIComponent(JSON.stringify(pl.meta))}"`);
+      [...pl.meta.left,...pl.meta.right].forEach(m=>registerSection(m,id));
+      return id;
+    }
+    const id=makeSec(pl.key, `data-measure="${encodeURIComponent(pl.key)}"`);
+    registerSection(pl.key,id);
+    return id;
+  });
+
+  // Spacing is controlled by the global grid gap.
+
+  /* ----------------- helpers ----------------- */
+  const THEMES={
+    light:{mode:'light', BG:'#fff',PBG:'#fff',TXT:'#111827',GRID:'#e5e7eb',SPIKE:'#9ca3af',XGRID:true},
+    paper:{mode:'light', BG:'#fbf7ef',PBG:'#fffaf1',TXT:'#1f2937',GRID:'#e7dcc9',SPIKE:'#a78b6d',XGRID:true},
+    dark:{mode:'dark', BG:'#0b1220',PBG:'#0f172a',TXT:'#e5e7eb',GRID:'#1f2937',SPIKE:'#475569',XGRID:false},
+  };
+  const THEME_ORDER=['light','paper','dark'];
+  let CUR_THEME='light'; // global theme (applies to all charts)
+  const USER_SIZE={scale:1, heightPx:null}; // global sizing (all charts)
+  const PALETTE=['#2E77D0','#E07A1F','#2FA24B','#C33C3C','#7C5AC9','#8C564B','#E377C2','#17BECF','#7f7f7f'];
+  const LINE_COLORS={}; const colorFor=ln=>LINE_COLORS[ln]||(LINE_COLORS[ln]=PALETTE[Object.keys(LINE_COLORS).length%PALETTE.length]);
+  const fmtText=(v)=>{
+    if(VAL_DIG!==''){
+      const dp=Math.max(0,Math.min(6,parseInt(VAL_DIG)||0));
+      return Number.isFinite(+v) ? (+v).toFixed(dp) : String(v??'');
+    }
+    return fmtLooseNum(v, 6);
+  };
+
+  function fmtTextFromRaw(measureKey, rawIdx, v){
+    if(rawIdx!=null && raw[rawIdx]){
+      const s=rawNumericString(raw[rawIdx][measureKey]);
+      if(s) return s;
+    }
+    return fmtText(v);
+  }
+
+  const clampNum=(v,lo,hi)=>Math.min(hi, Math.max(lo, v));
+  function safeFilename(s){
+    return String(s || 'chart').replace(/<[^>]+>/g,'').trim().replace(/\s+/g,'_').replace(/[^a-zA-Z0-9._-]/g,'_');
+  }
+
+  function escapeHtml(s){
+    const str = String(s ?? '');
+    return str.replace(/[&<>"']/g, (ch) => {
+      switch(ch){
+        case '&': return '&amp;';
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '"': return '&quot;';
+        case "'": return '&#39;';
+        default: return ch;
+      }
+    });
+  }
+
+  function chartTypeInfo(ct){
+    const v=String(ct||'line').toLowerCase();
+    // Bar variants
+    if(v==='barh' || v==='bar_h' || v==='bar-horizontal' || v==='barhorizontal') return {kind:'bar', orientation:'h'};
+    if(v==='bar100' || v==='bar_100' || v==='bar-100' || v==='barpercent' || v==='bar_percent' || v==='bar-percent' || v==='100bar' || v==='100%bar') return {kind:'bar', stacked:true, percent:true};
+    if(v==='bar100h' || v==='bar100_h' || v==='bar100-horizontal' || v==='barpercenth' || v==='bar_percent_h' || v==='100barh' || v==='100%barh') return {kind:'bar', stacked:true, percent:true, orientation:'h'};
+    if(v==='barstackh' || v==='barstack_h' || v==='barstack-horizontal' || v==='bar_stacked_h') return {kind:'bar', stacked:true, orientation:'h'};
+    if(v==='barstack' || v==='bar_stacked' || v==='bar-stacked') return {kind:'bar', stacked:true};
+    if(v==='areastack' || v==='area_stacked' || v==='area-stacked') return {kind:'area', stacked:true};
+    if(v==='step_hv' || v==='step-hv') return {kind:'line', stepShape:'hv'};
+    if(v==='step_vh' || v==='step-vh') return {kind:'line', stepShape:'vh'};
+
+    // Scatter / points-only variants
+    if(v==='scatterjitter' || v==='scatter_jitter' || v==='scatter-jitter' || v==='jitter') return {kind:'markers', jitter:true};
+    if(v==='scatter' || v==='points' || v==='markers' || v==='marker' || v==='dot') return {kind:'markers'};
+    if(v==='line_markers' || v==='line+markers' || v==='linemarkers') return {kind:'line', forceMarkers:true};
+    if(v==='area') return {kind:'area'};
+    if(v==='bar') return {kind:'bar'};
+    return {kind:'line'};
+  }
+
+  function movingAverage(y, win){
+    const w=Math.max(2, Math.min(60, Math.floor(+win||7)));
+    const out=new Array(y.length).fill(null);
+    let sum=0, count=0;
+    const q=[]; // queue of {v,isValid}
+    for(let i=0;i<y.length;i++){
+      const v=y[i];
+      const isValid=Number.isFinite(v);
+      q.push({v, isValid});
+      if(isValid){ sum+=v; count++; }
+      if(q.length>w){
+        const old=q.shift();
+        if(old.isValid){ sum-=old.v; count--; }
+      }
+      out[i]=(count>0 && q.length===w)?(sum/count):null;
+    }
+    return out;
+  }
+
+  function linearInterp(y){ const o=y.slice(); const idx=[]; for(let i=0;i<o.length;i++){ if(o[i]==null||!isFinite(o[i])){ let p=i-1; while(p>=0 && !isFinite(o[p])) p--; let n=i+1; while(n<o.length && !isFinite(o[n])) n++; if(p>=0&&n<o.length&&isFinite(o[p])&&isFinite(o[n])){ o[i]=o[p]+(o[n]-o[p])*((i-p)/(n-p)); idx.push(i);} } } return {y:o,idx}; }
+  function median(a){ const s=a.slice().sort((x,y)=>x-y); const n=s.length; if(!n) return null; const m=n/2|0; return n%2? s[m] : (s[m-1]+s[m])/2; }
+  function linreg(_,y){ const n=y.length; if(n<2) return {a:0,b:(y[0]||0)}; let sx=0,sy=0,sxx=0,sxy=0; for(let i=0;i<n;i++){ const X=i, Y=y[i]; sx+=X; sy+=Y; sxx+=X*X; sxy+=X*Y; } const d=(n*sxx-sx*sx)||1e-9; return {a:(n*sxy-sx*sy)/d, b:(sy - ((n*sxy-sx*sy)/d)*sx)/n}; }
+  function outlierIdx(y){ const v=y.filter(Number.isFinite); if(v.length<4) return []; const s=v.slice().sort((a,b)=>a-b);
+    const q1=s[Math.floor((s.length-1)*0.25)], q3=s[Math.floor((s.length-1)*0.75)], iqr=q3-q1, lo=q1-1.5*iqr, hi=q3+1.5*iqr;
+    const idx=[]; for(let i=0;i<y.length;i++){ const t=y[i]; if(Number.isFinite(t)&&(t<lo||t>hi)) idx.push(i); } return idx; }
+
+  const cache=new Map();
+  const removedPoints=new Map();
+  function perLineArray(mk){
+    let by=cache.get(mk); if(by) return by;
+    by={}; lines.forEach(l=>by[l]={x:[],y:[],t:[],idx:[]});
+    for(let i=0;i<raw.length;i++){
+      const r=raw[i], L=lite[i], v=toNum(r[mk]);
+      const x=USE_TIME_X?toISO(L.d):L.d;
+      const ln=L.ln;
+      const bucket=by[ln];
+      bucket.x.push(x);
+      bucket.y.push(Number.isFinite(v)?v:null);
+      bucket.t.push(L.cell||'');
+      bucket.idx.push(i);
+    }
+    cache.set(mk,by); return by;
+  }
+
+  /* Aggregate across ALL groups at each X (for Scope: All) */
+  const __AGG_CACHE__ = new Map();
+  function filterCacheKey(filter){
+    if(!filterIsActive(filter)) return '__none__';
+    const min = Number.isFinite(filter.min)?filter.min:'';
+    const max = Number.isFinite(filter.max)?filter.max:'';
+    const ex = filter.excludeOutliers?'1':'0';
+    return min+'|'+max+'|'+ex;
+  }
+  function aggAllForMeasure(mk, filter){
+    const cacheKey = mk+'::'+filterCacheKey(filter);
+    if(__AGG_CACHE__.has(cacheKey)) return __AGG_CACHE__.get(cacheKey);
+    const by = perLineArray(mk);
+    const buckets = new Map(); // x -> [values...]
+    for(const ln of lines){
+  const arr = by[ln]; if(!arr) continue;
+  const filtered = filterSeries(arr.x, arr.y, arr.t, arr.idx, filter, removedPoints.get(mk));
+      const X=filtered.x, Y=filtered.y;
+      for(let i=0;i<X.length;i++){
+        const val=Y[i]; if(!Number.isFinite(val)) continue;
+        const key=X[i];
+        if(buckets.has(key)) buckets.get(key).push(val); else buckets.set(key,[val]);
+      }
+    }
+    const xUniq = USE_TIME_X ? ISO_DATES_UNIQ.slice() : dates.slice();
+    const yAvg = xUniq.map(x=>{
+      const arr=buckets.get(x); if(!arr||!arr.length) return null;
+      let sum=0; for(let i=0;i<arr.length;i++) sum+=arr[i];
+      return sum/arr.length;
+    });
+    const allVals=[]; buckets.forEach(arr=>{ for(let i=0;i<arr.length;i++) allVals.push(arr[i]); });
+    const medAll = allVals.length? median(allVals) : null;
+    const res = {x:xUniq, yAvg, medAll};
+    __AGG_CACHE__.set(cacheKey,res);
+    return res;
+  }
+
+  function buildKeepIndex(y, width, extIdx, maxPts){
+    const n=y.length; if(n<=maxPts) return null;
+    const bins=Math.max(80, Math.min(n, Math.floor((width||800)/2)));
+    const step=Math.ceil(n/bins);
+    const keep=new Set([0,n-1]); const extSet=new Set(extIdx||[]);
+    if(extIdx){ for(const k of extIdx){ if(k>=0&&k<n) keep.add(k); } }
+    for(let i=0;i<n;i+=step){ let lo=Infinity,hi=-Infinity,il=-1,ih=-1; const end=Math.min(n,i+step);
+      for(let j=i;j<end;j++){ const v=y[j]; if(v==null||!isFinite(v)) continue; if(v<lo){lo=v;il=j;} if(v>hi){hi=v;ih=j;} }
+      if(il>=0) keep.add(il); if(ih>=0) keep.add(ih);
+    }
+    let arr=[...keep].sort((a,b)=>a-b);
+    if(arr.length>maxPts){ const stride=Math.ceil(arr.length/maxPts); arr=arr.filter((_,idx)=> idx%stride===0); for(const k of extSet) arr.push(k); arr=[...new Set(arr)].sort((a,b)=>a-b); }
+    return arr;
+  }
+  function applyKeep(x,y,t,keepIdx,extSet,origIdx){
+    if(!keepIdx){
+      const out = extSet ? y.map((_,i)=>extSet.has(i)) : y.map(()=>false);
+      const idxArr = origIdx ? origIdx.slice() : y.map((_,i)=>i);
+      return {x,y,t,out,idx:idxArr};
+    }
+    const len=keepIdx.length;
+    const X=new Array(len),Y=new Array(len),T=new Array(len),OUT=new Array(len),IDX=new Array(len);
+    for(let i=0;i<len;i++){
+      const k=keepIdx[i];
+      X[i]=x[k];
+      Y[i]=y[k];
+      T[i]=t[k];
+  IDX[i]=origIdx?origIdx[k]:k;
+      OUT[i]=extSet?extSet.has(k):false;
+    }
+    return {x:X,y:Y,t:T,out:OUT,idx:IDX};
+  }
+
+  function filterSeries(x,y,t,idx,filter,removedSet){
+    const minActive=filter && Number.isFinite(filter.min);
+    const maxActive=filter && Number.isFinite(filter.max);
+    const exclude=filter && !!filter.excludeOutliers;
+    const hasRemoval = !!(removedSet && removedSet.size);
+    if(!minActive && !maxActive && !exclude && !hasRemoval) return {x,y,t,idx};
+
+    const outSet = exclude ? new Set(outlierIdx(y)) : null;
+    const X=[], Y=[], T=[], IDX=[];
+    for(let i=0;i<y.length;i++){
+      const val=y[i];
+      const rawIdx = idx ? idx[i] : i;
+      if(removedSet && removedSet.has(rawIdx)) continue;
+      if(val==null){ X.push(x[i]); Y.push(val); T.push(t[i]); IDX.push(rawIdx); continue; }
+      if(minActive && val < filter.min) continue;
+      if(maxActive && val > filter.max) continue;
+      if(outSet && outSet.has(i)) continue;
+      X.push(x[i]); Y.push(val); T.push(t[i]); IDX.push(rawIdx);
+    }
+    return {x:X,y:Y,t:T,idx:IDX};
+  }
+
+  function filterIsActive(filter){
+    return !!filter && (Number.isFinite(filter.min) || Number.isFinite(filter.max) || filter.excludeOutliers);
+  }
+
+  function updateFilterButtonState(gd, filter, hasRemoved){
+    if(!gd) return;
+    const active = filterIsActive(filter) || !!hasRemoved;
+    const buttons = gd.querySelectorAll('.modebar-btn');
+    buttons.forEach(btn=>{
+      const title = btn.getAttribute('data-title') || btn.getAttribute('title') || '';
+      if(!title) return;
+      if(title === 'Filter data (range & outliers)' || title.toLowerCase().indexOf('filter data (range & outliers)')!==-1){
+        btn.setAttribute('data-on', active ? '1' : '0');
+      }
+    });
+  }
+
+  function measuresForGraph(gd){
+    const overlayAttr=gd.getAttribute('data-overlay');
+    if(overlayAttr){
+      try{
+        const meta=JSON.parse(decodeURIComponent(overlayAttr));
+        const all=[...(meta.left||[]),...(meta.right||[])];
+        return Array.from(new Set(all));
+      }catch(err){ return []; }
+    }
+    const measure=decodeURIComponent(gd.getAttribute('data-measure')||'');
+    return measure?[measure]:[];
+  }
+
+  function updateRemoveButtonState(gd){
+    if(!gd) return;
+    const active=!!gd.__removeMode;
+    const buttons=gd.querySelectorAll('.modebar-btn');
+    buttons.forEach(btn=>{
+      const title=btn.getAttribute('data-title') || btn.getAttribute('title') || '';
+      if(!title) return;
+      if(title === 'Remove data point' || title.toLowerCase().includes('remove data point')){
+        btn.setAttribute('data-on', active ? '1' : '0');
+      }
+    });
+    gd.classList.toggle('remove-mode', active);
+    if(active){
+      gd.setAttribute('title','Removal mode active: click a data point to delete it. Click the Remove button again to exit.');
+    }else{
+      gd.removeAttribute('title');
+    }
+  }
+
+  function updateModebarOnStates(gd, id){
+    if(!gd) return;
+    const st=state[id];
+    const buttons=gd.querySelectorAll('.modebar-btn');
+
+    const mk=decodeURIComponent(gd.getAttribute('data-measure')||'');
+    const defaultType=(mk ? chartTypeFor(mk) : (st.chartType||CHART_TYPE||'line'));
+
+    const measures = measuresForGraph(gd);
+    const removedCount = measures.reduce((acc, ms)=>{
+      const set=removedPoints.get(ms);
+      return acc + (set && set.size ? set.size : 0);
+    }, 0);
+    const filterApplied = filterIsActive(st.filter);
+    const removeApplied = removedCount > 0;
+    const filterOn = filterApplied || removeApplied;
+    const removeOn = !!gd.__removeMode;
+    const yOn = !!st.yMode && st.yMode!=='auto';
+    const targetsOn = !!st.showTargets;
+    const themeOn = (CUR_THEME!=='light');
+    const sizeOn = (USER_SIZE.scale!==1 || USER_SIZE.heightPx!=null);
+    const typeOn = (st.chartType && st.chartType!==defaultType);
+    const tableOn = !!st.showStatus;
+
+    buttons.forEach(btn=>{
+      const title=(btn.getAttribute('data-title') || btn.getAttribute('title') || '').toLowerCase();
+      if(!title) return;
+      if(title.includes('filter')){
+        btn.setAttribute('data-on', filterOn?'1':'0');
+        btn.setAttribute('data-kind','filter');
+        btn.setAttribute('data-applied', filterApplied ? '1' : '0');
+      }
+      else if(title.includes('remove data point')){
+        btn.setAttribute('data-on', removeOn?'1':'0');
+        btn.setAttribute('data-kind','remove');
+        btn.setAttribute('data-applied', removeApplied ? '1' : '0');
+      }
+      else if(title.includes('status table')) btn.setAttribute('data-on', tableOn?'1':'0');
+      else if(title.includes('y axis')) btn.setAttribute('data-on', yOn?'1':'0');
+      else if(title.includes('min/max target')) btn.setAttribute('data-on', targetsOn?'1':'0');
+      else if(title.includes('theme')) btn.setAttribute('data-on', themeOn?'1':'0');
+      else if(title.includes('graph size')) btn.setAttribute('data-on', sizeOn?'1':'0');
+      else if(title.includes('graph type') || title.includes('chart type') || title.includes('view')) btn.setAttribute('data-on', typeOn?'1':'0');
+    });
+  }
+
+  function statusTextForChart(gd, id){
+    try{
+      const st=state[id];
+      if(!gd || !st) return null;
+      const ov = gd.getAttribute('data-overlay');
+
+      const removed = (measuresForGraph(gd)||[]).reduce((acc, m)=>{
+        const set=removedPoints.get(m);
+        return acc + (set && set.size ? set.size : 0);
+      }, 0);
+
+      const f=st.filter||{};
+      const fParts=[];
+      if(Number.isFinite(f.min)) fParts.push('≥ '+f.min);
+      if(Number.isFinite(f.max)) fParts.push('≤ '+f.max);
+      if(f.excludeOutliers) fParts.push('exclude outliers');
+      if(removed) fParts.push('removed '+removed);
+      const filterTxt = fParts.length ? fParts.join(' • ') : 'None';
+
+      const legendPos = normLegendPos(st.legend && st.legend.pos);
+      const legendTxt = (st.legend && st.legend.show ? 'Show' : 'Hide') + ' (' + legendPos + ')';
+
+      const targetsTxt = st.showTargets
+        ? ((Number.isFinite(st.minT)?('min '+st.minT):'') + (Number.isFinite(st.maxT)?((Number.isFinite(st.minT)?', ':'')+'max '+st.maxT):''))
+        : 'Off';
+
+      const yTxt = (st.yMode==='manual')
+        ? ('manual' + (Number.isFinite(st.yMin)?(' ['+st.yMin):' [') + (Number.isFinite(st.yMax)?(', '+st.yMax+']') : ', ]'))
+        : (st.yMode||'auto');
+
+      const trellisTxt = ov ? 'N/A (overlay)' : (st.trellisOn ? ('On ('+(st.trellisCols||TRELLIS_COLS_DEFAULT)+' cols)') : 'Off');
+      const xscrollTxt = (st.xScroll || st.xScrollAuto) ? 'On' : 'Off';
+
+      return {
+        chartType: st.chartType || 'line',
+        lineStyle: st.lineStyle || 'curved',
+        points: st.points || 'extremes',
+        labels: st.labels ? 'On' : 'Off',
+        gaps: st.gaps || 'break',
+        legend: legendTxt,
+        targets: targetsTxt,
+        yaxis: yTxt,
+        trellis: trellisTxt,
+        xscroll: xscrollTxt,
+        filter: filterTxt
+      };
+    }catch(e){ return null; }
+  }
+
+  function renderStatusTable(gd, id){
+    try{
+      const st=state[id];
+      if(!gd || !st) return;
+      const sec = gd.closest('.sec') || gd.parentElement;
+      if(!sec) return;
+
+      const esc=escapeHtml;
+      const safeDecode = (v)=>{ try{ return decodeURIComponent(v||''); }catch(_){ return String(v||''); } };
+      const ctxParts=[];
+      const cardTitle = (REPORT_TITLE || '').trim();
+      if(cardTitle) ctxParts.push(`Card: ${cardTitle}`);
+      const chartTitle = safeDecode(gd.dataset.title || gd.dataset.measure || '');
+      if(chartTitle) ctxParts.push(`Chart: ${chartTitle}`);
+      const ctxLine = ctxParts.length ? `<div style="opacity:.75;margin:-2px 0 6px;font-size:11px">${esc(ctxParts.join(' · '))}</div>` : '';
+
+      let panel = sec.querySelector('.oas-status');
+      if(!st.showStatus){
+        if(panel) panel.remove();
+        return;
+      }
+
+      if(!panel){
+        panel=document.createElement('div');
+        panel.className='oas-status';
+        sec.appendChild(panel);
+      }
+
+      const buildChartDataMatrix = (gd2, st2, limitRows)=>{
+        const measures=measuresForGraph(gd2);
+        const tidy = (measures.length > 1);
+        const cols = tidy
+          ? [DATE_TITLE, LINE_TITLE, 'Measure', 'Value']
+          : [DATE_TITLE, LINE_TITLE, 'Value'];
+        const rows=[];
+        let truncated=false;
+        const hardLimit = Math.max(50, Math.min(200000, +limitRows||2000));
+        const pushRow = (r)=>{
+          if(rows.length>=hardLimit){ truncated=true; return false; }
+          rows.push(r);
+          return true;
+        };
+
+        if(!measures.length) return {cols, rows, tidy, truncated};
+
+        if(!tidy){
+          const mk=measures[0];
+          const by=perLineArray(mk);
+          for(const ln of lines){
+            const arr=by[ln];
+            if(!arr) continue;
+            const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st2?.filter, removedPoints.get(mk));
+            const X=filtered.x, Y=filtered.y;
+            for(let i=0;i<Y.length;i++){
+              if(!pushRow([X[i], ln, (Y[i]==null?'':Y[i])])) break;
+            }
+            if(truncated) break;
+          }
+        }else{
+          for(const mk of measures){
+            const by=perLineArray(mk);
+            for(const ln of lines){
+              const arr=by[ln];
+              if(!arr) continue;
+              const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st2?.filter, removedPoints.get(mk));
+              const X=filtered.x, Y=filtered.y;
+              for(let i=0;i<Y.length;i++){
+                if(!pushRow([X[i], ln, mk, (Y[i]==null?'':Y[i])])) break;
+              }
+              if(truncated) break;
+            }
+            if(truncated) break;
+          }
+        }
+
+        return {cols, rows, tidy, truncated};
+      };
+
+      const s=statusTextForChart(gd, id);
+      const limit=2000;
+      const m=buildChartDataMatrix(gd, st, limit);
+
+      const head = m.cols.map(c=>`<th style="text-align:left;padding:3px 6px;border-bottom:1px solid rgba(148,163,184,.45)">${esc(c)}</th>`).join('');
+      const body = m.rows.map(r=>'<tr>' + r.map(v=>`<td style="padding:2px 6px;vertical-align:top">${esc(v)}</td>`).join('') + '</tr>').join('');
+      const msg = m.truncated ? `<div style="opacity:.75;margin-top:4px">Showing first ${limit.toLocaleString()} rows (filtered). Export CSV/Excel for full data.</div>` : '';
+
+      function toggleStatusFS(){
+        if(!panel) return;
+        if(panel._fsOverlay){
+          const ph = panel._fsPH;
+          if(ph && ph.parentNode){
+            ph.parentNode.replaceChild(panel, ph);
+          }
+          panel._fsOverlay.remove();
+          panel._fsOverlay = null;
+          panel._fsPH = null;
+          panel.classList.remove('fs');
+          const sc = panel.querySelector('[data-kind="st-scroll"]');
+          if(sc) sc.style.maxHeight = '36vh';
+          return;
+        }
+
+        const parent = panel.parentNode;
+        if(!parent) return;
+        const ph = document.createElement('div');
+        ph.style.display='none';
+        parent.insertBefore(ph, panel);
+        panel._fsPH = ph;
+
+        const ov = document.createElement('div');
+        ov.className='pl-fs-overlay';
+        ov.style.zIndex='2147483647';
+        ov.style.padding='0';
+        document.body.appendChild(ov);
+
+        const head = document.createElement('div');
+        head.style.position='sticky';
+        head.style.top='0';
+        head.style.zIndex='10';
+        head.style.display='flex';
+        head.style.alignItems='center';
+        head.style.justifyContent='space-between';
+        head.style.gap='10px';
+        head.style.padding='10px 10px';
+        head.style.background='inherit';
+        head.style.borderBottom='1px solid rgba(148,163,184,.35)';
+        head.innerHTML = `<div><div style="font-weight:800">Data table</div>${ctxParts.length ? `<div style="opacity:.75;font-size:12px;margin-top:2px">${esc(ctxParts.join(' · '))}</div>` : ''}</div><button class="status-btn" data-act="exit" title="Exit fullscreen">×</button>`;
+
+        const body = document.createElement('div');
+        body.style.padding='10px 10px 16px';
+
+        ov.appendChild(head);
+        ov.appendChild(body);
+        body.appendChild(panel);
+
+        panel._fsOverlay = ov;
+        panel.classList.add('fs');
+        const sc = panel.querySelector('[data-kind="st-scroll"]');
+        if(sc) sc.style.maxHeight = 'calc(100vh - 128px)';
+
+        head.querySelector('button[data-act="exit"]').onclick=()=>toggleStatusFS();
+        addEventListener('keydown', function esc(e){
+          if(e.key==='Escape' && panel && panel._fsOverlay){
+            toggleStatusFS();
+            removeEventListener('keydown', esc);
+          }
+        });
+      }
+
+      panel.innerHTML=`
+        <div style="display:flex;align-items:center;justify-content:flex-start;gap:8px;margin-bottom:6px">
+          <div style="font-weight:800">Data table</div>
+          <button class="status-btn" data-act="fs" title="Fullscreen table">⛶</button>
+          <button class="xbtn" data-act="close" title="Close" style="width:26px;height:26px;line-height:24px;margin-left:auto">×</button>
+        </div>
+        ${ctxLine}
+        ${s ? `<div style="opacity:.85;margin-bottom:6px">Filter: ${esc(s.filter || 'None')}</div>` : ''}
+        <div data-kind="st-scroll" style="border:1px solid rgba(148,163,184,.45);border-radius:10px;overflow:auto;max-height:36vh">
+          <table>
+            <thead><tr>${head}</tr></thead>
+            <tbody>${body}</tbody>
+          </table>
+        </div>
+        ${msg}
+      `;
+
+      const x=panel.querySelector('button[data-act="close"]');
+      if(x){
+        x.onclick=()=>{
+          st.showStatus=false;
+          renderStatusTable(gd, id);
+          updateModebarOnStates(gd, id);
+        };
+      }
+
+      const fs=panel.querySelector('button[data-act="fs"]');
+      if(fs){
+        fs.onclick=(e)=>{ try{ e && e.stopPropagation && e.stopPropagation(); }catch(_){ } toggleStatusFS(); };
+      }
+    }catch(e){ /* ignore */ }
+  }
+
+  function setRemoveMode(gd, active){
+    if(!gd) return;
+    const wasActive=!!gd.__removeMode;
+    if(!gd.__baseHoverSpec){
+      const fl=gd._fullLayout||{};
+      gd.__baseHoverSpec={
+        hovermode:fl.hovermode!=null?fl.hovermode:((HOVER_MODE==='unified')?'x unified':'closest'),
+        hoverdistance:fl.hoverdistance!=null?fl.hoverdistance:(HOVER_MODE==='unified'?10:20),
+        spikedistance:fl.spikedistance!=null?fl.spikedistance:(HOVER_MODE==='unified'?-1:20)
+      };
+    }
+    gd.__removeMode=!!active;
+    updateRemoveButtonState(gd);
+
+    if(gd.__removeMode && typeof Plotly!=='undefined' && gd.__hoverHighlightIdx!=null){
+      const p=Plotly.restyle(gd, {visible:false}, [gd.__hoverHighlightIdx]);
+      if(p && typeof p.catch==='function') p.catch(()=>{});
+    }
+
+    const desired=gd.__removeMode
+      ? {hovermode:'closest',hoverdistance:8,spikedistance:12}
+      : gd.__baseHoverSpec;
+    if(typeof Plotly!=='undefined' && desired){
+      const payload={};
+      if(desired.hovermode!=null) payload.hovermode=desired.hovermode;
+      if(desired.hoverdistance!=null) payload.hoverdistance=desired.hoverdistance;
+      if(desired.spikedistance!=null) payload.spikedistance=desired.spikedistance;
+      const relayout=Plotly.relayout(gd, payload);
+      if(relayout && typeof relayout.catch==='function') relayout.catch(()=>{});
+    }
+    if(gd.__removeMode && !wasActive) showRemovalHint(gd, 'Removal mode is active. Click points to delete them.');
+  }
+
+  function toggleRemoveMode(gd){
+    if(!gd) return;
+    setRemoveMode(gd, !gd.__removeMode);
+  }
+
+  function showRemovalHint(gd, text){
+    if(!gd) return;
+    document.querySelectorAll('.oas-removal-hint').forEach(el=>el.remove());
+    const hint=document.createElement('div');
+    hint.className='oas-removal-hint';
+    hint.textContent=text||'Removal mode is active. Click a data point to delete it.';
+    document.body.appendChild(hint);
+    const rect=btnRect(gd);
+    const w=hint.offsetWidth;
+    const left=Math.max(8, rect.right - w);
+    const top=Math.min(innerHeight-48, rect.bottom + 12);
+    hint.style.left=left+'px';
+    hint.style.top=top+'px';
+    requestAnimationFrame(()=>hint.classList.add('show'));
+    setTimeout(()=>hint.classList.add('fade'), 1800);
+    setTimeout(()=>hint.remove(), 2300);
+  }
+
+  function legendTraceIndicesForLegendHover(gd){
+    const d = (gd && Array.isArray(gd.data)) ? gd.data : [];
+    if(!d.length) return null;
+    const idx=[];
+    for(let i=0;i<d.length;i++){
+      const tr=d[i];
+      if(!tr) continue;
+      const t=String(tr.type||'scatter');
+      const eligible=(t==='bar' || t==='scatter' || t==='scattergl');
+      if(!eligible) continue;
+      const show = (tr.showlegend!==false) && (tr.visible!==false) && (tr.name!=null && String(tr.name)!=='');
+      if(!show) continue;
+      idx.push(i);
+    }
+    if(idx.length<2 || idx.length>60) return null;
+    return idx;
+  }
+
+  function snapshotLegendHoverStyles(gd, idxs){
+    const d = (gd && Array.isArray(gd.data)) ? gd.data : [];
+    const snap={
+      idxs: idxs.slice(),
+      opacity: [],
+      lineWidth: [],
+      markerSize: [],
+      markerLineWidth: [],
+      markerLineColor: []
+    };
+    const scalarNumOrNull=v=> (typeof v==='number' && Number.isFinite(v)) ? v : null;
+    for(let k=0;k<idxs.length;k++){
+      const i=idxs[k];
+      const tr=d[i]||{};
+      snap.opacity.push((typeof tr.opacity==='number' && Number.isFinite(tr.opacity)) ? tr.opacity : 1);
+      snap.lineWidth.push(scalarNumOrNull(tr?.line?.width));
+
+      const ms = tr?.marker?.size;
+      snap.markerSize.push(Array.isArray(ms) ? null : scalarNumOrNull(ms));
+
+      const mlw = tr?.marker?.line?.width;
+      snap.markerLineWidth.push(Array.isArray(mlw) ? null : scalarNumOrNull(mlw));
+      const mlc = tr?.marker?.line?.color;
+      snap.markerLineColor.push((mlc==null) ? null : String(mlc));
+    }
+    return snap;
+  }
+
+  function legendTraceHighlight(gd, curveNumber){
+    try{
+      const st3 = (gd && gd.id && state && state[gd.id]) ? state[gd.id] : null;
+      if(!st3 || st3.trellisOn) return;
+
+      const idxs = legendTraceIndicesForLegendHover(gd);
+      if(!idxs) return;
+
+      const idx = Number.isFinite(curveNumber) ? curveNumber : null;
+      if(idx==null || !gd.data || !gd.data[idx]) return;
+      if(idxs.indexOf(idx)===-1) return;
+
+      const now=Date.now();
+      if(gd.__legendHoverLastIdx===idx && gd.__legendHoverLastTs && (now-gd.__legendHoverLastTs)<40) return;
+      gd.__legendHoverLastIdx=idx;
+      gd.__legendHoverLastTs=now;
+
+      if(gd.__legendDimActive) legendTraceReset(gd);
+
+      const themeMode = (THEMES[CUR_THEME] && THEMES[CUR_THEME].mode) ? THEMES[CUR_THEME].mode : 'light';
+      const hi = (themeMode==='dark') ? '#fbbf24' : '#f59e0b';
+
+      const snap = snapshotLegendHoverStyles(gd, idxs);
+      gd.__legendDimActive=true;
+      gd.__legendDimSnapshot=snap;
+      Plotly.restyle(gd, {opacity:0.22}, idxs);
+
+      const tr = gd.data[idx] || {};
+      const t=String(tr.type||'scatter');
+      const pos=snap.idxs.indexOf(idx);
+      const upd={opacity:1};
+      if(t==='bar'){
+        upd['marker.line.width']=2.5;
+        upd['marker.line.color']=hi;
+      }else{
+        const mode=String(tr.mode||'');
+        if(mode.includes('lines')){
+          const base = (pos>=0 && typeof snap.lineWidth[pos]==='number') ? snap.lineWidth[pos] : (typeof tr?.line?.width==='number' ? tr.line.width : 2);
+          upd['line.width']=Math.min(10, Math.max(2.8, (base||2)+1.6));
+        }
+        if(mode.includes('markers')){
+          const baseS = (pos>=0 && typeof snap.markerSize[pos]==='number') ? snap.markerSize[pos] : null;
+          if(baseS!=null) upd['marker.size']=Math.min(22, Math.max(8, baseS+3));
+          const baseLW = (pos>=0 && typeof snap.markerLineWidth[pos]==='number') ? snap.markerLineWidth[pos] : (typeof tr?.marker?.line?.width==='number' ? tr.marker.line.width : null);
+          if(baseLW!=null) upd['marker.line.width']=Math.min(6, Math.max(2.2, baseLW+0.8));
+          if(tr?.marker?.line) upd['marker.line.color']=hi;
+        }
+      }
+      Plotly.restyle(gd, upd, [idx]);
+    }catch(e){ /* ignore */ }
+  }
+
+  function legendTraceReset(gd){
+    try{
+      const snap = gd && gd.__legendDimSnapshot;
+      if(!gd || !gd.__legendDimActive || !snap || !Array.isArray(snap.idxs)) return;
+      Plotly.restyle(gd, {
+        opacity: snap.opacity,
+        'line.width': snap.lineWidth,
+        'marker.size': snap.markerSize,
+        'marker.line.width': snap.markerLineWidth,
+        'marker.line.color': snap.markerLineColor
+      }, snap.idxs);
+      gd.__legendDimActive=false;
+      gd.__legendDimSnapshot=null;
+    }catch(e){ /* ignore */ }
+  }
+
+  function bindLegendHover(gd){
+    if(!gd) return;
+    const st3 = (gd && gd.id && state && state[gd.id]) ? state[gd.id] : null;
+    if(!st3 || st3.trellisOn) return;
+
+    const idxs = legendTraceIndicesForLegendHover(gd);
+    if(!idxs) return;
+
+    // Plotly legend items are rebuilt on redraw, so (re)bind each draw.
+    const nodes = gd.querySelectorAll('.infolayer .legend .traces, .legend .traces');
+    if(!nodes || !nodes.length) return;
+
+    const d = gd.data || [];
+    const legendTraceIdx=[];
+    for(let i=0;i<d.length;i++){
+      const tr=d[i];
+      if(!tr) continue;
+      const show = (tr.showlegend!==false) && (tr.visible!==false) && (tr.name!=null && String(tr.name)!=='');
+      if(show) legendTraceIdx.push(i);
+    }
+
+    nodes.forEach((node, i)=>{
+      try{
+        const traceIdx = (i<legendTraceIdx.length) ? legendTraceIdx[i] : null;
+        const tr = (traceIdx==null) ? null : d[traceIdx];
+        const t = tr ? String(tr.type||'scatter') : '';
+        const eligible = (traceIdx!=null) && (t==='bar' || t==='scatter' || t==='scattergl');
+        if(!eligible){
+          node.onmouseenter = null;
+          node.onmouseleave = null;
+          return;
+        }
+        node.onmouseenter = ()=>legendTraceHighlight(gd, traceIdx);
+        node.onmouseleave = ()=>legendTraceReset(gd);
+      }catch(e){ /* ignore */ }
+    });
+  }
+
+  function handleRemoveButton(gd){
+    if(!gd) return;
+    const ctx=gd.__lastPointContext;
+    if(ctx && ctx.measure!=null){
+      markPointRemoved(ctx.measure, ctx.rawIdx);
+      gd.__lastPointContext=null;
+      if(gd.__lastPointContextTimer){ clearTimeout(gd.__lastPointContextTimer); gd.__lastPointContextTimer=null; }
+      setRemoveMode(gd,false);
+      return;
+    }
+    toggleRemoveMode(gd);
+  }
+
+  function legendSpec(pos){
+    pos = normLegendPos(pos);
+    if(pos==='auto'){ const needRight=lines.length>7; return needRight?{orientation:'v',x:1.01,y:1,xanchor:'left',yanchor:'top'}:{orientation:'h',x:0.5,y:1.04,xanchor:'center',yanchor:'bottom'}; }
+    if(pos==='top')   return{orientation:'h',x:0.5,y:1.04,xanchor:'center',yanchor:'bottom'};
+    if(pos==='bottom')return{orientation:'h',x:0.5,y:-0.28,xanchor:'center',yanchor:'top'};
+    if(pos==='left')return{orientation:'v',x:-0.01,y:1,xanchor:'left',yanchor:'top'};
+    if(pos==='right')return{orientation:'v',x:1.01,y:1,xanchor:'left',yanchor:'top'};
+    return{orientation:'h',x:0.5,y:1.04,xanchor:'center',yanchor:'bottom'};
+  }
+  const dash=s=> s==='dashed'?'dash': s==='dotted'?'dot': s==='dashdot'?'dashdot':'solid';
+  const shape=st=>{
+    const info=chartTypeInfo(st.chartType);
+    if(info.stepShape) return info.stepShape;
+    return st.lineStyle==='curved'?'spline':'linear';
+  };
+
+  function rightmostX(){ return USE_TIME_X ? ISO_DATES_UNIQ[ISO_DATES_UNIQ.length-1] : dates[dates.length-1]; }
+
+  function addEndLabel(traces, x, y, text, color){
+    if(x==null || y==null || !text) return;
+    if(typeof y==='number' && !Number.isFinite(y)) return;
+    traces.push({type:'scatter', mode:'text', x:[x], y:[y], text:[text], textposition:'top right',
+      textfont:{size:11, color:color}, showlegend:false, hoverinfo:'skip'});
+  }
+
+  function minmaxShapes(st){
+    const sh=[];
+    if(st.band && Number.isFinite(st.minT) && Number.isFinite(st.maxT)){
+      sh.push({type:'rect', xref:'paper', x0:0, x1:1, y0:st.minT, y1:st.maxT,
+               fillcolor:'rgba(200,30,30,0.08)', line:{width:0}});
+    }
+    return sh;
+  }
+
+  const hAxis = (ax) => (USE_TIME_X ? `<b>%{${ax}|%d-%b-%Y}</b>` : `<b>%{${ax}}</b>`);
+  const hx = () => hAxis('x');
+
+  function hoverModeForAxis(axisLetter){
+    const hm = (HOVER_MODE||'focused');
+    if(hm==='unified') return axisLetter + ' unified';
+    if(hm==='compare') return axisLetter; // show all traces at shared axis value
+    return 'closest'; // default: show only the nearest point
+  }
+
+  function includeAxisInHover(){
+    // In compare/unified modes, Plotly already shows the axis value once.
+    const hm = (HOVER_MODE||'focused');
+    if(hm==='unified' || hm==='compare') return false;
+    return !!HOVER_SHOW_X;
+  }
+
+  function hoverHighlightTrace(st){
+    const themeMode = (THEMES[CUR_THEME] && THEMES[CUR_THEME].mode) ? THEMES[CUR_THEME].mode : 'light';
+    const ring = (themeMode==='dark') ? '#fbbf24' : '#f59e0b';
+    const base = (st && st.sizes && Number.isFinite(st.sizes.marker)) ? st.sizes.marker : 6;
+    const size = Math.max(12, base + 10);
+    return {
+      type:'scatter',
+      mode:'markers',
+      x:[0],
+      y:[0],
+      visible:false,
+      marker:{size, color:'rgba(0,0,0,0)', line:{width:3, color:ring}},
+      showlegend:false,
+      hoverinfo:'skip',
+      hovertemplate:''
+    };
+  }
+
+  function setHoverPrefs(next){
+    if(next && typeof next.mode==='string') HOVER_MODE = next.mode;
+    if(next && typeof next.showX==='boolean') HOVER_SHOW_X = next.showX;
+    if(next && typeof next.highlight==='boolean') HOVER_HIGHLIGHT = next.highlight;
+    // clear cached hover base spec so remove-mode toggles correctly
+    sections.forEach(secId=>{
+      const g=document.getElementById(secId);
+      if(g) g.__baseHoverSpec = null;
+    });
+    redrawAll();
+  }
+
+  /* ----------------- traces ----------------- */
+  function tracesForMeasure(mk, st){
+    const by=perLineArray(mk); const trs=[];
+
+    const info=chartTypeInfo(st.chartType || chartTypeFor(mk));
+    let kind=info.kind;
+    if(st.trellisOn){
+      // Trellis: one subplot per group; scope 'all' doesn't apply.
+      st.scope = 'line';
+    }
+    const isBarH = (kind==='bar' && info.orientation==='h');
+    const pointsMode = (kind==='markers' || info.forceMarkers) ? 'all' : st.points;
+
+    const trellisPageCount = st.trellisOn ? Math.max(1, Math.ceil((lines && lines.length ? lines.length : 0) / MAX_TRELLIS)) : 1;
+    const trellisPage = st.trellisOn ? Math.min(trellisPageCount-1, Math.max(0, Math.floor(st.trellisPage||0))) : 0;
+    const trellisStart = trellisPage * MAX_TRELLIS;
+    const trellisEnd = trellisStart + MAX_TRELLIS;
+    const lineList = st.trellisOn ? lines.slice(trellisStart, Math.min(lines.length, trellisEnd)) : lines;
+
+    // When groups are many, reduce per-trace point budget to keep UI responsive.
+    let maxPtsBudget = MAX_PTS;
+    try{
+      const groupCount = (lines && lines.length) ? lines.length : 0;
+      if(!st.trellisOn && groupCount > 20){
+        const f = Math.pow(20 / groupCount, 0.8);
+        maxPtsBudget = Math.max(180, Math.floor(MAX_PTS * f));
+      }
+      if(!st.trellisOn && raw && raw.length > 5000){
+        maxPtsBudget = Math.max(180, Math.min(maxPtsBudget, 700));
+      }
+    }catch(e){ /* ignore */ }
+    for(let li=0; li<lineList.length; li++){
+      const ln=lineList[li];
+      const col=colorFor(ln), arr=by[ln]; if(!arr) continue;
+
+      const axisId = li+1;
+      const axisRef = st.trellisOn
+        ? { xaxis:(axisId===1?'x':('x'+axisId)), yaxis:(axisId===1?'y':('y'+axisId)) }
+        : null;
+
+      const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st.filter, removedPoints.get(mk));
+      let x=filtered.x, y=filtered.y, cell=filtered.t;
+
+      const needOutFlags = (pointsMode!=='none') || !!st.labels || !!info.forceMarkers;
+      const ext = needOutFlags ? outlierIdx(y) : [];
+      const extSet = (needOutFlags && ext.length) ? new Set(ext) : null;
+
+      const keep=buildKeepIndex(y, st.sizes.w, ext, maxPtsBudget);
+      const kept=applyKeep(x,y,cell,keep,extSet,filtered.idx);
+      x=kept.x; y=kept.y; cell=kept.t;
+      const isOut = Array.isArray(kept.out) ? kept.out : null;
+      const rawIdxArr = kept.idx || [];
+
+      let yMain=y, interpIdx=[]; if(st.gaps==='interp'){ const r=linearInterp(y); yMain=r.y; interpIdx=r.idx; }
+      const connect=(st.gaps==='connect');
+
+      // === labels obey "Points" ===
+      const showText = st.labels && (pointsMode!=='none');
+      const textArr = showText
+        ? (pointsMode==='extremes'
+            ? (isOut ? yMain.map((v,i)=> isOut[i] ? fmtTextFromRaw(mk, rawIdxArr[i], v) : '') : yMain.map(()=>''))
+            : yMain.map((v,i)=>fmtTextFromRaw(mk, rawIdxArr[i], v)))
+        : null;
+
+      // markers / mode
+      const mode=[];
+      if(kind!=='bar' && kind!=='markers') mode.push('lines');
+      let marker={size:0};
+      if(pointsMode==='all'){
+        mode.push('markers');
+        const base=(st.sizes.marker||6);
+        if(isOut){
+          marker={ size:isOut.map(o=>o?base+3:base), symbol:isOut.map(o=>o?'diamond-open':'circle'),
+                   color:col, line:{width:2,color:col} };
+        }else{
+          marker={ size:base, symbol:'circle', color:col, line:{width:2,color:col} };
+        }
+      }else if(pointsMode==='extremes'){
+        mode.push('markers');
+        const base=(st.sizes.marker||6);
+        if(isOut){
+          marker={ size:isOut.map(o=>o?base+2:0), symbol:isOut.map(o=>o?'diamond-open':'circle'),
+                   color:col, line:{width:2,color:col} };
+        }else{
+          marker={ size:0, symbol:'circle', color:col, line:{width:2,color:col} };
+        }
+      }
+      if(textArr) mode.push('text');
+
+      // For Line+Markers preset, ensure markers are present
+      if(info.forceMarkers && !mode.includes('markers')){
+        mode.push('markers');
+        const base=(st.sizes.marker||6);
+        if(isOut){
+          marker={ size:isOut.map(o=>o?base+3:base), symbol:isOut.map(o=>o?'diamond-open':'circle'),
+                   color:col, line:{width:2,color:col} };
+        }else{
+          marker={ size:base, symbol:'circle', color:col, line:{width:2,color:col} };
+        }
+      }
+
+      const ydig = hovDigitsFor(mk);
+      const xLabelArr = x.slice();
+      if(kind==='markers' && info.jitter && !USE_TIME_X){
+        const idxMap = new Map(dates.map((d,i)=>[String(d), i]));
+        x = x.map(v=>{
+          const base = idxMap.get(String(v));
+          const j = (Math.random()-0.5)*0.35;
+          return (base==null?0:base) + j;
+        });
+      }
+
+      const dateToken = (kind==='markers' && info.jitter && !USE_TIME_X)
+        ? `<b>%{customdata[2]}</b>`
+        : (isBarH ? hAxis('y') : hx());
+      const valToken = isBarH ? `%{x:.${ydig}f}` : `%{y:.${ydig}f}`;
+      const hoverCore = `${LINE_TITLE}: ${ln}` + (includeAxisInHover()?`<br>${dateToken}`:'') + `<br>${valToken}` + (HOVER_SHOW_CELL?`<br>${CELL_TITLE}: %{customdata[0]}`:'');
+        const wantBullets = (x.length <= 2500) && !!isOut;
+        const ht = (wantBullets ? '%{hovertext}' : '') + hoverCore + '<extra></extra>';
+        const bulletColored = wantBullets ? isOut.map(o => o ? '◆ ' : '● ') : null;
+        // Performance: avoid stuffing large strings into customdata when not used.
+        // Keep rawIdx at customdata[1] for removal mode logic.
+        const needCellCD = !!HOVER_SHOW_CELL;
+        const needXLabelCD = (kind==='markers' && info.jitter && !USE_TIME_X);
+        let customData;
+        if(needCellCD || needXLabelCD){
+          customData = new Array(cell.length);
+          for(let i=0;i<cell.length;i++){
+            const row=[];
+            row[0] = needCellCD ? (cell[i]==null?'':cell[i]) : '';
+            row[1] = rawIdxArr[i] ?? null;
+            if(needXLabelCD) row[2] = xLabelArr[i] ?? null;
+            customData[i]=row;
+          }
+        }else{
+          customData = new Array(cell.length);
+          for(let i=0;i<cell.length;i++) customData[i]=['', rawIdxArr[i] ?? null];
+        }
+
+      if(kind==='bar'){
+        const bx = isBarH ? yMain : x;
+        const byy = isBarH ? x : yMain;
+        trs.push(Object.assign({type:'bar', name:ln, showlegend:!st.trellisOn, x:bx, y:byy, orientation:(isBarH?'h':undefined), customdata:customData,
+          marker:{color:col, line:{width:1, color:'#11182722'}},
+          offsetgroup:(info.stacked ? 'stack' : ln), alignmentgroup:mk,
+          text:textArr, textposition:(textArr?'outside':undefined), texttemplate:(textArr?'%{text}':undefined),
+          hovertext:bulletColored, hovertemplate:ht, hoverlabel:{bordercolor:col, font:{color:col}},
+          meta:{measure:mk,line:ln}}, axisRef||{}));
+      } else {
+        let fillMode = 'none';
+        let stackGroup = undefined;
+        if(kind==='area'){
+          if(info.stacked && !st.trellisOn){
+            fillMode = 'tonexty';
+            stackGroup = 'stack1';
+          }else{
+            const finite = yMain.filter(Number.isFinite);
+            const minV = finite.length ? Math.min(...finite) : null;
+            const maxV = finite.length ? Math.max(...finite) : null;
+            // If strictly positive, avoid forcing baseline to 0 (keeps autoscale tight)
+            if(minV!=null && maxV!=null && minV>0){
+              const yBase = x.map(()=>minV);
+              trs.push(Object.assign({
+                type:'scatter', mode:'lines', name:'', showlegend:false,
+                x, y:yBase,
+                line:{width:0, color:'rgba(0,0,0,0)'},
+                hoverinfo:'skip', hovertemplate:'', opacity:0,
+                meta:{measure:mk,line:ln}
+              }, axisRef||{}));
+              fillMode = 'tonexty';
+            }else{
+              fillMode = 'tozeroy';
+            }
+          }
+        }
+
+        const mainType = (kind==='markers' && x.length>3000) ? 'scattergl' : 'scatter';
+        trs.push(Object.assign({type:mainType, name:ln, showlegend:!st.trellisOn, x, y:yMain, customdata:customData,
+          mode:mode.join('+'), connectgaps:connect, cliponaxis:true, simplify:true,
+          line:{color:col,width:(st.sizes.lineW||2),shape:shape(st),dash:dash(st.lineStyle)},
+          marker, text:textArr, textposition:'top center', texttemplate:(textArr?'%{text}':undefined),
+          hovertext:bulletColored, hovertemplate:ht, hoverlabel:{bordercolor:col, font:{color:col}},
+          fill:fillMode,
+          stackgroup:stackGroup,
+          meta:{measure:mk,line:ln}}, axisRef||{}));
+
+        if(st.gaps==='interp' && interpIdx.length){
+          const ix=interpIdx.map(i=>x[i]), iy=interpIdx.map(i=>yMain[i]);
+          trs.push(Object.assign({type:'scatter',mode:'markers',name:'Interpolated',x:ix,y:iy,marker:{symbol:'x',size:8,line:{width:1.5,color:'#6b7280'}},showlegend:false,cliponaxis:true,hovertemplate:`Interpolated<br>${hx()}<br>%{y:.${ydig}f}<extra></extra>`}, axisRef||{}));
+        }
+      }
+
+      // ---- moving average overlay ----
+      if(st.maOn && st.scope==='line'){
+        const win = Math.max(2, Math.min(60, Math.floor(st.maWin||7)));
+        const yma = movingAverage(yMain, win);
+        const dateTok = isBarH ? hAxis('y') : hx();
+        const valTok = isBarH ? `%{x:.${ydig}f}` : `%{y:.${ydig}f}`;
+        trs.push(Object.assign({
+          type:'scatter', mode:'lines', name:`MA(${win}) – ${ln}`, showlegend:false,
+          x:(isBarH ? yma : x),
+          y:(isBarH ? x : yma),
+          line:{color:col,width:1.8,dash:'dash'},
+          hovertemplate:`Moving average (window ${win})<br>${LINE_TITLE}: ${ln}` + (includeAxisInHover()?`<br>${dateTok}`:'') + `<br>${valTok}<extra></extra>`
+        }, axisRef||{}));
+        for(let i=yma.length-1;i>=0;i--){
+          if(Number.isFinite(yma[i])){
+            if(!st.trellisOn) addEndLabel(trs, (isBarH ? yma[i] : x[i]), (isBarH ? x[i] : yma[i]), `MA(${win}) (${ln}): ${yma[i].toFixed(ydig)}`, col);
+            break;
+          }
+        }
+      }
+
+      // ---- per-line stats ----
+      if(st.statMode==='median' && st.scope==='line'){
+        const v=yMain.filter(Number.isFinite); if(v.length){
+          const m=median(v), yy=x.map(()=>m);
+          const dateTok = isBarH ? hAxis('y') : hx();
+          const valTok = isBarH ? `%{x:.${ydig}f}` : `%{y:.${ydig}f}`;
+          trs.push(Object.assign({
+            type:'scatter',mode:'lines',name:`Median – ${ln}`,showlegend:false,
+            x:(isBarH ? yy : x),
+            y:(isBarH ? x : yy),
+            line:{color:col,width:1.5,dash:'dot'},
+            hovertemplate:`Median (${LINE_TITLE}: ${ln})` + (includeAxisInHover()?`<br>${dateTok}`:'') + `<br>${valTok}<extra></extra>`
+          }, axisRef||{}));
+          if(!st.trellisOn) addEndLabel(trs, (isBarH ? m : x[x.length-1]), (isBarH ? x[x.length-1] : m), `Median (${ln}): ${m.toFixed(ydig)}`, col);
+        }
+      }
+      if(st.statMode==='reg' && st.scope==='line'){
+        const v=yMain.filter(Number.isFinite); if(v.length>1){
+          const {a,b}=linreg(null,v), yy=yMain.map((_,i)=>a*i+b);
+          const dateTok = isBarH ? hAxis('y') : hx();
+          const valTok = isBarH ? `%{x:.${ydig}f}` : `%{y:.${ydig}f}`;
+          trs.push(Object.assign({
+            type:'scatter',mode:'lines',name:`Regression – ${ln}`,showlegend:false,
+            x:(isBarH ? yy : x),
+            y:(isBarH ? x : yy),
+            line:{color:col,width:1.5,dash:'dash'},
+            hovertemplate:`Regression (${LINE_TITLE}: ${ln})` + (includeAxisInHover()?`<br>${dateTok}`:'') + `<br>${valTok}<extra></extra>`
+          }, axisRef||{}));
+          const last=yy[yy.length-1];
+          if(!st.trellisOn) addEndLabel(trs, (isBarH ? last : x[x.length-1]), (isBarH ? x[x.length-1] : last), `Reg (${ln}): ${last.toFixed(ydig)}`, col);
+        }
+      }
+    }
+
+    // ---- ALL groups stats ----
+    if(st.scope==='all'){
+      const agg = aggAllForMeasure(mk, st.filter);
+      const colAll = '#111827';
+      const ydig = hovDigitsFor(mk);
+
+      if(st.maOn){
+        const win = Math.max(2, Math.min(60, Math.floor(st.maWin||7)));
+        const yma = movingAverage(agg.yAvg, win);
+        trs.push({
+          type:'scatter', mode:'lines', name:`MA(${win}) – All`, showlegend:false,
+          x:(isBarH ? yma : agg.x),
+          y:(isBarH ? agg.x : yma),
+          line:{color:colAll,width:2.0,dash:'dash'},
+          hovertemplate:`Moving average (All groups, window ${win})` + (includeAxisInHover()?`<br>${isBarH?hAxis('y'):hx()}`:'') + `<br>${isBarH?`%{x:.${ydig}f}`:`%{y:.${ydig}f}`}<extra></extra>`
+        });
+        for(let i=yma.length-1;i>=0;i--){
+          if(Number.isFinite(yma[i])){
+            addEndLabel(trs,
+              (isBarH ? yma[i] : agg.x[i]),
+              (isBarH ? agg.x[i] : yma[i]),
+              `MA(${win}) (All): ${yma[i].toFixed(ydig)}`,
+              colAll);
+            break;
+          }
+        }
+      }
+
+      if(st.statMode==='none'){
+        // no-op
+      }
+      if(st.statMode==='median' && Number.isFinite(agg.medAll)){
+        const yline = agg.x.map(()=>agg.medAll);
+        trs.push({
+          type:'scatter', mode:'lines', name:'Median – All', showlegend:false,
+          x:(isBarH ? yline : agg.x),
+          y:(isBarH ? agg.x : yline),
+          line:{color:colAll,width:1.8,dash:'dot'},
+          hovertemplate:`Median (All groups)` + (includeAxisInHover()?`<br>${isBarH?hAxis('y'):hx()}`:'') + `<br>${isBarH?`%{x:.${ydig}f}`:`%{y:.${ydig}f}`}<extra></extra>`
+        });
+        addEndLabel(trs, (isBarH ? agg.medAll : agg.x[agg.x.length-1]), (isBarH ? agg.x[agg.x.length-1] : agg.medAll), `Median (All): ${agg.medAll.toFixed(ydig)}`, colAll);
+      }
+      if(st.statMode==='reg'){
+        const idx=[], vals=[];
+        for(let i=0;i<agg.yAvg.length;i++){ const v=agg.yAvg[i]; if(Number.isFinite(v)){ idx.push(i); vals.push(v); } }
+        if(vals.length>1){
+          const {a,b}=linreg(idx, vals);
+          const yreg = agg.x.map((_,i)=>a*i+b);
+          trs.push({
+            type:'scatter',mode:'lines',name:'Regression – All',showlegend:false,
+            x:(isBarH ? yreg : agg.x),
+            y:(isBarH ? agg.x : yreg),
+            line:{color:colAll,width:1.8,dash:'dash'},
+            hovertemplate:`Regression (All groups)` + (includeAxisInHover()?`<br>${isBarH?hAxis('y'):hx()}`:'') + `<br>${isBarH?`%{x:.${ydig}f}`:`%{y:.${ydig}f}`}<extra></extra>`
+          });
+          const lastVal = yreg[yreg.length-1];
+          addEndLabel(trs, (isBarH ? lastVal : agg.x[agg.x.length-1]), (isBarH ? agg.x[agg.x.length-1] : lastVal),
+            `Reg (All): ${lastVal.toFixed(ydig)}`, colAll);
+        }
+      }
+    }
+
+    // ---- targets (lines + right-side value text + hover)
+    if(Number.isFinite(st.minT) || Number.isFinite(st.maxT)){
+      const xl = USE_TIME_X ? ISO_DATES_UNIQ[0] : dates[0];
+      const xr = USE_TIME_X ? ISO_DATES_UNIQ[ISO_DATES_UNIQ.length-1] : dates[dates.length-1];
+      const ydig = hovDigitsFor(mk);
+
+      if(Number.isFinite(st.minT)){
+        trs.push({
+          type:'scatter', mode:'lines', showlegend:false,
+          x:(isBarH ? [st.minT, st.minT] : [xl,xr]),
+          y:(isBarH ? [xl,xr] : [st.minT, st.minT]),
+          line:{color:'#c81e1e', width:1.5, dash:'dot'},
+          hovertemplate:`Min target` + (includeAxisInHover()?`<br>${isBarH?hAxis('y'):hx()}`:'') + `<br>${isBarH?`%{x:.${ydig}f}`:`%{y:.${ydig}f}`}<extra></extra>`
+        });
+        addEndLabel(trs, (isBarH ? st.minT : xr), (isBarH ? xr : st.minT), `Min target: ${st.minT.toFixed(ydig)}`, '#c81e1e');
+      }
+      if(Number.isFinite(st.maxT)){
+        trs.push({
+          type:'scatter', mode:'lines', showlegend:false,
+          x:(isBarH ? [st.maxT, st.maxT] : [xl,xr]),
+          y:(isBarH ? [xl,xr] : [st.maxT, st.maxT]),
+          line:{color:'#c81e1e', width:1.5, dash:'dot'},
+          hovertemplate:`Max target` + (includeAxisInHover()?`<br>${isBarH?hAxis('y'):hx()}`:'') + `<br>${isBarH?`%{x:.${ydig}f}`:`%{y:.${ydig}f}`}<extra></extra>`
+        });
+        addEndLabel(trs, (isBarH ? st.maxT : xr), (isBarH ? xr : st.maxT), `Max target: ${st.maxT.toFixed(ydig)}`, '#c81e1e');
+      }
+    }
+
+    return trs;
+  }
+
+  /* ----------------- layouts ----------------- */
+  function xAxisBase(){
+    if(USE_TIME_X){
+      const base={type:'date', hoverformat:'%d-%b-%Y', tickformat:'%d'};
+      if(ISO_DATES_UNIQ.length>=2) base.range=[ISO_DATES_UNIQ[0], ISO_DATES_UNIQ[ISO_DATES_UNIQ.length-1]];
+      return base;
+    }
+    return {type:'category', categoryorder:'array', categoryarray:dates, tickangle:0};
+  }
+
+  function smartCategoryTicks(axis, values, px, rotate){
+    const vals = Array.isArray(values) ? values.slice() : [];
+    const n = vals.length;
+    if(n<=1 || !axis) return;
+
+    axis.automargin = true;
+    axis.tickfont = axis.tickfont || {};
+    axis.tickfont.size = 11;
+
+    // Determine angle and skip pattern based on number of values
+    let angle = 0;
+    let step = 1;
+    
+    if(n <= 10) {
+      // 1-10 values: show all, no angle
+      angle = 0;
+      step = 1;
+    } else if(n <= 20) {
+      // 11-20 values: show all, angled
+      angle = -45;
+      step = 1;
+    } else if(n <= 40) {
+      // 21-40 values: show every other, angled
+      angle = -45;
+      step = 2;
+    } else if(n <= 80) {
+      // 41-80 values: show every 3rd, angled
+      angle = -45;
+      step = 3;
+    } else if(n <= 120) {
+      // 81-120 values: show every 5th, angled
+      angle = -45;
+      step = 5;
+    } else {
+      // 120+ values: show every 10th, angled
+      angle = -45;
+      step = 10;
+    }
+
+    if(step === 1) {
+      axis.tickmode = 'auto';
+      axis.tickangle = angle;
+      delete axis.tickvals;
+      delete axis.ticktext;
+    } else {
+      const tv = vals.filter((_,i)=> i%step===0);
+      axis.tickmode = 'array';
+      axis.tickvals = tv;
+      axis.ticktext = tv.map(v=>String(v));
+      axis.tickangle = angle;
+    }
+  }
+
+  function smartDateTicks(axis, isoValues, px){
+    const vals = Array.isArray(isoValues) ? isoValues : [];
+    const n = vals.length;
+    if(n<=1 || !axis) return;
+    
+    axis.automargin = true;
+    axis.tickfont = axis.tickfont || {};
+    axis.tickfont.size = 11;
+    
+    // Determine angle and tick count based on number of values
+    let angle = 0;
+    let ticks = n;
+    
+    if(n <= 10) {
+      angle = 0;
+      ticks = n;
+    } else if(n <= 20) {
+      angle = -45;
+      ticks = n;
+    } else if(n <= 40) {
+      angle = -45;
+      ticks = Math.ceil(n / 2);
+    } else if(n <= 80) {
+      angle = -45;
+      ticks = Math.ceil(n / 3);
+    } else {
+      angle = -45;
+      ticks = Math.ceil(n / 5);
+    }
+    
+    axis.nticks = Math.max(2, Math.min(ticks, Math.floor((px||600) / 76)));
+    axis.tickangle = angle;
+  }
+
+  function applySmartTimeAxisTicks(axis, px){
+    const xVals = USE_TIME_X ? ISO_DATES_UNIQ : dates;
+    if(USE_TIME_X) smartDateTicks(axis, xVals, px);
+    else smartCategoryTicks(axis, xVals, px, true);
+  }
+  function yLayout(st, vals, title, mk){
+    const all=vals.filter(Number.isFinite);
+    const tf=(()=>{ if(!all.length) return ',.2f'; const a=Math.min(...all), b=Math.max(...all), r=Math.abs(b-a); if(Math.max(Math.abs(a),Math.abs(b))>=10000) return ',.2s'; if(r>=100) return ',.0f'; if(r>=10) return ',.1f'; if(r>=1) return ',.2f'; if(r>=0.1) return ',.3f'; return ',.4f'; })();
+    const base={zeroline:false, gridcolor:THEMES[CUR_THEME].GRID, tickformat:yFmtFor(mk||'', tf), ticksuffix:'', gridwidth:1, type:'linear', automargin:true,
+                title:{text:title, standoff:16, font:{size:Math.max(10, 14 - Math.max(0,(title||'').length-16)/4)}}};
+    if(st.yMode==='log')   return Object.assign({},base,{type:'log', autorange:true, range:null});
+    if(st.yMode==='zero')  return Object.assign({},base,{rangemode:'tozero', autorange:true, range:null});
+    if(st.yMode==='manual')return Object.assign({},base,{autorange:false, range:[st.yMin, st.yMax]});
+    return Object.assign({},base,{autorange:true, range:null});
+  }
+  function layoutFor(gd, mk, st){
+    const title=decodeURIComponent(gd.dataset.title||mk);
+    const t=THEMES[CUR_THEME];
+
+    const ctInfo = chartTypeInfo(st.chartType || chartTypeFor(mk));
+
+    // Trellis (small multiples) layout: one subplot per group.
+    if(st.trellisOn){
+      const trellisPageCount = Math.max(1, Math.ceil((lines && lines.length ? lines.length : 0) / MAX_TRELLIS));
+      const trellisPage = Math.min(trellisPageCount-1, Math.max(0, Math.floor(st.trellisPage||0)));
+      const trellisStart = trellisPage * MAX_TRELLIS;
+      const trellisEnd = trellisStart + MAX_TRELLIS;
+      const shown = lines.slice(trellisStart, Math.min(lines.length, trellisEnd));
+      const n = shown.length;
+      const cols = Math.max(1, Math.min(4, Math.floor(st.trellisCols||TRELLIS_COLS_DEFAULT||3)));
+      const rows = Math.max(1, Math.ceil(n / cols));
+      const ann=[];
+
+      if((lines && lines.length) && lines.length>MAX_TRELLIS){
+        const total = lines.length;
+        const from = trellisStart + 1;
+        const to = trellisStart + shown.length;
+        const themeMode = (THEMES[CUR_THEME] && THEMES[CUR_THEME].mode) ? THEMES[CUR_THEME].mode : 'light';
+        ann.push({
+          xref:'paper', yref:'paper', x:0.995, y:0.995,
+          xanchor:'right', yanchor:'top',
+          showarrow:false,
+          text:`Groups ${from}–${to} of ${total}`,
+          font:{size:11, color:t.TXT},
+          bgcolor:(themeMode==='dark' ? 'rgba(0,0,0,.22)' : 'rgba(255,255,255,.72)'),
+          bordercolor:t.GRID, borderwidth:1, borderpad:4
+        });
+      }
+
+      const baseX = Object.assign({automargin:true, showgrid:t.XGRID, gridcolor:t.GRID, showspikes:true, spikethickness:1, spikedash:'dot', spikecolor:t.SPIKE}, xAxisBase());
+      if(ctInfo.kind==='markers' && ctInfo.jitter && !USE_TIME_X){
+        baseX.type='linear';
+        baseX.tickmode='array';
+        baseX.tickvals=dates.map((_,i)=>i);
+        baseX.ticktext=dates.map(v=>String(v));
+      } else {
+        const cellPx = Math.max(220, Math.floor(((st.sizes && st.sizes.w) ? st.sizes.w : 660) / cols));
+        applySmartTimeAxisTicks(baseX, cellPx);
+      }
+      const vals=raw.map(r=>toNum(r[mk])).filter(v=>v!=null&&isFinite(v));
+      const baseY = yLayout(st, vals, '', mk);
+      delete baseY.title;
+
+      const layout={
+        margin:{l:52,r:16,t:42,b:44,pad:0},
+        paper_bgcolor:t.BG, plot_bgcolor:t.PBG, font:{color:t.TXT},
+        grid:{rows, columns:cols, pattern:'independent'},
+        showlegend:false,
+        hovermode:'closest',
+        hoverlabel:{align:'left'},
+        spikedistance: (HOVER_MODE==='unified'?-1:20),
+        hoverdistance: (HOVER_MODE==='unified'?10:20),
+        dragmode: st.dragPan ? 'pan' : false,
+        annotations:ann,
+        shapes:minmaxShapes(st),
+        uirevision: st.uirev
+      };
+
+      for(let i=0;i<n;i++){
+        const axisId=i+1;
+        const xKey = (axisId===1)?'xaxis':('xaxis'+axisId);
+        const yKey = (axisId===1)?'yaxis':('yaxis'+axisId);
+        const r = Math.floor(i/cols);
+        const c = i%cols;
+        const isBottom = (r===rows-1);
+        const isLeft = (c===0);
+
+        layout[xKey]=Object.assign({}, baseX, {title:{text:isBottom?DATE_TITLE:''}, showticklabels:isBottom});
+        layout[yKey]=Object.assign({}, baseY, {showticklabels:isLeft});
+
+        const ax = (axisId===1)?'':String(axisId);
+        ann.push({
+          xref:'x'+ax+' domain', yref:'y'+ax+' domain',
+          x:0, y:1,
+          xanchor:'left', yanchor:'bottom',
+          showarrow:false,
+          text:escapeHtml(shown[i]||''),
+          font:{size:11, color:t.TXT},
+          align:'left'
+        });
+      }
+
+      layout.title={text:'<b>'+escapeHtml(title)+'</b>', x:0.01, y:0.98, xanchor:'left', yanchor:'top', font:{size:Math.max(12, (st.sizes?.title||14))}};
+      return layout;
+    }
+
+    const legend=legendSpec(st.legend.pos);
+    const legFont = Math.max(9, Math.min(12, 12 - Math.max(0, (lines.length||0) - 8) / 6));
+    const vals=raw.map(r=>toNum(r[mk])).filter(v=>v!=null&&isFinite(v));
+
+    const xax = Object.assign({automargin:true, title:{text:DATE_TITLE}, showgrid:t.XGRID, gridcolor:t.GRID, showspikes:true, spikethickness:1, spikedash:'dot', spikecolor:t.SPIKE}, xAxisBase());
+    if(ctInfo.kind==='markers' && ctInfo.jitter && !USE_TIME_X){
+      xax.type='linear';
+      xax.tickmode='array';
+      xax.tickvals=dates.map((_,i)=>i);
+      xax.ticktext=dates.map(v=>String(v));
+    }
+    if(st.xScroll || st.xScrollAuto){
+      xax.rangeslider = {visible:true, thickness:0.08};
+    }
+
+    const rightLegend = (legend.orientation==='v' && legend.x>=1);
+    return {
+      margin:{l:70,r: (rightLegend ? 92 : 16), t:56, b:(MONTH_BAND?76:56), pad:0},
+      showlegend: st.legend.show,
+      legend:Object.assign({bgcolor:'rgba(0,0,0,0)', font:{size:legFont}, tracegroupgap:0}, legend),
+      paper_bgcolor:t.BG, plot_bgcolor:t.PBG, font:{color:t.TXT},
+      xaxis:xax,
+      yaxis:yLayout(st, vals, title, mk),
+      hovermode: hoverModeForAxis('x'),
+      hoverlabel:{align:'left'},
+      spikedistance: (HOVER_MODE==='unified'?-1:20),
+      hoverdistance: (HOVER_MODE==='unified'?10:20),
+      dragmode: st.dragPan ? 'pan' : false,
+      annotations: (function(){ if(!MONTH_BAND) return []; return MONTH_BAND.map(seg=>({xref:'x', yref:'paper', x:seg.x, y:0, yanchor:'top', yshift:-18, showarrow:false, text:seg.text, font:{size:11,color:t.TXT}, align:'center'})); })(),
+      shapes:minmaxShapes(st),
+      uirevision: st.uirev
+    };
+  }
+
+  /* ----------------- state + draw ----------------- */
+  const state={};
+  sections.forEach(id=>{
+    const mk=decodeURIComponent(document.getElementById(id)?.dataset?.measure||'');
+    const titleKey=decodeURIComponent(document.getElementById(id)?.dataset?.title||mk);
+    state[id]={ chartType: (MEAS_MODE_MAP[mk]||MEAS_MODE_MAP[titleKey]||CHART_TYPE||'line'),
+      lineStyle:LINE_STYLE, points:(POINT_MODE_DEFAULT==='none'?'none':POINT_MODE_DEFAULT==='all'?'all':'extremes'),
+      labels:SHOW_VALUES_DEFAULT, statMode:'none', scope:'line', gaps:GAP_MODE,
+      yMode:'auto', yMin:null, yMax:null, legend:{show:LEG_SHOW,pos:LEG_POS}, theme:CUR_THEME,
+      minT:null, maxT:null, band:false, showTargets:false,
+      sizes:{w:800,lineW:2,marker:6,title:14,hov:12}, uirev:1,
+      keepYRange:false,
+      showStatus:false,
+      xScroll: X_SCROLLBAR_DEFAULT,
+      xScrollAuto:false,
+      trellisOn: TRELLIS_DEFAULT,
+      trellisCols: TRELLIS_COLS_DEFAULT,
+      trellisPage: 0,
+      filter:{min:null,max:null,excludeOutliers:false},
+      dragPan:false,
+      maOn:false,
+      maWin:7
+    };
+  });
+
+  const I=p=>({width:1000,height:1000,path:p});
+  const homeI =I('M500 150 L900 450 V850 H650 V600 H350 V850 H100 V450 Z');
+  // Icons aligned to BoxPlot_v2 (Boxplot_Y2)
+  const typeI=I('M160 820 H860 V860 H160 Z M220 820 V520 H300 V820 Z M360 820 V420 H440 V820 Z M500 820 V600 H580 V820 Z M210 520 L400 380 L540 560 L760 260');
+  const ptsI  =I('M200 500 A40 40 0 1 0 199 500 Z M400 500 A40 40 0 1 0 399 500 Z M600 500 A40 40 0 1 0 599 500 Z M800 500 A40 40 0 1 0 799 500 Z');
+  const filterI=I('M200 200 H800 L600 520 V800 H400 V520 Z');
+  const yI=I('M220 800 H860 M220 800 V200 M220 200 L160 260 M220 200 L280 260 M420 800 V360 M420 360 L360 420 M420 360 L480 420 M620 800 V520 M620 520 L560 580 M620 520 L680 580');
+  const zoomI=I('M420 200 A220 220 0 1 0 420 640 A220 220 0 1 0 420 200 Z M580 580 L820 820');
+  const themeI=I('M700 500 A200 200 0 1 1 300 500 A200 200 0 1 0 700 500 Z M500 100 A400 400 0 1 0 900 500 A250 250 0 0 1 500 100 Z');
+  const downI =I('M500 180 V720 M500 720 L420 640 M500 720 L580 640');
+  const fsI   =I('M140 180 L140 140 L380 140 L380 180 L180 180 L180 380 L140 380 Z M620 140 L860 140 L860 380 L820 380 L820 180 L620 180 Z M140 620 L180 620 L180 820 L380 820 L380 860 L140 860 Z M820 620 L860 620 L860 860 L620 860 L620 820 L820 820 Z');
+  const statusI=I('M180 720 L420 520 L620 600 L820 300 M220 740 A30 30 0 1 0 221 740 M420 520 A30 30 0 1 0 421 520 M620 600 A30 30 0 1 0 621 600');
+  const tableI=I('M160 200 H840 V800 H160 Z M160 320 H840 M160 480 H840 M160 640 H840 M360 200 V800 M560 200 V800');
+  const minmaxI=I('M200 720 H800 M200 280 H800 M180 720 L220 720 M180 280 L220 280');
+  const removeI=I('M260 260 L740 740 M740 260 L260 740');
+  const sizeI=I('M220 220 H480 V300 H300 V480 H220 Z M520 300 H700 V220 H780 V480 H700 V520 H520 Z M300 700 H220 V780 H480 V700 H300 Z M700 520 H780 V780 H520 V700 H700 Z');
+  const gridI=I('M160 160 H460 V460 H160 Z M540 160 H840 V460 H540 Z M160 540 H460 V840 H160 Z M540 540 H840 V840 H540 Z');
+  const helpI=I('M500 180 A320 320 0 1 0 500 820 A320 320 0 1 0 500 180 Z M500 460 V680 M500 340 V360');
+
+  (function initTheme(){
+    const th = (THEMES[CUR_THEME] ? THEMES[CUR_THEME] : THEMES.light);
+    const mode = (th && th.mode) ? th.mode : 'light';
+    document.documentElement.style.setProperty('--sec-bg', (th && th.BG) ? th.BG : '#fff');
+    document.documentElement.style.setProperty('--overlay-bg', (th && th.BG) ? th.BG : '#fff');
+    document.documentElement.setAttribute('data-theme', mode);
+    if(document.body) document.body.setAttribute('data-theme', mode);
+    renderHeader(CUR_THEME);
+  })();
+
+  function openFullscreenMenu(anchor){ 
+    // Directly toggle fullscreen without menu
+    togglePageFullscreen();
+  }
+
+  function togglePageFullscreen(){
+    const root = document.documentElement;
+    try{
+      if(document.fullscreenElement) { document.exitFullscreen(); return; }
+      if(root && root.requestFullscreen) root.requestFullscreen();
+    }catch(e){ /* ignore */ }
+  }
+
+  function resetChartStateToDefaults(gd, id){
+    const st = state[id];
+    if(!gd || !st) return;
+    const mk=decodeURIComponent(gd.dataset.measure||'');
+    Object.assign(st,{ chartType:(MEAS_MODE_MAP[mk]||CHART_TYPE||'line'), lineStyle:LINE_STYLE, points:(POINT_MODE_DEFAULT==='none'?'none':POINT_MODE_DEFAULT==='all'?'all':'extremes'),
+      labels:SHOW_VALUES_DEFAULT, statMode:'none', scope:'line', gaps:GAP_MODE, yMode:'auto', yMin:null, yMax:null,
+      legend:{show:LEG_SHOW,pos:LEG_POS}, minT:null, maxT:null, band:false, showTargets:false, theme:CUR_THEME, uirev:st.uirev+1, keepYRange:false,
+      showStatus:false,
+      xScroll: X_SCROLLBAR_DEFAULT,
+      xScrollAuto:false,
+      trellisOn: TRELLIS_DEFAULT,
+      trellisCols: TRELLIS_COLS_DEFAULT,
+      trellisPage: 0,
+      filter:{min:null,max:null,excludeOutliers:false,excludeExtremes:false},
+      dragPan:false,
+      maOn:false,
+      maWin:7
+    });
+    gd._lastYRange = null;
+    setRemoveMode(gd,false);
+    clearRemovedForMeasure(mk, id);
+    const overlay=gd.getAttribute('data-overlay');
+    if(overlay){
+      try{
+        const meta=JSON.parse(decodeURIComponent(overlay));
+        [...(meta.left||[]),...(meta.right||[])].forEach(ms=>{ if(ms!==mk) clearRemovedForMeasure(ms, id); });
+      }catch(err){ /* ignore overlay parse errors */ }
+    }
+    __AGG_CACHE__.clear();
+  }
+
+  function resetAllChartsToDefaults(){
+    USER_SIZE.scale=1;
+    USER_SIZE.heightPx=null;
+    sections.forEach(secId=>{
+      const gd=document.getElementById(secId);
+      if(gd) resetChartStateToDefaults(gd, secId);
+    });
+    applyUserSizeToAll();
+    redrawAll();
+  }
+
+  function redrawMeasure(measure, skipId){
+    const secSet=measureSectionMap.get(measure);
+    if(!secSet) return;
+    secSet.forEach(secId=>{
+      if(skipId && secId===skipId) return;
+      const st=state[secId];
+      if(!st) return;
+      st.uirev++;
+      st.keepYRange=false;
+      draw(secId);
+    });
+  }
+
+  function markPointRemoved(measure, rawIdx){
+    if(!measure || rawIdx==null) return;
+    let set=removedPoints.get(measure);
+    if(!set){ set=new Set(); removedPoints.set(measure,set); }
+    if(set.has(rawIdx)) return;
+    set.add(rawIdx);
+    __AGG_CACHE__.clear();
+    redrawMeasure(measure);
+  }
+
+  function clearRemovedForMeasure(measure, skipId){
+    if(!measure) return;
+    if(removedPoints.has(measure)){
+      removedPoints.delete(measure);
+      __AGG_CACHE__.clear();
+      redrawMeasure(measure, skipId);
+    }
+  }
+
+  function cfgFor(gd,id){
+    const st=state[id];
+    const resetBtn={name:'Reset',title:'Reset chart + UI',icon:homeI,click:()=>{
+      // global sizing reset (BoxPlot_v2-style)
+      USER_SIZE.scale=1; USER_SIZE.heightPx=null;
+      resetChartStateToDefaults(gd, id);
+      applyUserSizeToAll();
+      redrawAll();
+    }};
+    const viewBtn  ={name:'View',title:'Chart type • Line style',icon:typeI, click:()=>openViewMenu(gd,id,false)};
+    const tableBtn ={name:'Table',title:'Status table',icon:tableI, click:()=>{
+      st.showStatus = !st.showStatus;
+      renderStatusTable(gd, id);
+      updateModebarOnStates(gd, id);
+    }};
+    const ptsBtn   ={name:'Points',title:'Points • Labels • Gaps • Legend',icon:ptsI, click:()=>openPointsMenu(gd,id,false)};
+    const filterBtn={name:'Filter',title:'Filter data (range & outliers)',icon:filterI, click:()=>openFilterMenu(gd,id)};
+    const statusBtn={name:'Status',title:'Median / Regression',icon:statusI, click:()=>openStatusMenu(gd,id,false)};
+    const yBtn     ={name:'Y axis',title:'Auto • 0-based • Log • Manual',icon:yI, click:()=>openYAxisMenu(gd,id)};
+    const tgtBtn   ={name:'Targets',title:'Min/Max target lines/band',icon:minmaxI, click:()=>openTargetsMenu(gd,id)};
+    const zoomBtn  ={name:'Zoom',title:'Zoom X/Y + resets',icon:zoomI, click:()=>openZoomMenu(gd,id)};
+    const themeBtn ={name:'Theme',title:'Theme',icon:themeI, click:()=>openThemeMenu(btnRect(gd)) };
+    const dlBtn    ={name:'Download',title:'Export (this graph)',icon:downI, click:()=>openDownloadMenuSingle(gd,id)};
+    const fsBtn    ={name:'Fullscreen',title:'Enter/Exit fullscreen',icon:fsI, click:()=>toggleFS(gd,id)};
+  const removeBtn={name:'Remove',title:'Remove data point',icon:removeI, click:()=>{ handleRemoveButton(gd); }};
+    return {displayModeBar:true, displaylogo:false, responsive:true, scrollZoom:false,
+      modeBarButtonsToRemove:['toImage','resetScale2d','zoom2d','zoomIn2d','zoomOut2d','pan2d','select2d','lasso2d','hoverClosestCartesian','hoverCompareCartesian','autoScale2d','toggleSpikelines'],
+        modeBarButtonsToAdd:[resetBtn,viewBtn,tableBtn,ptsBtn,filterBtn,removeBtn,statusBtn,yBtn,tgtBtn,zoomBtn,themeBtn,dlBtn,fsBtn]};
+  }
+
+  function layoutForAny(gd, st){
+    const ov=gd.getAttribute('data-overlay');
+    if(!ov){ const mk=decodeURIComponent(gd.getAttribute('data-measure')); return layoutFor(gd, mk, st); }
+    if(st) st.trellisOn = false;
+    const meta=JSON.parse(decodeURIComponent(ov)); const seed=meta.left[0]||meta.right[0]; const base=layoutFor(gd, seed, st);
+    if(meta.axisMode==='dualY'){ base.yaxis2={overlaying:'y', side:'right', showgrid:false, zeroline:false, automargin:true}; base.margin.r=Math.max(96, base.margin.r||16); }
+    return base;
+  }
+  function tracesForAny(gd, st){
+    const ov=gd.getAttribute('data-overlay');
+    if(!ov){ const mk=decodeURIComponent(gd.getAttribute('data-measure')); return tracesForMeasure(mk, st); }
+    const meta=JSON.parse(decodeURIComponent(ov)); const keys=[...meta.left,...meta.right]; const types=meta.types||[];
+    const out=[]; keys.forEach((k,i)=>{ const cloned=Object.assign({},st); cloned.chartType = st.chartType || (types[i]||chartTypeFor(k)); const trs=tracesForMeasure(k, cloned); const y2=meta.right.includes(k);
+      trs.forEach(t=>{ if(t.type==='scatter'||t.type==='bar') t.yaxis=(y2?'y2':'y'); }); out.push(...trs); }); return out;
+  }
+
+  function calcSizes(gd){ const r=gd.getBoundingClientRect(); const w=Math.max(280, Math.floor(r.width||600));
+    return {w, lineW:Math.max(1,Math.min(3,Math.round(w/600*2))), marker:Math.max(3,Math.min(8,Math.round(w/600*5))), title:Math.max(12,Math.min(18,Math.round(w/600*16))), hov:Math.max(10,Math.min(14,Math.round(w/600*12)))}; }
+
+  function applyUserSizeToAll(){
+    sections.forEach(id=>{
+      const gd=document.getElementById(id);
+      if(!gd) return;
+      if(gd._fsOverlay) return; // don't override fullscreen sizing
+      const baseH=baseChartHeightPx();
+      const h = (USER_SIZE.heightPx!=null ? USER_SIZE.heightPx : Math.round(baseH*USER_SIZE.scale));
+      gd.style.height = Math.max(180, h) + 'px';
+      try{ Plotly.Plots.resize(gd); }catch(e){ /* ignore */ }
+    });
+  }
+
+  (function setupParamObserver(){
+    if(!('MutationObserver' in window)) return;
+    if(!p || !p.dataset) return;
+    let lastH = String(p.dataset.chartHeight||'');
+    const mo = new MutationObserver(()=>{
+      const curH = String(p.dataset.chartHeight||'');
+      if(curH===lastH) return;
+      lastH = curH;
+      // Only adjust when user hasn't explicitly overridden height via Size menu.
+      if(USER_SIZE && USER_SIZE.heightPx==null){
+        try{ applyUserSizeToAll(); }catch(e){ /* ignore */ }
+      }
+    });
+    try{ mo.observe(p, {attributes:true, attributeFilter:['data-chart-height']}); }catch(e){ /* ignore */ }
+  })();
+
+  async function draw(id){
+    const gd=document.getElementById(id), st=state[id];
+    // apply global height before measuring sizes
+    const baseH=baseChartHeightPx();
+    const h = gd._fsOverlay ? Math.max(180, innerHeight) : (USER_SIZE.heightPx!=null ? USER_SIZE.heightPx : Math.round(baseH*USER_SIZE.scale));
+    gd.style.height = Math.max(180, h) + 'px';
+
+    st.sizes=calcSizes(gd);
+    const sc=Math.max(0.6, Math.min(2.0, USER_SIZE.scale||1));
+    st.sizes.lineW=Math.max(1, Math.round((st.sizes.lineW||2)*sc));
+    st.sizes.marker=Math.max(3, Math.round((st.sizes.marker||6)*sc));
+    st.sizes.title=Math.max(12, Math.round((st.sizes.title||14)*sc));
+    st.sizes.hov=Math.max(10, Math.round((st.sizes.hov||12)*sc));
+
+    // lots of groups => reduce marker size further
+    const groupCount = (lines && lines.length) ? lines.length : 0;
+    if(groupCount > 10){
+      const factor = Math.pow(10 / groupCount, 0.35); // gentle decay
+      st.sizes.marker = Math.max(2, Math.round(st.sizes.marker * factor));
+    }
+
+    const traces=tracesForAny(gd, st);
+    const layout=layoutForAny(gd, st);
+
+    // Bar charts: ensure grouped/stacked so bars don't overlap/hide
+    const hasBar = Array.isArray(traces) && traces.some(t=>t && t.type==='bar');
+    if(hasBar){
+      const info=chartTypeInfo(st.chartType);
+      layout.barmode = (info.kind==='bar' && info.stacked) ? 'stack' : 'group';
+      if(info.kind==='bar' && info.percent){
+        layout.barnorm = 'percent';
+      } else {
+        delete layout.barnorm;
+      }
+      layout.bargap = 0.15;
+      layout.bargroupgap = 0.1;
+
+      // Horizontal bars: put dates/categories on Y axis, values on X axis
+      const anyH = Array.isArray(traces) && traces.some(t=>t && t.type==='bar' && t.orientation==='h');
+      if(anyH){
+        // preserve date axis settings from layoutFor() xaxisBase() when possible
+        const oldX = layout.xaxis || {};
+        const oldY = layout.yaxis || {};
+
+        const yType = USE_TIME_X ? 'date' : 'category';
+        const yRange = (oldX && oldX.type==='date' && Array.isArray(oldX.range)) ? oldX.range : undefined;
+        const yTickformat = (oldX && oldX.type==='date' && oldX.tickformat) ? oldX.tickformat : undefined;
+        const yHoverformat = (oldX && oldX.type==='date' && oldX.hoverformat) ? oldX.hoverformat : undefined;
+
+        layout.xaxis = Object.assign({}, oldX, {type:'linear', title:{text:(oldY.title && oldY.title.text) ? oldY.title.text : ''}, automargin:true});
+        layout.yaxis = Object.assign({}, oldY, {type:yType, title:{text:DATE_TITLE}, automargin:true});
+        if(yRange) layout.yaxis.range = yRange;
+        if(yTickformat) layout.yaxis.tickformat = yTickformat;
+        if(yHoverformat) layout.yaxis.hoverformat = yHoverformat;
+
+        // hover should follow the date axis (y), but default to closest-point for readability
+        layout.hovermode = (HOVER_MODE==='unified') ? 'y unified' : ((HOVER_MODE==='compare') ? 'y' : 'closest');
+      }
+
+      // For bar charts, prefer data-driven axis ranges (avoid forced 0 baseline)
+      const valueAxis = anyH ? (layout.xaxis || (layout.xaxis={})) : (layout.yaxis || (layout.yaxis={}));
+      const labelAxisPx = anyH ? Math.max(180, (gd.getBoundingClientRect().height||0)) : st.sizes.w;
+
+      // Smart ticks on the date/category axis (week labels)
+      if(anyH){
+        applySmartTimeAxisTicks(layout.yaxis || (layout.yaxis={}), labelAxisPx);
+      } else {
+        applySmartTimeAxisTicks(layout.xaxis || (layout.xaxis={}), labelAxisPx);
+      }
+
+      if(info.kind==='bar' && info.percent){
+        valueAxis.autorange = false;
+        valueAxis.range = [0, 100];
+        valueAxis.ticksuffix = '%';
+        valueAxis.tickformat = '.0f';
+      } else if(st.yMode==='auto' && !st.keepYRange){
+        // compute extent; for stacked, use stack sums per category/date
+        let vMin=Infinity, vMax=-Infinity;
+        if(info.stacked){
+          const pos=new Map();
+          const neg=new Map();
+          traces.forEach(tr=>{
+            if(!tr || tr.type!=='bar') return;
+            const keys = anyH ? tr.y : tr.x;
+            const vals = anyH ? tr.x : tr.y;
+            if(!Array.isArray(keys) || !Array.isArray(vals)) return;
+            for(let i=0;i<Math.min(keys.length, vals.length);i++){
+              const k = keys[i];
+              const v = +vals[i];
+              if(!Number.isFinite(v)) continue;
+              if(v>=0) pos.set(k, (pos.get(k)||0)+v);
+              else neg.set(k, (neg.get(k)||0)+v);
+            }
+          });
+          pos.forEach(v=>{ if(v>vMax) vMax=v; });
+          neg.forEach(v=>{ if(v<vMin) vMin=v; });
+          if(!Number.isFinite(vMin)) vMin = 0;
+          if(!Number.isFinite(vMax)) vMax = 0;
+        } else {
+          traces.forEach(tr=>{
+            if(!tr || tr.type!=='bar') return;
+            const vals = anyH ? tr.x : tr.y;
+            if(!Array.isArray(vals)) return;
+            for(const rawV of vals){
+              const v = +rawV;
+              if(!Number.isFinite(v)) continue;
+              if(v<vMin) vMin=v;
+              if(v>vMax) vMax=v;
+            }
+          });
+          if(!Number.isFinite(vMin)) vMin = 0;
+          if(!Number.isFinite(vMax)) vMax = 0;
+        }
+
+        let pad = (vMax - vMin) * 0.06;
+        if(!Number.isFinite(pad) || pad<=0){
+          pad = Math.max(1, Math.abs(vMax||vMin||1) * 0.08);
+        }
+        valueAxis.autorange = false;
+        valueAxis.range = [vMin - pad, vMax + pad];
+        // clear percent formatting if previously set
+        delete valueAxis.ticksuffix;
+      }
+    }
+
+    // keep Y-range when requested
+    if(gd._lastYRange && st.keepYRange){
+      layout.yaxis = Object.assign({}, layout.yaxis, {autorange:false, range: gd._lastYRange.slice()});
+    }
+
+    // For non-bar charts, still apply smart ticks to avoid X overlap
+    if(!hasBar){
+      applySmartTimeAxisTicks(layout.xaxis || (layout.xaxis={}), st.sizes.w);
+    }
+
+    layout.title={text:'<b>'+decodeURIComponent(gd.dataset.title||'')+'</b>', x:0.01, y:0.98, xanchor:'left', yanchor:'top', font:{size:st.sizes.title}};
+    const themeMode = (THEMES[CUR_THEME] && THEMES[CUR_THEME].mode) ? THEMES[CUR_THEME].mode : 'light';
+    layout.hoverlabel = Object.assign({}, layout.hoverlabel, (themeMode==='dark'
+      ? {bgcolor:'rgba(15,23,42,.96)', font:{size:st.sizes.hov, color:'#e5e7eb'}, bordercolor:'#475569'}
+      : {bgcolor:'rgba(255,255,255,.94)', font:{size:st.sizes.hov, color:'#111827'}, bordercolor:'#94a3b8'}));
+
+    if(HOVER_HIGHLIGHT){
+      traces.push(hoverHighlightTrace(st));
+      gd.__hoverHighlightIdx = traces.length - 1;
+    } else {
+      gd.__hoverHighlightIdx = null;
+    }
+
+  await Plotly.react(gd, traces, layout, cfgFor(gd,id));
+  let removalActive=false;
+  const overlayAttr=gd.getAttribute('data-overlay');
+  if(overlayAttr){
+    try{
+      const meta=JSON.parse(decodeURIComponent(overlayAttr));
+      removalActive=[...(meta.left||[]),...(meta.right||[])].some(measure=>{
+        const set=removedPoints.get(measure);
+        return set && set.size;
+      });
+    }catch(err){ removalActive=false; }
+  }else{
+    const measure=decodeURIComponent(gd.getAttribute('data-measure')||'');
+    const set=removedPoints.get(measure);
+    removalActive=!!(set && set.size);
+  }
+  if(gd.__removeMode==null) gd.__removeMode=false;
+  setRemoveMode(gd, gd.__removeMode);
+  updateFilterButtonState(gd, st.filter, removalActive);
+  updateModebarOnStates(gd, id);
+  renderStatusTable(gd, id);
+  try{ bindLegendHover(gd); }catch(e){ /* ignore */ }
+
+  gd.__lastPointContext=null;
+  if(!gd.__pointRemovalInit){
+    gd.__pointRemovalInit=true;
+    const extractContext=ev=>{
+      if(!ev || !Array.isArray(ev.points)) return null;
+      const point=ev.points.find(pt=>{
+        const meta=pt?.fullData?.meta;
+        const cd=pt?.customdata;
+        return meta && meta.measure && Array.isArray(cd) && cd.length>1 && cd[1]!=null;
+      });
+      if(!point) return null;
+      const rawIdx=Array.isArray(point.customdata)?point.customdata[1]:null;
+      if(rawIdx==null) return null;
+      return {
+        measure:point.fullData?.meta?.measure||null,
+        line:point.fullData?.meta?.line||null,
+        rawIdx,
+        pointNumber:point.pointNumber
+      };
+    };
+    gd.on('plotly_hover',ev=>{
+      gd.__lastPointContext=extractContext(ev);
+    });
+    gd.on('plotly_unhover',()=>{
+      gd.__lastPointContext=null;
+    });
+    gd.on('plotly_click',ev=>{
+      const ctx=extractContext(ev);
+      if(ctx) gd.__lastPointContext=ctx;
+      if(gd.__removeMode && ctx){
+        if(ev?.event){
+          ev.event.preventDefault?.();
+          ev.event.stopPropagation?.();
+        }
+        markPointRemoved(ctx.measure, ctx.rawIdx);
+        gd.__lastPointContext=null;
+        setRemoveMode(gd,false);
+      }
+    });
+
+    // Legend hover highlight (non-trellis; bars + lines + scatter; guarded for performance)
+    gd.__legendDimActive=false;
+    gd.__legendDimSnapshot=null;
+    gd.__legendHoverLastIdx=null;
+    gd.__legendHoverLastTs=0;
+    gd.on('plotly_legendhover', (ev)=>{
+      legendTraceHighlight(gd, ev && ev.curveNumber);
+    });
+    gd.on('plotly_legendunhover', ()=>{
+      legendTraceReset(gd);
+    });
+
+    gd.on('plotly_relayout',ev=>{
+      if(!ev) return;
+      const id2 = gd && gd.id;
+      const st2 = (id2 && state && state[id2]) ? state[id2] : null;
+      if(!st2) return;
+
+      const xRangeChanged = (ev['xaxis.range[0]']!=null) || (ev['xaxis.range[1]']!=null) || (ev['xaxis.range']!=null);
+      const xAutoChanged = (ev['xaxis.autorange']!=null);
+      if(!xRangeChanged && !xAutoChanged) return;
+
+      const isAuto = (ev['xaxis.autorange']===true || ev['xaxis.autorange']==='true');
+      if(isAuto){
+        st2.xScrollAuto = false;
+        if(!st2.xScroll){
+          try{ Plotly.relayout(gd, {'xaxis.rangeslider.visible': false}); }catch(e){ /* ignore */ }
+        }
+        return;
+      }
+
+      // Any explicit X-range zoom => show scrollbar automatically (unless user already enabled it).
+      if(!st2.xScroll && !st2.xScrollAuto){
+        st2.xScrollAuto = true;
+        try{ Plotly.relayout(gd, {'xaxis.rangeslider.visible': true}); }catch(e){ /* ignore */ }
+      }
+    });
+  }
+
+    const yr = gd._fullLayout?.yaxis?.range; 
+    if(yr) gd._lastYRange = yr.slice();
+    st.keepYRange = false;
+  }
+
+  /* --------- Menus --------- */
+  function btnRect(gd){ const b=gd.querySelector('.modebar'); return b? b.getBoundingClientRect():{right:innerWidth-8,bottom:40,top:8}; }
+  function placeMenu(pop, anchor){ const r=anchor||{right:innerWidth-16,bottom:48}; const w=pop.offsetWidth, h=pop.offsetHeight; let left=r.right-w, top=r.bottom+6; if(top+h>innerHeight) top=r.top-h-6; if(left<6) left=6; pop.style.left=left+'px'; pop.style.top=top+'px'; }
+  function closeMenus(){ document.querySelectorAll('.oas-pop').forEach(x=>x.remove()); }
+  let __open=null; function toggleMenu(kind,build){ if(__open===kind){ closeMenus(); __open=null; return; } closeMenus(); build(); __open=kind; }
+  addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeMenus(); __open=null; }},{passive:true});
+  addEventListener('mousedown',e=>{ const pops=[...document.querySelectorAll('.oas-pop')]; if(pops.length && !pops.some(p=>p.contains(e.target))) { closeMenus(); __open=null; } },{capture:true,passive:true});
+
+  function addMenuClose(pop){
+    pop.addEventListener('click', (e)=>{
+      const t=e.target;
+      if(t && t.dataset && t.dataset.act==='close'){ closeMenus(); __open=null; }
+    });
+  }
+
+  function openThemeMenu(anchor){
+    toggleMenu('theme', ()=>{
+      const pop=document.createElement('div');
+      pop.className='oas-pop vlist';
+      const items = THEME_ORDER.map(k=>{
+        const cur = (k===CUR_THEME);
+        const name = k.charAt(0).toUpperCase()+k.slice(1);
+        return `<button class="item" data-theme="${k}">${cur?'✓ ':''}${escapeHtml(name)}</button>`;
+      }).join('');
+      pop.innerHTML=`
+        <div class="hdr hdr-top"><span class="ttl">Theme</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+        ${items}`;
+      document.body.appendChild(pop);
+      placeMenu(pop, anchor || {right:innerWidth-16,bottom:48,top:8});
+      addMenuClose(pop);
+      pop.querySelectorAll('button[data-theme]').forEach(b=>b.onclick=()=>{
+        const k=b.getAttribute('data-theme');
+        closeMenus(); __open=null;
+        setTheme(k);
+      });
+    });
+  }
+
+  function openLayoutMenu(anchor){
+    toggleMenu('layout', ()=>{
+      const nonOverlayIds = sections.filter(secId=>{
+        const gd=document.getElementById(secId);
+        return gd && !gd.getAttribute('data-overlay');
+      });
+      const anyTrellis = nonOverlayIds.some(secId=>!!(state[secId] && state[secId].trellisOn));
+      const trellisCols = (nonOverlayIds.length && state[nonOverlayIds[0]]) ? (state[nonOverlayIds[0]].trellisCols||TRELLIS_COLS_DEFAULT) : TRELLIS_COLS_DEFAULT;
+      const anyXScroll = sections.some(secId=>{ const st=state[secId]; return st && (st.xScroll || st.xScrollAuto); });
+      const curScalePct = Math.round((USER_SIZE.scale||1)*100);
+      const curH = (USER_SIZE.heightPx==null) ? '' : String(USER_SIZE.heightPx);
+
+      const pop=document.createElement('div');
+      pop.className='oas-pop';
+      pop.innerHTML=`
+        <div class="hdr hdr-top"><span class="ttl">Layout & Size</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+        <div class="group">
+          <div class="hdr">Charts per row</div>
+          <div class="row">
+            <label><input type="radio" name="cols" value="1" ${USER_COLS===1?'checked':''}> 1</label>
+            <label><input type="radio" name="cols" value="2" ${USER_COLS===2?'checked':''}> 2</label>
+            <label><input type="radio" name="cols" value="3" ${USER_COLS===3?'checked':''}> 3</label>
+            <label><input type="radio" name="cols" value="4" ${USER_COLS===4?'checked':''}> 4</label>
+          </div>
+
+          <div class="row" style="align-items:center;gap:8px">
+            <span style="opacity:.85">Grid gap (px)</span>
+            <input id="gap" type="number" inputmode="numeric" placeholder="Gap" value="${GRID_GAP}" min="0" max="40" style="width:60px">
+          </div>
+
+          <div class="row" style="align-items:center;gap:8px">
+            <label title="Adds an X-axis range slider so you can scroll after zoom"><input type="checkbox" id="xs-all" ${anyXScroll?'checked':''}> X Axes Slider</label>
+          </div>
+
+          <div class="hdr" style="margin-top:10px">Graph size</div>
+          <div class="row">
+            <button class="item" data-act="sz-minus" type="button">Scale −</button>
+            <div class="item" style="justify-content:center;opacity:.9;cursor:default">${curScalePct}%</div>
+            <button class="item" data-act="sz-plus" type="button">Scale +</button>
+          </div>
+          <div style="margin-top:6px;opacity:.9">Height override (px)</div>
+          <div class="row" style="align-items:center">
+            <input id="sz-h" type="number" inputmode="numeric" placeholder="Auto" value="${escapeHtml(curH)}" style="width:90px;flex:0 0 90px">
+            <button class="item" data-act="sz-apply" type="button" style="flex:1">Apply</button>
+            <button class="item" data-act="sz-reset" type="button" style="flex:1">Reset</button>
+          </div>
+        </div>`;
+
+      document.body.appendChild(pop);
+      placeMenu(pop, anchor || {right:innerWidth-16,bottom:48,top:8});
+      addMenuClose(pop);
+
+      const resizeAll = ()=>{
+        try{ if(!window.Plotly) return; sections.forEach(secId=>{ const gd=document.getElementById(secId); if(gd) Plotly.Plots.resize(gd); }); }catch(e){ /* ignore */ }
+      };
+
+      const refresh = ()=>{ closeMenus(); __open=null; openLayoutMenu(anchor); };
+
+      pop.addEventListener('change', (e)=>{
+        const t=e && e.target;
+        if(!t) return;
+
+        if(t.name==='cols'){
+          const n=Math.max(1, Math.min(4, Math.floor(+t.value||USER_COLS||GPR)));
+          USER_COLS = n;
+          applyCols(USER_COLS);
+          setTimeout(resizeAll, 0);
+          return refresh();
+        }
+
+        if(t.id==='gap'){
+          const v = toNum(t.value);
+          applyGridGap(v==null ? GRID_GAP_DEFAULT : v);
+          setTimeout(resizeAll, 50);
+          return;
+        }
+
+        if(t.id==='tr-all'){
+          const on=!!t.checked;
+          applyToAllCharts((s, secId)=>{
+            const gd=document.getElementById(secId);
+            if(gd && gd.getAttribute('data-overlay')) return;
+            s.trellisOn = on;
+            s.trellisPage = 0;
+            s.keepYRange=false;
+            s.uirev++;
+          });
+          redrawAll();
+          return refresh();
+        }
+
+        if(t.name==='trcols'){
+          const cols=Math.max(1, Math.min(4, Math.floor(+t.value||TRELLIS_COLS_DEFAULT)));
+          applyToAllCharts((s, secId)=>{
+            const gd=document.getElementById(secId);
+            if(gd && gd.getAttribute('data-overlay')) return;
+            s.trellisCols = cols;
+            s.trellisPage = 0;
+            s.keepYRange=false;
+            s.uirev++;
+          });
+          redrawAll();
+          return refresh();
+        }
+
+        if(t.id==='xs-all'){
+          const on=!!t.checked;
+          applyToAllCharts((s)=>{
+            s.xScroll = on;
+            s.xScrollAuto = false;
+            s.keepYRange=false;
+            s.uirev++;
+          });
+          redrawAll();
+          return refresh();
+        }
+      }, {passive:true});
+
+      pop.addEventListener('click', (e)=>{
+        const t=e && e.target;
+        if(!t) return;
+        const act = t.dataset ? t.dataset.act : null;
+        if(act==='gap-apply'){
+          const inp=pop.querySelector('#gap');
+          const v = inp ? toNum(inp.value) : null;
+          applyGridGap(v==null ? GRID_GAP_DEFAULT : v);
+          return refresh();
+        }
+        if(act==='gap-reset'){
+          applyGridGap(GRID_GAP_DEFAULT);
+          return refresh();
+        }
+        if(act==='sz-minus'){
+          USER_SIZE.scale = clampNum((USER_SIZE.scale||1) - 0.1, 0.5, 2.0);
+          applyUserSizeToAll();
+          return refresh();
+        }
+        if(act==='sz-plus'){
+          USER_SIZE.scale = clampNum((USER_SIZE.scale||1) + 0.1, 0.5, 2.0);
+          applyUserSizeToAll();
+          return refresh();
+        }
+        if(act==='sz-apply'){
+          const inp=pop.querySelector('#sz-h');
+          const v = inp ? toNum(inp.value) : null;
+          USER_SIZE.heightPx = (v==null) ? null : clampNum(Math.round(v), 180, 1400);
+          applyUserSizeToAll();
+          return refresh();
+        }
+        if(act==='sz-reset'){
+          USER_SIZE.scale = 1;
+          USER_SIZE.heightPx = null;
+          applyUserSizeToAll();
+          return refresh();
+        }
+      });
+    });
+  }
+
+  function applyToAllCharts(mutator){
+    sections.forEach(secId=>{
+      const st=state[secId];
+      if(!st) return;
+      mutator(st, secId);
+    });
+  }
+
+  function setTheme(theme){
+    const key = (theme && THEMES[theme]) ? theme : 'light';
+    CUR_THEME = key;
+    const mode = (THEMES[CUR_THEME] && THEMES[CUR_THEME].mode) ? THEMES[CUR_THEME].mode : 'light';
+    try{
+      const th = (THEMES[CUR_THEME] ? THEMES[CUR_THEME] : THEMES.light);
+      document.documentElement.style.setProperty('--sec-bg', (th && th.BG) ? th.BG : '#fff');
+      document.documentElement.style.setProperty('--overlay-bg', (th && th.BG) ? th.BG : '#fff');
+    }catch(e){ /* ignore */ }
+    document.documentElement.setAttribute('data-theme', mode);
+    if(document.body) document.body.setAttribute('data-theme', mode);
+    renderHeader(CUR_THEME);
+    applyToAllCharts((s)=>{ s.theme = CUR_THEME; s.uirev++; s.keepYRange=false; });
+    sections.forEach(secId=>draw(secId));
+  }
+
+  function redrawAll(){
+    sections.forEach(secId=>{ const st=state[secId]; if(st){ st.uirev++; st.keepYRange=false; } });
+    sections.forEach(secId=>draw(secId));
+  }
+
+  function clearAllLastYRanges(){
+    sections.forEach(secId=>{
+      const gd=document.getElementById(secId);
+      if(gd) gd._lastYRange=null;
+    });
+  }
+
+  function openHelpMenu(gd, anchor){ toggleMenu('help', ()=>{
+    const pop=document.createElement('div');
+    pop.className='oas-pop';
+    pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Help</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div style="font:12px/1.45 system-ui; opacity:.9">
+        <div style="font-weight:700; margin:6px 0">Titlebar Controls</div>
+        <div><b>Status</b>: show/hide data table below charts.</div>
+        <div><b>Layout</b>: charts per row, grid spacing, trellis mode, graph size.</div>
+        <div><b>Help</b>: this help popup.</div>
+        <div><b>Theme</b>: toggle light/paper/dark themes.</div>
+        <div><b>Download</b>: export all charts as PDF/PNG/CSV, raw data.</div>
+        <div style="font-weight:700; margin-top:10px; margin-bottom:6px">Chart Modebar</div>
+        <div><b>Reset</b>: restore defaults and clear removed points.</div>
+        <div><b>View</b>: chart type (line/area/bar/scatter) + line style.</div>
+        <div><b>Points</b>: markers (auto/none/outliers/all), labels, gaps, legend.</div>
+        <div><b>Filter</b>: min/max range + exclude outliers.</div>
+        <div><b>Remove</b>: click mode to delete individual data points.</div>
+        <div><b>Status</b>: median / regression lines + moving average.</div>
+        <div><b>Y axis</b>: auto/0-based/log/manual range.</div>
+        <div><b>Targets</b>: min/max target lines or band.</div>
+        <div><b>Zoom</b>: X/Y zoom controls + pan drag mode.</div>
+        <div><b>Theme</b>: light/paper/dark for current chart.</div>
+        <div><b>Download</b>: export this chart as PNG/PDF/CSV/Excel.</div>
+        <div><b>Fullscreen</b>: toggle fullscreen mode for chart.</div>
+      </div>`;
+    document.body.appendChild(pop);
+    placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+  }); }
+
+  function openSizeMenu(gd,id, anchor){ toggleMenu('size', ()=>{
+    const pop=document.createElement('div');
+    pop.className='oas-pop vlist';
+
+    const pct = Math.round((USER_SIZE.scale||1)*100);
+    pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Graph size</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="item" style="justify-content:flex-start;opacity:.9;cursor:default">Scale: <b style="margin-left:6px">${pct}%</b></div>
+      <button class="item" data-act="minus">Scale −</button>
+      <button class="item" data-act="plus">Scale +</button>
+      <div class="sep"></div>
+      <div class="item" style="justify-content:flex-start;opacity:.9;cursor:default">Height override (px)</div>
+      <div style="padding:0 10px 10px">
+        <input id="sz-h" type="number" inputmode="numeric" placeholder="Auto" value="${USER_SIZE.heightPx==null?'':USER_SIZE.heightPx}" style="width:100%">
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="item" style="flex:1" data-act="apply">Apply</button>
+          <button class="item" style="flex:1" data-act="clear">Clear</button>
+        </div>
+      </div>`;
+
+    document.body.appendChild(pop);
+    placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+
+    const refresh=()=>{ closeMenus(); __open=null; openSizeMenu(gd,id, anchor); };
+    const step=0.1;
+
+    pop.querySelectorAll('[data-act]').forEach(el=>{
+      el.onclick=()=>{
+        const act=el.getAttribute('data-act');
+        if(act==='minus'){
+          USER_SIZE.scale = clampNum((USER_SIZE.scale||1) - step, 0.5, 2.0);
+          applyUserSizeToAll();
+          redrawAll();
+          refresh();
+          return;
+        }
+        if(act==='plus'){
+          USER_SIZE.scale = clampNum((USER_SIZE.scale||1) + step, 0.5, 2.0);
+          applyUserSizeToAll();
+          redrawAll();
+          refresh();
+          return;
+        }
+        if(act==='apply'){
+          const hp = toNum(pop.querySelector('#sz-h')?.value);
+          USER_SIZE.heightPx = Number.isFinite(hp) ? Math.max(180, Math.round(hp)) : null;
+          applyUserSizeToAll();
+          redrawAll();
+          closeMenus(); __open=null;
+          return;
+        }
+        if(act==='clear'){
+          USER_SIZE.heightPx = null;
+          applyUserSizeToAll();
+          redrawAll();
+          closeMenus(); __open=null;
+          return;
+        }
+      };
+    });
+  }); }
+
+  function openViewMenu(gd,id, globalMode, anchor){ toggleMenu('view', ()=>{ const st=state[id];
+    const info = chartTypeInfo(st.chartType);
+    const main = (info.kind==='markers') ? 'scatter' : ((info.kind==='bar') ? 'bar' : (info.kind==='area' ? 'area' : 'line'));
+    const barOrient = (info.kind==='bar' && info.orientation==='h') ? 'h' : 'v';
+    const barMode = (info.kind==='bar' && info.percent) ? 'pct' : ((info.kind==='bar' && info.stacked) ? 'stack' : 'norm');
+    const areaMode = (info.kind==='area' && info.stacked) ? 'stack' : 'norm';
+    const lineLike = (main!=='bar' && main!=='scatter');
+    const scatterJitter = (info.kind==='markers' && !!info.jitter);
+    const canTrellis = !gd.getAttribute('data-overlay');
+
+    const pop=document.createElement('div');
+    pop.className='oas-pop';
+    pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Chart type</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="row">
+          <label><input type="radio" name="main" value="line" ${main==='line'?'checked':''}> Line</label>
+          <label><input type="radio" name="main" value="area" ${main==='area'?'checked':''}> Area</label>
+          <label><input type="radio" name="main" value="bar"  ${main==='bar'?'checked':''}> Bar</label>
+          <label><input type="radio" name="main" value="scatter" ${main==='scatter'?'checked':''}> Scatter</label>
+        </div>
+
+        <div id="scBox" style="${main==='scatter'?'':'display:none'}">
+          <div class="hdr">Scatter</div>
+          <div class="row">
+            <label title="Adds a small random horizontal offset so overlapping points are visible"><input type="checkbox" id="sc-jit" ${scatterJitter?'checked':''}> Jitter (X)</label>
+          </div>
+          <div style="font:11px/1.35 system-ui;opacity:.7;margin-top:4px">
+            Scatter shows only points (no connecting lines). Jitter helps when X is categorical and many points overlap.
+          </div>
+        </div>
+
+        <div id="areaBox" style="${main==='area'?'':'display:none'}">
+          <div class="hdr">Area</div>
+          <div class="row">
+            <label><input type="radio" name="aream" value="norm" ${areaMode==='norm'?'checked':''}> Normal</label>
+            <label><input type="radio" name="aream" value="stack" ${areaMode==='stack'?'checked':''}> Stacked</label>
+          </div>
+        </div>
+
+        <div id="barBox" style="${main==='bar'?'':'display:none'}">
+          <div class="hdr">Bar</div>
+          <div class="row">
+            <label><input type="radio" name="bor" value="v" ${barOrient==='v'?'checked':''}> Vertical</label>
+            <label><input type="radio" name="bor" value="h" ${barOrient==='h'?'checked':''}> Horizontal</label>
+          </div>
+          <div class="row">
+            <label><input type="radio" name="bm" value="norm"  ${barMode==='norm'?'checked':''}> Normal</label>
+            <label><input type="radio" name="bm" value="stack" ${barMode==='stack'?'checked':''}> Stacked</label>
+            <label><input type="radio" name="bm" value="pct"   ${barMode==='pct'?'checked':''}> 100%</label>
+          </div>
+        </div>
+
+        <div id="lsBox" style="${lineLike?'':'display:none'}">
+          <div class="hdr">Line style</div>
+          <div class="row">
+            <label><input type="radio" name="ls" value="curved"   ${st.lineStyle==='curved'?'checked':''}> Curved</label>
+            <label><input type="radio" name="ls" value="straight" ${st.lineStyle==='straight'?'checked':''}> Straight</label>
+            <label><input type="radio" name="ls" value="dashed"   ${st.lineStyle==='dashed'?'checked':''}> Dashed</label>
+            <label><input type="radio" name="ls" value="dotted"   ${st.lineStyle==='dotted'?'checked':''}> Dotted</label>
+            <label><input type="radio" name="ls" value="dashdot"  ${st.lineStyle==='dashdot'?'checked':''}> Dash-dot</label>
+          </div>
+        </div>
+
+        <div class="sep" style="margin:10px 0"></div>
+        <div class="hdr">Layout</div>
+        <div class="row" style="flex-direction:column;align-items:flex-start;gap:6px">
+          <label title="Shows each group in its own small chart (small multiples)"><input type="checkbox" id="tr-on" ${st.trellisOn?'checked':''} ${canTrellis?'':'disabled'}> Small multiples (Trellis)</label>
+          <div style="display:flex;gap:10px;align-items:center;opacity:${canTrellis?'1':'.55'}">
+            <span style="font:12px system-ui">Columns</span>
+            <select id="tr-cols" ${canTrellis?'':'disabled'}>
+              ${[1,2,3,4].map(n=>'<option value="'+n+'" '+((Number(st.trellisCols||TRELLIS_COLS_DEFAULT||3)===n)?'selected':'')+'>'+n+'</option>').join('')}
+            </select>
+            <span style="font:11px system-ui;opacity:.75">(page size ${MAX_TRELLIS})</span>
+          </div>
+          ${canTrellis ? '' : '<div style="font:11px/1.35 system-ui;opacity:.65">Trellis is disabled for overlay (multi-measure) charts.</div>'}
+
+          <div id="tr-pager" style="${(canTrellis && st.trellisOn && (lines && lines.length) && (lines.length>MAX_TRELLIS))?'':'display:none'};margin-top:4px;opacity:${canTrellis?'1':'.55'}">
+            <div id="tr-msg" style="font:11px/1.35 system-ui;opacity:.75;margin:2px 0 6px"></div>
+            <div style="display:flex;gap:8px">
+              <button type="button" id="tr-prev">Prev</button>
+              <button type="button" id="tr-next">Next</button>
+            </div>
+          </div>
+
+          <label title="Adds an X-axis range slider so you can scroll after zoom"><input type="checkbox" id="xs-on" ${(st.xScroll||st.xScrollAuto)?'checked':''}> X Axes Slider</label>
+        </div>
+      </div>`;
+
+    const applyChartType = (nextType) => {
+      if(globalMode){
+        applyToAllCharts((s)=>{
+          s.chartType=nextType;
+          s.keepYRange=false;
+          if(s.yMode!=='manual'){
+            s.yMode='auto';
+            s.yMin=null; s.yMax=null;
+          }
+          s.uirev++;
+        });
+        clearAllLastYRanges();
+        redrawAll();
+        return;
+      }
+      st.chartType=nextType;
+      st.keepYRange=false;
+      if(st.yMode!=='manual'){
+        st.yMode='auto';
+        st.yMin=null; st.yMax=null;
+      }
+      st.uirev++;
+      gd._lastYRange=null;
+      draw(id);
+    };
+
+    const computeBarType = () => {
+      const orient=(pop.querySelector('input[name="bor"]:checked')||{}).value||'v';
+      const mode=(pop.querySelector('input[name="bm"]:checked')||{}).value||'norm';
+      if(mode==='pct') return (orient==='h') ? 'bar100h' : 'bar100';
+      if(mode==='stack') return (orient==='h') ? 'barstackh' : 'barstack';
+      return (orient==='h') ? 'barh' : 'bar';
+    };
+    const computeAreaType = () => {
+      const mode=(pop.querySelector('input[name="aream"]:checked')||{}).value||'norm';
+      return (mode==='stack') ? 'areastack' : 'area';
+    };
+
+    document.body.appendChild(pop);
+    placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+
+    pop.addEventListener('change',e=>{
+      const applyOrSet = (fn) => {
+        if(globalMode){
+          applyToAllCharts((s)=>{ fn(s); s.uirev++; });
+          redrawAll();
+        }else{
+          fn(st);
+          st.uirev++;
+          draw(id);
+        }
+      };
+
+      if(e.target.name==='ls'){
+        const next=e.target.value;
+        return applyOrSet((s)=>{ s.lineStyle=next; });
+      }
+
+      if(e.target && e.target.id==='tr-on'){
+        const on = !!pop.querySelector('#tr-on')?.checked;
+        return applyOrSet((s)=>{ s.trellisOn = on; s.trellisPage = 0; s.keepYRange=false; });
+      }
+      if(e.target && e.target.id==='tr-cols'){
+        const cols = Math.max(1, Math.min(4, Math.floor(+pop.querySelector('#tr-cols')?.value||TRELLIS_COLS_DEFAULT||3)));
+        return applyOrSet((s)=>{ s.trellisCols = cols; s.keepYRange=false; });
+      }
+      if(e.target && e.target.id==='xs-on'){
+        const on = !!pop.querySelector('#xs-on')?.checked;
+        return applyOrSet((s)=>{ s.xScroll = on; s.keepYRange=false; });
+      }
+
+      const mainSel=(pop.querySelector('input[name="main"]:checked')||{}).value||'line';
+      const barBox=pop.querySelector('#barBox');
+      const areaBox=pop.querySelector('#areaBox');
+      const lsBox=pop.querySelector('#lsBox');
+      const scBox=pop.querySelector('#scBox');
+      if(barBox) barBox.style.display = (mainSel==='bar') ? 'block' : 'none';
+      if(areaBox) areaBox.style.display = (mainSel==='area') ? 'block' : 'none';
+      if(lsBox) lsBox.style.display = (mainSel==='bar' || mainSel==='scatter') ? 'none' : 'block';
+      if(scBox) scBox.style.display = (mainSel==='scatter') ? 'block' : 'none';
+
+      if(mainSel==='scatter'){
+        const jit = !!pop.querySelector('#sc-jit')?.checked;
+        return applyChartType(jit ? 'scatterjitter' : 'scatter');
+      }
+      if(mainSel==='bar')  return applyChartType(computeBarType());
+      if(mainSel==='area') return applyChartType(computeAreaType());
+      return applyChartType('line');
+    },{passive:true});
+
+    const updatePagerUI = ()=>{
+      try{
+        const total = (lines && lines.length) ? lines.length : 0;
+        const pageCount = Math.max(1, Math.ceil(total / MAX_TRELLIS));
+        const page = Math.min(pageCount-1, Math.max(0, Math.floor(st.trellisPage||0)));
+        const from = total ? (page*MAX_TRELLIS + 1) : 0;
+        const to = total ? Math.min(total, from + MAX_TRELLIS - 1) : 0;
+
+        const pager = pop.querySelector('#tr-pager');
+        if(pager) pager.style.display = (canTrellis && !!st.trellisOn && total>MAX_TRELLIS) ? 'block' : 'none';
+        const msg = pop.querySelector('#tr-msg');
+        if(msg) msg.textContent = total ? ('Showing groups '+from+'–'+to+' of '+total) : 'No groups';
+        const prev = pop.querySelector('#tr-prev');
+        const next = pop.querySelector('#tr-next');
+        if(prev) prev.disabled = (page<=0);
+        if(next) next.disabled = (page>=pageCount-1);
+      }catch(e){ /* ignore */ }
+    };
+
+    pop.addEventListener('change', ()=>{ updatePagerUI(); }, {passive:true});
+
+    pop.addEventListener('click', (e)=>{
+      const t=e.target;
+      if(!t || !t.id) return;
+      if(t.id!=='tr-prev' && t.id!=='tr-next') return;
+      const delta = (t.id==='tr-prev') ? -1 : 1;
+      const applyOrSet = (fn) => {
+        if(globalMode){
+          applyToAllCharts((s)=>{ fn(s); s.uirev++; });
+          redrawAll();
+        }else{
+          fn(st);
+          st.uirev++;
+          draw(id);
+        }
+      };
+      applyOrSet((s)=>{
+        const total = (lines && lines.length) ? lines.length : 0;
+        const pageCount = Math.max(1, Math.ceil(total / MAX_TRELLIS));
+        const page = Math.min(pageCount-1, Math.max(0, Math.floor(s.trellisPage||0)));
+        s.trellisPage = Math.min(pageCount-1, Math.max(0, page + delta));
+        s.keepYRange=false;
+      });
+      updatePagerUI();
+    }, {passive:true});
+
+    updatePagerUI();
+  }); }
+
+  function openPointsMenu(gd,id, globalMode, anchor){ toggleMenu('points', ()=>{ const st=state[id];
+    const pop=document.createElement('div'); pop.className='oas-pop'; pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Points / Labels / Legend</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">Points</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="pm" value="auto"     ${(st.points==='auto'||!st.points)?'checked':''}><span>Auto</span></label>
+          <label class="seg"><input type="radio" name="pm" value="none"     ${st.points==='none'?'checked':''}><span>None</span></label>
+          <label class="seg"><input type="radio" name="pm" value="all"      ${st.points==='all'?'checked':''}><span>All</span></label>
+        </div>
+        <div class="hdr">Labels</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="lbl" value="off" ${!st.labels?'checked':''}><span>Off</span></label>
+          <label class="seg"><input type="radio" name="lbl" value="on"  ${st.labels?'checked':''}><span>On</span></label>
+        </div>
+        <div class="hdr">Gaps</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="gap" value="break"   ${st.gaps==='break'?'checked':''}><span>Break</span></label>
+          <label class="seg"><input type="radio" name="gap" value="connect" ${st.gaps==='connect'?'checked':''}><span>Connect</span></label>
+          <label class="seg"><input type="radio" name="gap" value="interp"  ${st.gaps==='interp'?'checked':''}><span>Interpolate (×)</span></label>
+        </div>
+        <div class="hdr">Legend</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="lshow" value="1" ${st.legend.show?'checked':''}><span>Show</span></label>
+          <label class="seg"><input type="radio" name="lshow" value="0" ${!st.legend.show?'checked':''}><span>Hide</span></label>
+        </div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="lpos" value="auto"   ${normLegendPos(st.legend.pos)==='auto'?'checked':''}><span>Auto</span></label>
+          <label class="seg"><input type="radio" name="lpos" value="top"    ${normLegendPos(st.legend.pos)==='top'?'checked':''}><span>Top</span></label>
+          <label class="seg"><input type="radio" name="lpos" value="bottom" ${normLegendPos(st.legend.pos)==='bottom'?'checked':''}><span>Bottom</span></label>
+        </div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="lpos" value="left"   ${normLegendPos(st.legend.pos)==='left'?'checked':''}><span>Left</span></label>
+          <label class="seg"><input type="radio" name="lpos" value="right"  ${normLegendPos(st.legend.pos)==='right'?'checked':''}><span>Right</span></label>
+        </div>
+
+        <div class="hdr">Hover</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="hv" value="focused" ${HOVER_MODE==='focused'?'checked':''}><span>Focused (nearest)</span></label>
+          <label class="seg"><input type="radio" name="hv" value="compare" ${HOVER_MODE==='compare'?'checked':''}><span>Compare (all lines)</span></label>
+          <label class="seg"><input type="radio" name="hv" value="unified" ${HOVER_MODE==='unified'?'checked':''}><span>Unified</span></label>
+        </div>
+      </div>`;
+    document.body.appendChild(pop); placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+    pop.addEventListener('change',e=>{
+      const applyOrSet = (fn) => {
+        if(globalMode){
+          applyToAllCharts((s)=>{ fn(s); s.uirev++; });
+          redrawAll();
+        }else{
+          fn(st);
+          st.uirev++; draw(id);
+        }
+      };
+
+      if(e.target.name==='pm')    return applyOrSet((s)=>{ s.points=e.target.value; });
+      if(e.target.name==='lbl')   return applyOrSet((s)=>{ s.labels=(e.target.value==='on'); });
+      if(e.target.name==='gap')   return applyOrSet((s)=>{ s.gaps=e.target.value; });
+      if(e.target.name==='lpos')  return applyOrSet((s)=>{ s.legend.pos=normLegendPos(e.target.value); });
+      if(e.target.name==='lshow') return applyOrSet((s)=>{ s.legend.show=(e.target.value==='1'); });
+
+      if(e.target.name==='hv'){
+        setHoverPrefs({mode:e.target.value});
+        return;
+      }
+    },{passive:true});
+  }); }
+
+  function openFilterMenu(gd,id){ toggleMenu('filter', ()=>{ const st=state[id]; const f=st.filter||{min:null,max:null,excludeOutliers:false,excludeExtremes:false};
+    const minVal=Number.isFinite(f.min)?f.min:''; const maxVal=Number.isFinite(f.max)?f.max:'';
+    const parts=[]; if(minVal!=='') parts.push('≥ '+minVal); if(maxVal!=='') parts.push('≤ '+maxVal); if(f.excludeOutliers) parts.push('exclude outliers'); if(f.excludeExtremes) parts.push('exclude extremes');
+    const summary = filterIsActive(f)
+      ? `<div class="row" style="font:11px/1.4 system-ui;opacity:.7">Active: ${parts.join(' • ')}</div>`
+      : `<div class="row" style="font:11px/1.4 system-ui;opacity:.6">No active filter.</div>`;
+
+    const pop=document.createElement('div'); pop.className='oas-pop'; pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Filter</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="row"><input id="flt-min" type="number" placeholder="Min value" value="${minVal}" style="width:140px"></div>
+        <div class="row"><input id="flt-max" type="number" placeholder="Max value" value="${maxVal}" style="width:140px"></div>
+        <label><input id="flt-out" type="checkbox" ${f.excludeOutliers?'checked':''}> Exclude outliers (IQR)</label>
+        <label><input id="flt-ext" type="checkbox" ${f.excludeExtremes?'checked':''}> Exclude extremes</label>
+        ${summary}
+        <div class="row"><button id="flt-apply">Apply</button><button id="flt-clear">Clear</button></div>
+      </div>`;
+    document.body.appendChild(pop); placeMenu(pop, btnRect(gd));
+    addMenuClose(pop);
+
+    const minInput=pop.querySelector('#flt-min');
+    const maxInput=pop.querySelector('#flt-max');
+    const outCheck=pop.querySelector('#flt-out');
+    const extCheck=pop.querySelector('#flt-ext');
+    const finish=()=>{ closeMenus(); __open=null; };
+
+    const apply=()=>{
+      let min=parseFloat(minInput.value);
+      let max=parseFloat(maxInput.value);
+      if(!Number.isFinite(min)) min=null;
+      if(!Number.isFinite(max)) max=null;
+      if(min!=null && max!=null && min>max){ const tmp=min; min=max; max=tmp; minInput.value=min; maxInput.value=max; }
+      const exclude = !!outCheck.checked;
+      const excludeExt = !!extCheck.checked;
+      st.filter={min,max,excludeOutliers:exclude,excludeExtremes:excludeExt};
+      st.uirev++; st.keepYRange=false;
+      __AGG_CACHE__.clear();
+      setRemoveMode(gd,false);
+      draw(id);
+      finish();
+    };
+
+    pop.querySelector('#flt-apply').onclick=apply;
+    pop.querySelector('#flt-clear').onclick=()=>{
+      st.filter={min:null,max:null,excludeOutliers:false,excludeExtremes:false};
+      minInput.value=''; maxInput.value=''; outCheck.checked=false; extCheck.checked=false;
+      st.uirev++; st.keepYRange=false;
+      __AGG_CACHE__.clear();
+      measuresForGraph(gd).forEach(ms=>clearRemovedForMeasure(ms, id));
+      setRemoveMode(gd,false);
+      draw(id);
+      finish();
+    };
+
+    [minInput,maxInput,outCheck,extCheck].forEach(el=>{ el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ apply(); } }); });
+    minInput.focus();
+  }); }
+
+  function openStatusMenu(gd,id, globalMode, anchor){ toggleMenu('status', ()=>{ const st=state[id];
+    const pop=document.createElement('div'); pop.className='oas-pop'; pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Status</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">Mode</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="sm" value="none"   ${st.statMode==='none'?'checked':''}><span>None</span></label>
+          <label class="seg"><input type="radio" name="sm" value="median" ${st.statMode==='median'?'checked':''}><span>Median</span></label>
+          <label class="seg"><input type="radio" name="sm" value="reg"    ${st.statMode==='reg'?'checked':''}><span>Regression</span></label>
+        </div>
+        <div class="hdr">Scope</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="scp" value="line" ${st.scope==='line'?'checked':''}><span>By group</span></label>
+          <label class="seg"><input type="radio" name="scp" value="all"  ${st.scope==='all'?'checked':''}><span>All groups</span></label>
+        </div>
+
+        <div class="hdr">Moving average</div>
+        <div class="row">
+          <label><input type="checkbox" name="maon" ${st.maOn?'checked':''}> Show</label>
+          <span style="opacity:.85;margin-left:8px">Window</span>
+          <input type="number" name="mawin" min="2" max="60" step="1" value="${Number.isFinite(+st.maWin)?Math.max(2,Math.min(60,Math.floor(+st.maWin))):7}" style="width:72px">
+        </div>
+      </div>`;
+    document.body.appendChild(pop); placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+    pop.addEventListener('change',e=>{
+      const applyOrSet = (fn) => {
+        if(globalMode){
+          applyToAllCharts((s)=>{ fn(s); s.uirev++; });
+          redrawAll();
+        }else{
+          fn(st);
+          st.uirev++; draw(id);
+        }
+      };
+      if(e.target.name==='sm')  return applyOrSet((s)=>{ s.statMode=e.target.value; });
+      if(e.target.name==='scp') return applyOrSet((s)=>{ s.scope=e.target.value; });
+
+      if(e.target.name==='maon'){
+        const on = !!e.target.checked;
+        return applyOrSet((s)=>{ s.maOn=on; s.keepYRange=false; });
+      }
+      if(e.target.name==='mawin'){
+        const win = Math.max(2, Math.min(60, Math.floor(+e.target.value||7)));
+        return applyOrSet((s)=>{ s.maWin=win; s.keepYRange=false; });
+      }
+    },{passive:true});
+  }); }
+
+  function openTargetsMenu(gd,id){ toggleMenu('targets', ()=>{ const st=state[id];
+    const pop=document.createElement('div'); pop.className='oas-pop'; pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Targets</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">Style</div>
+        <div class="row">
+          <label><input type="radio" name="band" value="line" ${!st.band?'checked':''}> Line</label>
+          <label><input type="radio" name="band" value="area" ${st.band?'checked':''}> Band</label>
+        </div>
+        <div class="row"><input id="mmmin" type="number" placeholder="min" value="${Number.isFinite(st.minT)?st.minT:''}"></div>
+        <div class="row"><input id="mmmax" type="number" placeholder="max" value="${Number.isFinite(st.maxT)?st.maxT:''}"></div>
+        <div class="row"><button id="apply">Apply</button><button id="clear">Clear</button></div>
+      </div>`;
+    document.body.appendChild(pop); placeMenu(pop, btnRect(gd));
+    addMenuClose(pop);
+    pop.addEventListener('change',e=>{ if(e.target.name==='band'){ st.band=(e.target.value==='area'); st.uirev++; draw(id); } },{passive:true});
+    pop.querySelector('#apply').onclick=()=>{ const mi=parseFloat(pop.querySelector('#mmmin').value), ma=parseFloat(pop.querySelector('#mmmax').value); st.minT=Number.isFinite(mi)?mi:null; st.maxT=Number.isFinite(ma)?ma:null; st.showTargets=true; st.uirev++; draw(id); };
+    pop.querySelector('#clear').onclick=()=>{ st.minT=null; st.maxT=null; st.showTargets=false; st.uirev++; draw(id); };
+  }); }
+
+  function openYAxisMenu(gd,id){ toggleMenu('yaxis', ()=>{ const st=state[id];
+    const pop=document.createElement('div'); pop.className='oas-pop'; pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Y-axis</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">Mode</div>
+        <div class="row">
+          <label class="seg"><input type="radio" name="ym" value="auto" ${st.yMode==='auto'?'checked':''}><span>Auto</span></label>
+          <label class="seg"><input type="radio" name="ym" value="zero" ${st.yMode==='zero'?'checked':''}><span>0-based</span></label>
+          <label class="seg"><input type="radio" name="ym" value="log"  ${st.yMode==='log'?'checked':''}><span>Log</span></label>
+        </div>
+        <div class="row"><input id="ymin" type="number" placeholder="min" value="${st.yMin??''}"></div>
+        <div class="row"><input id="ymax" type="number" placeholder="max" value="${st.yMax??''}"></div>
+        <div class="row"><button id="apply">Apply</button><button id="clear">Clear</button></div>
+      </div>`;
+    document.body.appendChild(pop); placeMenu(pop, btnRect(gd));
+    addMenuClose(pop);
+    pop.addEventListener('change',e=>{ if(e.target.name!=='ym') return; st.yMode=e.target.value; if(st.yMode!=='manual'){ st.yMin=null; st.yMax=null; } st.uirev++; draw(id); },{passive:true});
+    pop.querySelector('#apply').onclick=()=>{ const mi=parseFloat(pop.querySelector('#ymin').value), ma=parseFloat(pop.querySelector('#ymax').value); st.yMin=Number.isFinite(mi)?mi:null; st.yMax=Number.isFinite(ma)?ma:null; st.yMode='manual'; st.uirev++; draw(id); };
+    pop.querySelector('#clear').onclick=()=>{ st.yMin=null; st.yMax=null; st.yMode='auto'; st.uirev++; draw(id); };
+  }); }
+
+  function openZoomMenu(gd,id){ toggleMenu('zoom', ()=>{
+    const st=state[id]||{};
+    const pop=document.createElement('div');
+    pop.className='oas-pop';
+    pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Zoom</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">X-axis</div>
+        <div class="row">
+          <button class="item" data-z="xin" style="width:auto">X +</button>
+          <button class="item" data-z="xout" style="width:auto">X −</button>
+          <button class="item" data-z="xreset" style="width:auto">Reset</button>
+        </div>
+        <div class="row">
+          <button class="item" data-z="xscroll" style="width:auto">Range slider: ${(st.xScroll||st.xScrollAuto)?'On':'Off'}</button>
+        </div>
+        <div class="sep"></div>
+        <div class="hdr">Y-axis</div>
+        <div class="row">
+          <button class="item" data-z="yin" style="width:auto">Y +</button>
+          <button class="item" data-z="yout" style="width:auto">Y −</button>
+          <button class="item" data-z="yreset" style="width:auto">Reset</button>
+        </div>
+        <div class="sep"></div>
+        <div class="row">
+          <button class="item" data-z="reset" style="width:auto">Reset both</button>
+          <button class="item" data-z="pan" style="width:auto">Pan (drag): ${st.dragPan?'On':'Off'}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(pop);
+    placeMenu(pop, btnRect(gd));
+    addMenuClose(pop);
+
+    const setR=(ax,r)=>{ const o={}; o[ax+'axis.range']=r; return Plotly.relayout(gd,o); };
+    function zoom(ax,dir){
+      const la=gd._fullLayout?.[ax+'axis'];
+      const r=la?.range?.slice()||null;
+      if(!r){
+        const o={}; o[ax+'axis.autorange']=true;
+        Plotly.relayout(gd,o).then(()=>zoom(ax,dir));
+        return;
+      }
+      const f=(dir==='in'?0.8:1.25);
+      if(la.type==='date'){
+        const toMs=v=> (typeof v==='number')?v:(new Date(v)).getTime();
+        const toStr=ms=> (new Date(ms)).toISOString();
+        const a=toMs(r[0]), b=toMs(r[1]);
+        const c=(a+b)/2, nh=(b-a)/2*f;
+        setR(ax,[toStr(c-nh),toStr(c+nh)]);
+      }else{
+        const a=+r[0], b=+r[1];
+        const c=(a+b)/2, nh=(b-a)/2*f;
+        setR(ax,[c-nh,c+nh]);
+      }
+    }
+
+    pop.querySelectorAll('button[data-z]').forEach(b=>b.onclick=()=>{
+      const k=b.dataset.z;
+      if(k==='xin') zoom('x','in');
+      if(k==='xout') zoom('x','out');
+      if(k==='xreset') Plotly.relayout(gd,{'xaxis.autorange':true});
+      if(k==='xscroll'){
+        const cur = !!(st.xScroll || st.xScrollAuto);
+        st.xScroll = !cur;
+        if(cur) st.xScrollAuto = false;
+        st.uirev++;
+        draw(id);
+        closeMenus(); __open=null;
+        openZoomMenu(gd,id);
+      }
+      if(k==='yin') zoom('y','in');
+      if(k==='yout') zoom('y','out');
+      if(k==='yreset') Plotly.relayout(gd,{'yaxis.autorange':true});
+      if(k==='reset') Plotly.relayout(gd,{'xaxis.autorange':true,'yaxis.autorange':true});
+      if(k==='pan'){
+        st.dragPan = !st.dragPan;
+        st.uirev++;
+        draw(id);
+        closeMenus(); __open=null;
+        openZoomMenu(gd,id);
+      }
+    });
+  }); }
+
+  function pdfReady(){
+    return !!(window.jspdf && window.jspdf.jsPDF);
+  }
+
+  async function plotlyToPngDataUrl(gd, scale){
+    return Plotly.toImage(gd, { format:'png', scale: scale||2 });
+  }
+
+  async function downloadThisChartPDF(gd){
+    if(!pdfReady()) return;
+    const {jsPDF} = window.jspdf;
+    const title = decodeURIComponent(gd.getAttribute('data-title')||'chart');
+    const filename = safeFilename(title||'chart');
+
+    const img = await plotlyToPngDataUrl(gd, 2);
+    const pdf = new jsPDF({ orientation:'landscape', unit:'pt', format:'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const margin = 24;
+    const maxW = pageW - margin*2;
+    const maxH = pageH - margin*2;
+    const props = pdf.getImageProperties(img);
+    const ratio = (props.width && props.height) ? (props.width/props.height) : 1.6;
+    let w = maxW;
+    let h = w / ratio;
+    if(h > maxH){ h = maxH; w = h * ratio; }
+    const x = (pageW - w) / 2;
+    const y = (pageH - h) / 2;
+    pdf.addImage(img, 'PNG', x, y, w, h);
+    pdf.save(filename + '.pdf');
+  }
+
+  async function downloadAllChartsPDF(){
+    if(!pdfReady()) return;
+    const {jsPDF} = window.jspdf;
+    const pdf = new jsPDF({ orientation:'landscape', unit:'pt', format:'a4' });
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+    const margin = 24;
+    const maxW = pageW - margin*2;
+    const maxH = pageH - margin*2;
+    let first = true;
+
+    for(const secId of sections){
+      const g2=document.getElementById(secId);
+      if(!g2) continue;
+      const img = await plotlyToPngDataUrl(g2, 2);
+      if(!first) pdf.addPage('a4','landscape');
+      first = false;
+      const props = pdf.getImageProperties(img);
+      const ratio = (props.width && props.height) ? (props.width/props.height) : 1.6;
+      let w = maxW;
+      let h = w / ratio;
+      if(h > maxH){ h = maxH; w = h * ratio; }
+      const x = (pageW - w) / 2;
+      const y = (pageH - h) / 2;
+      pdf.addImage(img, 'PNG', x, y, w, h);
+      await new Promise(r=>setTimeout(r, 120));
+    }
+
+    pdf.save('all_charts.pdf');
+  }
+
+  function openDownloadMenu(gd,id, anchor){ toggleMenu('download', ()=>{
+    const pop=document.createElement('div');
+    pop.className='oas-pop';
+    pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Export</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">All graphs</div>
+        <div class="row">
+          <button class="item" data-dl="allpdf" ${pdfReady()?'':'disabled'} style="width:auto">PDF</button>
+        </div>
+        <div class="sep"></div>
+        <div class="hdr">All data</div>
+        <div class="row">
+          <button class="item" data-dl="allcsv" style="width:auto">CSV</button>
+          <button class="item" data-dl="allexcel" style="width:auto">Excel</button>
+        </div>
+      </div>`;
+    document.body.appendChild(pop);
+    placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+
+    pop.querySelector('[data-dl="allpdf"]').onclick=()=>downloadAllChartsPDF();
+    pop.querySelector('[data-dl="allcsv"]').onclick=()=>downloadAllDataCSV();
+    pop.querySelector('[data-dl="allexcel"]').onclick=()=>downloadAllDataExcel();
+  }); }
+
+  function openDownloadMenuSingle(gd,id, anchor){ toggleMenu('download', ()=>{
+    const st=state[id]||{};
+    const pop=document.createElement('div');
+    pop.className='oas-pop';
+    pop.innerHTML=`
+      <div class="hdr hdr-top"><span class="ttl">Export (this graph)</span><button class="xbtn" data-act="close" title="Close">×</button></div>
+      <div class="group">
+        <div class="hdr">Chart</div>
+        <div class="row">
+          <button class="item" data-dl="png" style="width:auto">PNG</button>
+          <button class="item" data-dl="pdf" ${pdfReady()?'':'disabled'} style="width:auto">PDF</button>
+        </div>
+        <div class="sep"></div>
+        <div class="hdr">Data</div>
+        <div class="row">
+          <button class="item" data-dl="csv" style="width:auto">CSV</button>
+          <button class="item" data-dl="excel" style="width:auto">Excel</button>
+          <button class="item" data-dl="cpy" style="width:auto">Copy</button>
+        </div>
+      </div>`;
+    document.body.appendChild(pop);
+    placeMenu(pop, anchor || btnRect(gd));
+    addMenuClose(pop);
+
+    pop.querySelector('[data-dl="png"]').onclick=()=>{
+      const title=decodeURIComponent(gd.getAttribute('data-title')||'chart');
+      try{ Plotly.downloadImage(gd,{format:'png',scale:2,filename:safeFilename(title||'chart')}); }catch(e){ /* ignore */ }
+    };
+    pop.querySelector('[data-dl="pdf"]').onclick=()=>downloadThisChartPDF(gd);
+    pop.querySelector('[data-dl="csv"]').onclick=()=>downloadCSV(gd, st);
+    pop.querySelector('[data-dl="excel"]').onclick=()=>downloadExcel(gd, st);
+    pop.querySelector('[data-dl="cpy"]').onclick=()=>copyCSVToClipboard(gd, st);
+  }); }
+  function csvCell(v){
+    const s = String(v ?? '');
+    return '"' + s.replace(/\r?\n/g,' ').replace(/"/g,'""') + '"';
+  }
+
+  function downloadAllDataCSV(){
+    // Exports the raw dataset (what OAS provided) as one CSV.
+    const keys = [];
+    const seen = new Set();
+    for(const r of raw){
+      for(const k in r){
+        if(!seen.has(k)) { seen.add(k); keys.push(k); }
+      }
+    }
+    const cols = keys.length ? keys : ['dt','line','cell'];
+    const out = [cols.map(csvCell).join(',')];
+    for(const r of raw){
+      out.push(cols.map(k=>csvCell(r[k])).join(','));
+    }
+    const blob=new Blob([out.join('\n')],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='all_data.csv';
+    a.click();
+  }
+
+  function downloadAllDataExcel(){
+    // Excel export (.xlsx). Uses SheetJS if available; falls back to HTML-table .xls.
+    try{
+      if(typeof window.XLSX!=='undefined' && window.XLSX && window.XLSX.utils && window.XLSX.writeFile){
+        const keys = [];
+        const seen = new Set();
+        for(const r of raw){
+          for(const k in r){
+            if(!seen.has(k)) { seen.add(k); keys.push(k); }
+          }
+        }
+        const cols = keys.length ? keys : ['dt','line','cell'];
+        const table = [cols.slice()];
+        for(const r of raw){
+          table.push(cols.map(k=>r[k] ?? ''));
+        }
+        const wb = window.XLSX.utils.book_new();
+        const ws = window.XLSX.utils.aoa_to_sheet(table);
+        window.XLSX.utils.book_append_sheet(wb, ws, 'Data');
+        window.XLSX.writeFile(wb, 'all_data.xlsx');
+        return;
+      }
+    }catch(e){ /* fall through */ }
+
+    // Fallback: HTML table saved as .xls (opens in Excel).
+    const keys = [];
+    const seen = new Set();
+    for(const r of raw){
+      for(const k in r){
+        if(!seen.has(k)) { seen.add(k); keys.push(k); }
+      }
+    }
+    const cols = keys.length ? keys : ['dt','line','cell'];
+    const esc = (v)=> String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    let html = '<html><head><meta charset="utf-8"></head><body><table border="1"><tr>';
+    html += cols.map(c=>`<th>${esc(c)}</th>`).join('');
+    html += '</tr>';
+    for(const r of raw){
+      html += '<tr>' + cols.map(k=>`<td>${esc(r[k])}</td>`).join('') + '</tr>';
+    }
+    html += '</table></body></html>';
+    const blob = new Blob([html], {type:'application/vnd.ms-excel;charset=utf-8;'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='all_data.xls';
+    a.click();
+  }
+
+  function buildAllDataCSVText(){
+    const keys = [];
+    const seen = new Set();
+    for(const r of raw){
+      for(const k in r){
+        if(!seen.has(k)) { seen.add(k); keys.push(k); }
+      }
+    }
+    const cols = keys.length ? keys : ['dt','line','cell'];
+    const out = [cols.map(csvCell).join(',')];
+    for(const r of raw){
+      out.push(cols.map(k=>csvCell(r[k])).join(','));
+    }
+    return out.join('\n');
+  }
+
+  function copyAllDataCSVToClipboard(){
+    try{
+      const t = buildAllDataCSVText();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(t);
+        return;
+      }
+    }catch(e){ /* ignore */ }
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=buildAllDataCSVText();
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.left='-9999px';
+      ta.style.top='0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand && document.execCommand('copy');
+      document.body.removeChild(ta);
+    }catch(e){ /* ignore */ }
+  }
+
+  function downloadExcel(gd, st){
+    // Per-graph data export to Excel (.xlsx if SheetJS present, otherwise HTML-table .xls).
+    const title=decodeURIComponent(gd.getAttribute('data-title')||'chart');
+    const filename = safeFilename(title||'chart');
+    const measures=measuresForGraph(gd);
+    const tidy = (measures.length > 1);
+    const cols = tidy
+      ? [DATE_TITLE, LINE_TITLE, CELL_TITLE, 'Measure', 'Value']
+      : [DATE_TITLE, LINE_TITLE, CELL_TITLE, 'Value'];
+    const rows=[];
+
+    if(!measures.length) return;
+    if(!tidy){
+      const mk=measures[0];
+      const by=perLineArray(mk);
+      for(const ln of lines){
+        const arr=by[ln]; if(!arr) continue;
+        const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st?.filter, removedPoints.get(mk));
+        const X=filtered.x, Y=filtered.y, T=filtered.t;
+        for(let i=0;i<Y.length;i++) rows.push([X[i], ln, (T[i]??''), (Y[i]==null?'':Y[i])]);
+      }
+    }else{
+      for(const mk of measures){
+        const by=perLineArray(mk);
+        for(const ln of lines){
+          const arr=by[ln]; if(!arr) continue;
+          const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st?.filter, removedPoints.get(mk));
+          const X=filtered.x, Y=filtered.y, T=filtered.t;
+          for(let i=0;i<Y.length;i++) rows.push([X[i], ln, (T[i]??''), mk, (Y[i]==null?'':Y[i])]);
+        }
+      }
+    }
+
+    try{
+      if(typeof window.XLSX!=='undefined' && window.XLSX && window.XLSX.utils && window.XLSX.writeFile){
+        const wb = window.XLSX.utils.book_new();
+        const ws = window.XLSX.utils.aoa_to_sheet([cols].concat(rows));
+        window.XLSX.utils.book_append_sheet(wb, ws, 'Data');
+        window.XLSX.writeFile(wb, filename + '.xlsx');
+        return;
+      }
+    }catch(e){ /* fall through */ }
+
+    const esc = (v)=> String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    let html = '<html><head><meta charset="utf-8"></head><body><table border="1"><tr>';
+    html += cols.map(c=>`<th>${esc(c)}</th>`).join('');
+    html += '</tr>';
+    for(const r of rows){
+      html += '<tr>' + r.map(v=>`<td>${esc(v)}</td>`).join('') + '</tr>';
+    }
+    html += '</table></body></html>';
+    const blob = new Blob([html], {type:'application/vnd.ms-excel;charset=utf-8;'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=filename + '.xls';
+    a.click();
+  }
+
+  function downloadCSV(gd, st){
+    const title=decodeURIComponent(gd.getAttribute('data-title')||'chart');
+    const measures=measuresForGraph(gd);
+    const tidy = (measures.length > 1);
+    const out = tidy
+      ? [`${csvCell(DATE_TITLE)},${csvCell(LINE_TITLE)},${csvCell(CELL_TITLE)},${csvCell('Measure')},${csvCell('Value')}`]
+      : [`${csvCell(DATE_TITLE)},${csvCell(LINE_TITLE)},${csvCell(CELL_TITLE)},${csvCell('Value')}`];
+
+    const mkPrimary = measures[0] || '';
+    if(!mkPrimary){
+      const blob=new Blob([out.join('\n')],{type:'text/csv;charset=utf-8;'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=safeFilename(title||'chart')+'.csv'; a.click();
+      return;
+    }
+
+    if(!tidy){
+      const mk = mkPrimary;
+      const by=perLineArray(mk);
+      for(const ln of lines){
+        const arr=by[ln]; if(!arr) continue;
+        const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st?.filter, removedPoints.get(mk));
+        const X=filtered.x, Y=filtered.y, T=filtered.t;
+        for(let i=0;i<Y.length;i++) out.push(`${csvCell(X[i])},${csvCell(ln)},${csvCell(T[i]??'')},${csvCell(Y[i]==null?'':Y[i])}`);
+      }
+    } else {
+      for(const mk of measures){
+        const by=perLineArray(mk);
+        for(const ln of lines){
+          const arr=by[ln]; if(!arr) continue;
+          const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st?.filter, removedPoints.get(mk));
+          const X=filtered.x, Y=filtered.y, T=filtered.t;
+          for(let i=0;i<Y.length;i++) out.push(`${csvCell(X[i])},${csvCell(ln)},${csvCell(T[i]??'')},${csvCell(mk)},${csvCell(Y[i]==null?'':Y[i])}`);
+        }
+      }
+    }
+
+    const blob=new Blob([out.join('\n')],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=safeFilename(title||'chart')+'.csv';
+    a.click();
+  }
+
+  function copyCSVToClipboard(gd, st){
+    const title=decodeURIComponent(gd.getAttribute('data-title')||'chart');
+    const measures=measuresForGraph(gd);
+    const tidy = (measures.length > 1);
+    const out = tidy
+      ? [`${csvCell(DATE_TITLE)},${csvCell(LINE_TITLE)},${csvCell(CELL_TITLE)},${csvCell('Measure')},${csvCell('Value')}`]
+      : [`${csvCell(DATE_TITLE)},${csvCell(LINE_TITLE)},${csvCell(CELL_TITLE)},${csvCell('Value')}`];
+
+    const mkPrimary = measures[0] || '';
+    if(mkPrimary){
+      if(!tidy){
+        const mk = mkPrimary;
+        const by=perLineArray(mk);
+        for(const ln of lines){
+          const arr=by[ln]; if(!arr) continue;
+          const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st?.filter, removedPoints.get(mk));
+          const X=filtered.x, Y=filtered.y, T=filtered.t;
+          for(let i=0;i<Y.length;i++) out.push(`${csvCell(X[i])},${csvCell(ln)},${csvCell(T[i]??'')},${csvCell(Y[i]==null?'':Y[i])}`);
+        }
+      } else {
+        for(const mk of measures){
+          const by=perLineArray(mk);
+          for(const ln of lines){
+            const arr=by[ln]; if(!arr) continue;
+            const filtered=filterSeries(arr.x, arr.y, arr.t, arr.idx, st?.filter, removedPoints.get(mk));
+            const X=filtered.x, Y=filtered.y, T=filtered.t;
+            for(let i=0;i<Y.length;i++) out.push(`${csvCell(X[i])},${csvCell(ln)},${csvCell(T[i]??'')},${csvCell(mk)},${csvCell(Y[i]==null?'':Y[i])}`);
+          }
+        }
+      }
+    }
+
+    const text=out.join('\n');
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).catch(()=>{});
+      return;
+    }
+    const ta=document.createElement('textarea');
+    ta.value=text;
+    ta.style.position='fixed';
+    ta.style.left='-9999px';
+    ta.style.top='-9999px';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try{ document.execCommand('copy'); }catch(e){ /* ignore */ }
+    ta.remove();
+  }
+
+  /* --------- Fullscreen (preserve state) --------- */
+  const _raf=()=>new Promise(r=>requestAnimationFrame(r));
+  async function _waitForSize(el, maxFrames){
+    const n = (maxFrames==null ? 30 : maxFrames);
+    for(let i=0;i<n;i++){
+      await _raf();
+      const r=el.getBoundingClientRect();
+      if(r.width>20 && r.height>20) return true;
+    }
+    return false;
+  }
+
+  async function toggleFS(g,id){
+    const st=state[id];
+
+    // EXIT FS
+    if(g._fsOverlay){
+      const parent = g._origParent || null;
+      const ph = g._ph || null;
+      if(ph && ph.parentNode){
+        ph.parentNode.replaceChild(g, ph);
+        g._ph = null;
+      } else if(parent){
+        parent.appendChild(g);
+      }
+      g.style.width='100%';
+      g.style.height=(g._prevH||baseChartHeightPx()||200)+'px';
+      g._fsOverlay.remove(); g._fsOverlay=null;
+      removeEventListener('resize',g._fsResize);
+
+      // Let the browser compute layout after DOM move before resizing.
+      g.style.opacity=0.01;
+      await _waitForSize(g, 40);
+      try{ await Plotly.relayout(g,{autosize:true, width:null, height:null}); }catch(e){ /* ignore */ }
+      try{ Plotly.Plots.resize(g); }catch(e){ /* ignore */ }
+      await _raf();
+      try{ await draw(id); }catch(e){ /* ignore */ }
+      await _raf();
+      try{ Plotly.Plots.resize(g); }catch(e){ /* ignore */ }
+
+      // Sometimes after DOM moves, Plotly may return without marker layer (SVG)
+      // even though the trace mode requests markers. Force a one-time purge+redraw.
+      try{
+        const mk = decodeURIComponent(g.getAttribute('data-measure')||'');
+        const info = chartTypeInfo(st.chartType || chartTypeFor(mk));
+        const shouldMarkers = (st.points && st.points!=='none') || !!info.forceMarkers || info.kind==='markers';
+        const hasMarkerSvg = !!g.querySelector('.points path.point, .points path');
+        if(shouldMarkers && !hasMarkerSvg){
+          try{ Plotly.purge(g); }catch(e){ /* ignore */ }
+          await _raf();
+          try{ await draw(id); }catch(e){ /* ignore */ }
+          await _raf();
+          try{ Plotly.Plots.resize(g); }catch(e){ /* ignore */ }
+        }else{
+          // Nudge Plotly to redraw in case only markers are stale.
+          try{ await Plotly.redraw(g); }catch(e){ /* ignore */ }
+        }
+      }catch(e){ /* ignore */ }
+
+      // Fallback: if Plotly DOM didn't come back, purge + redraw once.
+      if(!g.querySelector('.main-svg')){
+        try{ Plotly.purge(g); }catch(e){ /* ignore */ }
+        await _raf();
+        try{ await draw(id); }catch(e){ /* ignore */ }
+        await _raf();
+        try{ Plotly.Plots.resize(g); }catch(e){ /* ignore */ }
+      }
+
+      // Restore tick-angle/tick settings from before fullscreen.
+      if(g._preFSX){
+        const x=g._preFSX;
+        const o={};
+        if(x.tickangle!=null) o['xaxis.tickangle']=x.tickangle;
+        if(x.tickmode!=null) o['xaxis.tickmode']=x.tickmode;
+        if(x.nticks!=null) o['xaxis.nticks']=x.nticks;
+        if(x.tickvals!=null) o['xaxis.tickvals']=x.tickvals;
+        if(x.ticktext!=null) o['xaxis.ticktext']=x.ticktext;
+        try{ await Plotly.relayout(g, o); }catch(e){ /* ignore */ }
+      }
+      g._preFSX=null;
+      g.style.opacity=1;
+      return;
+    }
+
+    // ENTER FS (do NOT force any setting; preserve current st.*)
+    g._preFSX = (g._fullLayout && g._fullLayout.xaxis) ? {
+      tickangle: g._fullLayout.xaxis.tickangle,
+      tickmode: g._fullLayout.xaxis.tickmode,
+      tickvals: g._fullLayout.xaxis.tickvals,
+      ticktext: g._fullLayout.xaxis.ticktext,
+      nticks: g._fullLayout.xaxis.nticks
+    } : null;
+    g._origParent=g.parentNode;
+    const ph=document.createElement('div');
+    ph.className='pl-fs-ph';
+    ph.style.display='none';
+    g._origParent.insertBefore(ph, g);
+    g._ph=ph;
+    g._prevH=(parseInt(g.style.height,10)||baseChartHeightPx()||200);
+
+    const ov=document.createElement('div'); ov.className='pl-fs-overlay'; document.body.appendChild(ov); g._fsOverlay=ov;
+    const row=document.createElement('div'); row.className='fs-row'; ov.appendChild(row);
+    const top=document.createElement('div'); top.className='fs-chart'; row.appendChild(top); top.appendChild(g);
+
+    g._fsResize=function(){
+      const ih=innerHeight, iw=innerWidth;
+      g.style.width=iw+'px'; g.style.height=ih+'px';
+      Plotly.relayout(g,{margin:{l:80,r:28,t:84,b:64,pad:0}, width:iw, height:ih, autosize:false});
+      Plotly.Plots.resize(g);
+    };
+    addEventListener('resize',g._fsResize);
+    g._fsResize();
+    // Avoid races between fullscreen draw and later exit draw.
+    await _raf();
+    await _waitForSize(g, 30);
+    try{ await draw(id); }catch(e){ /* ignore */ }
+  }
+
+  /* ----------------- lazy & start ----------------- */
+  if(!sections.length){ return; }
+
+  // Smoother resizing (e.g., OAS container changes / side panels)
+  (function setupResizeObserver(){
+    if(!('ResizeObserver' in window)) return;
+    const pending=new Set();
+    let raf=0;
+    const flush=()=>{
+      raf=0;
+      pending.forEach(gd=>{ try{ if(gd && gd._fullLayout) Plotly.Plots.resize(gd); }catch(e){ /* ignore */ } });
+      pending.clear();
+    };
+    const ro=new ResizeObserver(entries=>{
+      for(const e of entries){ pending.add(e.target); }
+      if(!raf) raf=requestAnimationFrame(flush);
+    });
+    sections.forEach(id=>{ const gd=document.getElementById(id); if(gd) ro.observe(gd); });
+  })();
+
+  draw(sections[0]);
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ draw(e.target.id); io.unobserve(e.target); } }); },{root:null,rootMargin:'400px',threshold:0});
+    sections.slice(1).forEach(id=>io.observe(document.getElementById(id)));
+  }else{ sections.slice(1).forEach(id=>draw(id)); }
+})();
+</script>
+<!-- ============ /OAS Trend v2.0.0 (rev 2026-02-02) ============ -->

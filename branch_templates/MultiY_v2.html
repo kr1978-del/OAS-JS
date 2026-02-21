@@ -1,0 +1,926 @@
+Prefix
+<div id="box-data" style="display:none">[
+
+Narrative
+{"dt":"@1","line":"@2","cell":"@3","m1":"@4","m2":"@5","m3":"@6","m4":"@7"}
+
+Row separator	
+,
+
+Postfix
+]</div>
+
+<!-- Add new PVs to control styling and layout -->
+<div id="oas-params" style="display:none" 
+  data-gpr="@{GraphsPerRow}{1}"
+  data-attr-title="@{PV_Attribute01}{Week}"
+  data-mtitles="@{PV_MeasureTitles}{}"
+  data-p1="@{PV_Met01}{AE Duration (secs)}"
+  data-p2="@{PV_Met02}{Current Effeciency(%)}"
+  data-p3="@{PV_Met03}{Nett Volts Per Pot (V)}"
+  data-p4="@{PV_Met04}{Latest Base RSP (µΩ)}"
+  data-lw="@{PV_LineWidth}{3}"            <!-- New: line width -->
+  data-ptsize="@{PV_PointSize}{7}"        <!-- New: point (symbol) size -->
+  data-tbsize="@{PV_ToolboxSize}{14}"     <!-- New: toolbox icon size -->
+  data-legend-pad="@{PV_LegendRightPad}{200}" <!-- New: reserve space on right for toolbox so legend stays on same row -->
+  data-yoffset-base="@{PV_YAxisOffsetBase}{34}" <!-- New: shrink spacing between stacked Y axes -->
+  data-animate="@{PV_Animate}{0}"         <!-- New: 0/1 force animation -->
+></div>
+
+<style>
+  :root{ --frame-bg:#fff; --frame-bd:#e5e7eb; --icon-hover:rgba(0,0,0,.06); }
+  .sec{
+    border:1px solid var(--frame-bd); border-radius:10px; padding:10px; background:var(--frame-bg);
+    display:flex; flex-direction:column; position:relative; width:100%; box-sizing:border-box; overflow:hidden;
+  }
+  .plot-wrap{flex:1 1 auto; min-height:0; overflow:hidden;}
+  #multiY{width:100%; height:100%; position:relative;}
+
+  /* Tiny dropdown used by Zoom menu */
+  .zoom-menu{
+    position:absolute; right:8px; top:40px; z-index:10; min-width:160px; border-radius:8px;
+    border:1px solid var(--frame-bd); overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.15);
+    user-select:none; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+  }
+  .zoom-menu .hdr{ padding:8px 10px; font-weight:600; font-size:13px; border-bottom:1px solid var(--frame-bd); }
+  .zoom-menu .btn{ padding:8px 10px; cursor:pointer; font-size:13px; }
+  .zoom-menu .btn:hover{ background:var(--icon-hover); }
+  .zoom-menu .row{ display:flex; gap:8px; padding:8px 10px; align-items:center; }
+  .zoom-menu .row .btn{ padding:6px 10px; border-radius:6px; border:1px solid var(--frame-bd); }
+  .zoom-menu .row input{ width:72px; padding:6px 8px; border:1px solid var(--frame-bd); border-radius:6px; background:transparent; color:inherit; font-size:13px; }
+  .zoom-menu .hint{ padding:0 10px 10px; font-size:12px; opacity:.85; }
+</style>
+
+<div class="sec" id="sec-root">
+  <div class="plot-wrap"><div id="multiY"></div></div>
+</div>
+
+<script src="/analyticsRes/custom/echarts.min.js"></script>
+<script>
+(function(){
+  try{
+    const host=document.getElementById('box-data');
+    const gd=document.getElementById('multiY');
+    const sec=document.getElementById('sec-root');
+    if(!host||!gd||!sec){ return; }
+    if(typeof echarts==='undefined'){ gd.innerHTML='<div style="color:#ef4444">echarts.min.js not found</div>'; return; }
+
+    /* ---------- THEME ---------- */
+    const THEMES={
+      light:{BG:'#fff',PBG:'#fff',TXT:'#111827',GRID:'#e5e7eb',AX:'#6b7280',VL:'#60a5fa',LEG:'#111827',BORDER:'#e5e7eb',LBLBG:'#eef2ff'},
+      dark :{BG:'#0b1220',PBG:'#0f172a',TXT:'#e5e7eb',GRID:'#293244',AX:'#9aa4b2',VL:'#60a5fa',LEG:'#e5e7eb',BORDER:'#2b3447',LBLBG:'#1f2a44'}
+    };
+    let CUR_THEME='light';
+    const PAL=['#38bdf8','#f59e0b','#22c55e','#ef4444'];
+    const LINE_TYPES=['solid','dashed','dotted','dashdot'];
+
+    /* ---------- SIZE: responsive height (fit inside container/viewport) ---------- */
+    function getViewportHeight(){
+      const vv = window.visualViewport;
+      return (vv && vv.height) ? vv.height : innerHeight;
+    }
+
+    function findScrollContainer(el){
+      let node = el.parentElement;
+      while(node && node !== document.body && node !== document.documentElement){
+        const cs = getComputedStyle(node);
+        const oy = (cs.overflowY || cs.overflow || '').toLowerCase();
+        const isScroll = oy.includes('auto') || oy.includes('scroll');
+        if(isScroll) return node;
+        node = node.parentElement;
+      }
+      return null;
+    }
+
+    function computeAvailableHeight(){
+      const r = sec.getBoundingClientRect();
+      const pad = 8;
+      const viewH = getViewportHeight();
+      const availViewport = viewH - r.top - pad;
+
+      const sc = findScrollContainer(sec);
+      if(sc){
+        const sr = sc.getBoundingClientRect();
+        const availContainer = sr.bottom - r.top - pad;
+        if(Number.isFinite(availContainer) && availContainer > 0) return Math.min(availViewport, availContainer);
+      }
+
+      // Fallback: use viewport
+      return availViewport;
+    }
+
+    const userSize = { scale: 1, widthPx: null, heightPx: null };
+
+    function fit(){
+      const minH = 320;
+      const autoH = Math.max(220, computeAvailableHeight());
+      const targetH = (Number.isFinite(userSize.heightPx) && userSize.heightPx > 0)
+        ? userSize.heightPx
+        : autoH * (Number.isFinite(userSize.scale) ? userSize.scale : 1);
+      sec.style.height = Math.max(minH, Math.floor(targetH))+'px';
+
+      // Width override is best-effort; container constraints may still apply.
+      if(Number.isFinite(userSize.widthPx) && userSize.widthPx > 0){
+        sec.style.width = Math.floor(userSize.widthPx) + 'px';
+        sec.style.maxWidth = 'none';
+      }else{
+        sec.style.width = '';
+        sec.style.maxWidth = '';
+      }
+    }
+
+    let resizeRaf = 0;
+    function scheduleResize(){
+      cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(()=>{ fit(); chart && chart.resize(); });
+    }
+
+    function scheduleResizeAndRelayout(){
+      cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(()=>{
+        fit();
+        if(chart) chart.resize();
+        // Recompute grids/x-axis label spacing after size changes, but keep current zoom extents.
+        if(chart){
+          const prev = chart.getOption();
+          const next = buildOption();
+
+          // Preserve dataZoom window(s) by id.
+          const prevDzById = new Map();
+          for(const dz of (prev.dataZoom||[])){
+            if(dz && dz.id) prevDzById.set(dz.id, dz);
+          }
+          if(Array.isArray(next.dataZoom) && prevDzById.size){
+            next.dataZoom = next.dataZoom.map((dz)=>{
+              const pdz = dz && dz.id ? prevDzById.get(dz.id) : null;
+              if(!pdz) return dz;
+              const out = Object.assign({}, dz);
+              if(pdz.start != null) out.start = Array.isArray(pdz.start) ? pdz.start[0] : pdz.start;
+              if(pdz.end != null) out.end = Array.isArray(pdz.end) ? pdz.end[0] : pdz.end;
+              if(pdz.startValue != null) out.startValue = Array.isArray(pdz.startValue) ? pdz.startValue[0] : pdz.startValue;
+              if(pdz.endValue != null) out.endValue = Array.isArray(pdz.endValue) ? pdz.endValue[0] : pdz.endValue;
+              return out;
+            });
+          }
+
+          // Preserve current y-axis zoom (min/max) by index.
+          if(Array.isArray(next.yAxis) && Array.isArray(prev.yAxis)){
+            next.yAxis = next.yAxis.map((ax,i)=>{
+              const pax = prev.yAxis[i];
+              if(pax && isFinite(pax.min) && isFinite(pax.max)){
+                return Object.assign({}, ax, { min: pax.min, max: pax.max });
+              }
+              return ax;
+            });
+          }
+
+          chart.setOption(
+            next,
+            { notMerge:true, replaceMerge:['series','xAxis','yAxis','grid','legend','toolbox','axisPointer'] }
+          );
+        }
+      });
+    }
+
+    addEventListener('resize', scheduleResize);
+    if(window.visualViewport){
+      visualViewport.addEventListener('resize', scheduleResize);
+      visualViewport.addEventListener('scroll', scheduleResize);
+    }
+    fit();
+
+    /* ---------- PARAMS ---------- */
+    const p=document.getElementById('oas-params')||{dataset:{}};
+    const ATTR=(p.dataset.attrTitle||'Week').trim();
+    const MT=(p.dataset.mtitles||'').split('|').map(s=>s.trim()).filter(Boolean);
+    const PT=[]; for(let i=1;i<=4;i++){ const v=(p.dataset['p'+i]||'').trim(); if(v) PT.push(v); }
+
+    // User-tunable sizes/pads
+    const LINE_W  = Math.max(1, Math.min(12, +(p.dataset.lw||p.dataset.linew||3)));
+    const PT_SIZE = Math.max(2, Math.min(24, +(p.dataset.ptsize||p.dataset.symsize||7)));
+    const TB_SIZE = Math.max(10, Math.min(24, +(p.dataset.tbsize||14)));
+    const LEGEND_RIGHT_PAD = Math.max(120, +(p.dataset.legendPad||200));
+    const Y_OFFSET_BASE = Math.max(24, +(p.dataset.yoffsetBase||34));
+    const FORCE_ANIMATE = +(p.dataset.animate||0) ? true : false;
+
+    const toNum=s=>{ if(s==null) return null; let t=(''+s).trim(); if(!t) return null;
+      t=t.replace(/[^\d.,\-]/g,''); const d=t.lastIndexOf('.'), c=t.lastIndexOf(',');
+      if(d!==-1&&c!==-1) t=(c>d)? t.replace(/\./g,'').replace(',', '.'): t.replace(/,/g,'');
+      else if(c!==-1) t=t.replace(',', '.'); else t=t.replace(/,/g,'');
+      const v=parseFloat(t); return Number.isFinite(v)?v:null; };
+
+    function parseRows(txt){
+      if(!txt) return [];
+      // Fast path: try to coerce to a proper JSON array
+      try{
+        const cleaned = txt
+          .replace(/,\s*]$/,']')
+          .replace(/^[^\[]*\[/,'[')
+          .replace(/\][^\]]*$/ ,']');
+        const parsed = JSON.parse(cleaned);
+        return Array.isArray(parsed) ? parsed : [];
+      }catch(_){ /* fall through */ }
+
+      // Fallback: extract JSON objects (slower)
+      const blocks=[...txt.matchAll(/\{[\s\S]*?\}/g)].map(m=>m[0]);
+      const rows=[]; for(const b of blocks){ try{ rows.push(JSON.parse(b)); }catch(_){ } }
+      return rows;
+    }
+
+    const raw=parseRows(host.textContent||'');
+    if(!raw.length){ gd.innerHTML='<div style="color:#374151">No data rows.</div>'; return; }
+
+    // Normalize rows + build per-X aggregates in one pass (faster than group+mean)
+    const DEF={m1:'Measure 1',m2:'Measure 2',m3:'Measure 3',m4:'Measure 4'};
+    const allKeys=['m1','m2','m3','m4'];
+
+    const X0=[];
+    const aggByX=new Map();
+    const keyHasData={m1:false,m2:false,m3:false,m4:false};
+
+    for(const r of raw){
+      const x=String(r.dt);
+      let agg=aggByX.get(x);
+      if(!agg){
+        agg={sum:{m1:0,m2:0,m3:0,m4:0}, cnt:{m1:0,m2:0,m3:0,m4:0}};
+        aggByX.set(x, agg);
+        X0.push(x);
+      }
+      for(const k of allKeys){
+        const v=toNum(r[k]);
+        if(Number.isFinite(v)){
+          keyHasData[k]=true;
+          agg.sum[k]+=v;
+          agg.cnt[k]+=1;
+        }
+      }
+    }
+
+    const keys=allKeys.filter(k=>keyHasData[k]);
+    if(!keys.length){ gd.innerHTML='<div style="color:#374151">No numeric measures found.</div>'; return; }
+
+    const TIT={}; keys.forEach((k,i)=>TIT[k]=(MT[i]||PT[i]||DEF[k]));
+
+    function buildSeries(X){
+      const S={};
+      for(const k of keys) S[k]=new Array(X.length);
+      for(let i=0;i<X.length;i++){
+        const agg=aggByX.get(X[i]);
+        for(const k of keys){
+          const c=agg?.cnt?.[k]||0;
+          S[k][i]=c? (agg.sum[k]/c) : null;
+        }
+      }
+      return S;
+    }
+
+    /* ---------- STATE ---------- */
+    let chart = echarts.init(gd, null, {renderer:'canvas', useDirtyRect:true});
+
+    let split=false, showValues=false, dragPan=false;
+    let curveMode='curved'; // curved | straight
+    let dashOverride=null;  // null | solid | dashed | dotted | dashdot
+    let barIdx = 0; // first measure as BAR
+    const hiddenX = new Set();
+    let lastXValue = null;
+    let zoomMenuEl = null;
+    let lineMenuEl = null;
+    let sizeMenuEl = null;
+
+    // ResizeObserver (throttled)
+    const ro = new ResizeObserver(scheduleResize);
+    ro.observe(sec);
+    ro.observe(gd);
+    if(sec.parentElement) ro.observe(sec.parentElement);
+
+    function applyTheme(){ document.documentElement.setAttribute('data-theme',CUR_THEME==='dark'?'dark':'light'); }
+    function extent(arr){
+      const v=arr.filter(Number.isFinite); if(!v.length) return {min:0,max:1};
+      let mn=Math.min(...v), mx=Math.max(...v);
+      if(mn===mx){ const pad=Math.abs(mx||1)*0.05; return {min:mn-pad, max:mx+pad}; }
+      const pad=(mx-mn)*0.05; return {min:mn-pad, max:mx+pad};
+    }
+    function tickFmtFactory(ex){
+      const span=Math.abs(ex.max-ex.min); let d=2;
+      if(span<0.5) d=3; if(span<0.05) d=4; if(span<0.005) d=5;
+      const big=Math.max(Math.abs(ex.max),Math.abs(ex.min));
+      if(big>=50) d=Math.min(d,1); if(big>=1000) d=0;
+      return (val)=> (val==null||!isFinite(val))?'':(+val).toFixed(d);
+    }
+
+    function xLabelConfig(X){
+      const w = gd.clientWidth || sec.clientWidth || 900;
+      const targetLabels = Math.max(6, Math.min(18, Math.floor(w/85)));
+      const step = Math.max(1, Math.ceil(X.length / targetLabels));
+      const rotate = (step===1 && X.length<=18) ? 0 : (step<=2 ? 45 : 0);
+      const bottom = rotate===45 ? 72 : 52;
+      return {step, rotate, bottom};
+    }
+
+    function makeXAxis(X, showLabels, gridIndex, hasBar, withTitle, labelCfg){
+      const T=THEMES[CUR_THEME];
+      const interval = labelCfg.step > 1 ? (labelCfg.step - 1) : 0;
+      return {
+        type:'category', data:X, gridIndex,
+        name: withTitle ? ATTR : '', nameLocation:'middle', nameGap: 24,
+        nameTextStyle:{ color:T.TXT, fontSize:13 },
+        axisLabel:{ show:showLabels, rotate:labelCfg.rotate, interval, color:T.TXT, margin:6 },
+        axisLine:{ show:showLabels, lineStyle:{ color:T.AX }},
+        axisTick:{ show:showLabels, alignWithLabel:true },
+        boundaryGap: !!hasBar,
+        axisPointer:{ show:true }
+      };
+    }
+
+    const wrapName=s=>{ if(!s||s.length<=18) return s;
+      const mid=Math.floor(s.length/2); let i=s.lastIndexOf(' ',mid);
+      if(i<10) i=s.indexOf(' ',mid);
+      return i>0 ? s.slice(0,i)+'\n'+s.slice(i+1) : s.replace(/(.{1,20})/g,'$1\n');
+    };
+
+    const sideStep=(S, side)=>{
+      const widths = keys.map((k,i)=>{
+        if((i%2===0?'left':'right')!==side) return 0;
+        const ex=extent(S[k]); const w=Math.max(String(ex.min).length, String(ex.max).length);
+        return 6*w + 8;
+      });
+      return Math.max(Y_OFFSET_BASE, Math.max(...widths));
+    };
+
+    function makeCombinedYAxes(S, xLen, labelCfg){
+      const T=THEMES[CUR_THEME];
+      const sides = keys.map((_,i)=> i%2===0 ? 'left':'right');
+      const STEP_L = sideStep(S,'left');
+      const STEP_R = sideStep(S,'right');
+      let li=0, ri=0; const yAxis=[];
+      keys.forEach((k,i)=>{
+        const side=sides[i], off = side==='left' ? li++*STEP_L : ri++*STEP_R;
+        const ex=extent(S[k]); const fmt=tickFmtFactory(ex);
+        yAxis.push({
+          type:'value',
+          name: TIT[k], position: side, offset: off,
+          nameLocation:'middle', nameRotate: side==='left'? 90:-90,
+          nameGap: 8 + off*0.03,
+          nameTextStyle:{ color:PAL[i], fontSize:13 },
+          axisLine:{ show:true, lineStyle:{ color:PAL[i] } },
+          axisLabel:{ color:PAL[i], align: side==='left'?'right':'left', margin:4, formatter:fmt },
+          splitLine:{ show:i===0, lineStyle:{ color:T.GRID }},
+          scale:true, min: ex.min, max: ex.max,
+          axisPointer:{
+            show:true,
+            label:{ show:true, backgroundColor:T.LBLBG, color:T.TXT, borderColor:T.BORDER, borderWidth:1,
+                    formatter:(p)=>fmt(p.value) }
+          }
+        });
+      });
+      const grid = {
+        top:56,
+        bottom: labelCfg.bottom,
+        left:  58 + Math.max(0, li-1)*STEP_L,
+        right: 58 + Math.max(0, ri-1)*STEP_R,
+        containLabel:false, backgroundColor:T.PBG, show:true, borderColor:T.BORDER, borderWidth:1
+      };
+      return {yAxis, grid};
+    }
+
+    function getLineSmooth(){
+      return curveMode === 'curved' ? 0.35 : 0;
+    }
+
+    function baseLineTypeForSeries(i){
+      // Default requested: one solid curved + two dashed curved.
+      if(i === 0) return 'solid';
+      if(i === 1 || i === 2) return 'dashed';
+      return 'solid';
+    }
+
+    function getLineType(){
+      return dashOverride;
+    }
+
+    // Single line series (removes extra scatter overlay for faster rendering)
+    function lineTrace(i, Y, xa=0, ya=i, showSymbols){
+      const name=TIT[keys[i]];
+      const t = getLineType();
+      return {
+        type:'line', name, xAxisIndex:xa, yAxisIndex:ya, data:Y,
+        showSymbol: showSymbols,
+        symbol:'circle', symbolSize:PT_SIZE,
+        smooth: getLineSmooth(),
+        lineStyle:{ width:LINE_W, type: (t || baseLineTypeForSeries(i)), color:PAL[i] },
+        itemStyle:{ color:PAL[i] },
+        emphasis:{ focus:'none' },
+        label: showValues
+          ? {show:true, position:'top', formatter:(d)=> (d.data==null?'':(+d.data).toFixed(3))}
+          : {show:false}
+      };
+    }
+
+    function barTrace(i, Y, xa=0, ya=i){
+      return {
+        type:'bar', name:TIT[keys[i]], xAxisIndex:xa, yAxisIndex:ya, data:Y,
+        barMaxWidth:28, barCategoryGap:'30%', itemStyle:{ color:PAL[i] },
+        emphasis:{ focus:'none' },
+        label: showValues
+          ? {show:true, position:'top', formatter:(d)=> (d.data==null?'':(+d.data).toFixed(3))}
+          : {show:false}
+      };
+    }
+
+    function filteredX(){
+      const out=[];
+      for(const x of X0){ if(!hiddenX.has(String(x))) out.push(x); }
+      return out;
+    }
+
+    function filteredData(){
+      const X = filteredX();
+      return {X, S: buildSeries(X)};
+    }
+
+    /* ---------- TOOLTIPS ---------- */
+    function fmtTooltip(params, attr){
+      const seen=new Set(); const rows=[];
+      for(const p of params){
+        if(!isFinite(p.value)) continue;
+        if(seen.has(p.seriesName)) continue;
+        seen.add(p.seriesName);
+        rows.push(`${p.marker}<b>${p.seriesName}:</b> ${(+p.value).toLocaleString(undefined,{maximumFractionDigits:4})}`);
+      }
+      const xi=params[0]?.axisValueLabel ?? '';
+      return `<b>${attr}: ${xi}</b><br>${rows.join('<br>')}`;
+    }
+
+    const tooltipCombined=()=>( {
+      trigger:'axis',
+      axisPointer:{ type:'cross', link:[{xAxisIndex:'all'},{yAxisIndex:'all'}],
+        lineStyle:{ color:THEMES[CUR_THEME].VL, width:1 },
+        label:{ show:true, backgroundColor:THEMES[CUR_THEME].LBLBG, color:THEMES[CUR_THEME].TXT, borderColor:THEMES[CUR_THEME].BORDER, borderWidth:1 } },
+      formatter:(p)=>fmtTooltip(p, ATTR)
+    });
+    const tooltipSplit=()=>( { trigger:'axis', formatter:(p)=>fmtTooltip(p, ATTR) } );
+
+    /* ---------- DATA ZOOM HELPERS ---------- */
+    function dataZoomX(idx){ return [{ id:'dx', type:'inside', xAxisIndex: idx, filterMode:'none',
+      zoomOnMouseWheel: !dragPan, moveOnMouseMove: dragPan, moveOnMouseWheel: dragPan }]; }
+    function dataZoomY(idx){ return [{ id:'dy', type:'inside', yAxisIndex: idx, filterMode:'none',
+      zoomOnMouseWheel: false, moveOnMouseWheel: false }]; }
+
+    function getAxisYBounds(i){
+      const o=chart.getOption(); const ax=o.yAxis?.[i];
+      if(ax && isFinite(ax.min) && isFinite(ax.max)) return [Number(ax.min), Number(ax.max)];
+      const F=filteredData(), S=F.S, ex=extent(S[keys[i]]);
+      return [ex.min, ex.max];
+    }
+
+    function zoomX(dir){
+      const o=chart.getOption();
+      const dzList=o.dataZoom||[];
+      const dzIndex = dzList.findIndex(z=>z.xAxisIndex!=null);
+      const dz = dzList[dzIndex] || {start:0,end:100};
+      const start=Array.isArray(dz.start)?dz.start[0]:dz.start ?? 0;
+      const end  =Array.isArray(dz.end)?dz.end[0]:dz.end ?? 100;
+      const span=end-start;
+      const xLen = filteredX().length || 1;
+      const minSpanPct = Math.max(2/xLen*100, 1);
+      const f = (dir==='in') ? 0.8 : 1.25;
+      const newSpan = Math.min(100, Math.max(minSpanPct, span*f));
+      const center=(start+end)/2;
+      const ns=Math.max(0, center - newSpan/2);
+      const ne=Math.min(100, center + newSpan/2);
+      dzList.forEach((z,i)=>{ if(z.xAxisIndex!=null){ chart.dispatchAction({ type:'dataZoom', dataZoomIndex:i, start:ns, end:ne }); } });
+    }
+
+    function resetX(){
+      const dzList=(chart.getOption().dataZoom||[]);
+      dzList.forEach((z,i)=>{ if(z.xAxisIndex!=null){ chart.dispatchAction({ type:'dataZoom', dataZoomIndex:i, start:0, end:100 }); } });
+    }
+
+    function zoomY(i,dir){
+      const o=chart.getOption(); const ax=o.yAxis?.[i]; if(!ax) return;
+      const [a,b]=getAxisYBounds(i);
+      const c=(a+b)/2, h=(b-a)/2;
+      const f=(dir==='in'?0.8:1.25);
+      const nh=h*f;
+      ax.min = +(c-nh).toFixed(6);
+      ax.max = +(c+nh).toFixed(6);
+      chart.setOption(o,{notMerge:true});
+    }
+    function zoomAllY(dir){ for(let i=0;i<keys.length;i++) zoomY(i,dir); }
+
+    function resetY(){
+      const F=filteredData(), S=F.S;
+      const o=chart.getOption();
+      o.yAxis.forEach((ax,i)=>{
+        const ex=extent(S[keys[i]]);
+        ax.min=ex.min; ax.max=ex.max;
+      });
+      chart.setOption(o,{notMerge:true});
+    }
+
+    function resetAllToDefaults(){
+      // Reset interactive state
+      split = false;
+      showValues = false;
+      dragPan = false;
+
+      curveMode = 'curved';
+      dashOverride = null;
+      barIdx = 0;
+
+      CUR_THEME = 'light';
+
+      userSize.scale = 1;
+      userSize.widthPx = null;
+      userSize.heightPx = null;
+
+      hiddenX.clear();
+
+      // Rebuild option from scratch, then hard-reset zoom windows.
+      redraw();
+      resetX();
+      resetY();
+    }
+
+    /* ---------- TOOLBOX ICONS ---------- */
+    const P=s=>'path://'+s;
+    const homeI  = P('M500 150 L900 450 V850 H650 V600 H350 V850 H100 V450 Z');
+    const barsI  = P('M160 840 V320 H270 V840 Z M420 840 V200 H530 V840 Z M680 840 V450 H790 V840 Z');
+    const splitI = P('M120 140 H880 V260 H120 Z M120 420 H880 V540 H120 Z M120 700 H880 V820 H120 Z');
+    const valsI  = P('M150 230 H850 V310 H150 Z M150 470 H650 V550 H150 Z M150 710 H800 V790 H150 Z');
+    const themeI = P('M700 500 A200 200 0 1 1 300 500 A200 200 0 1 0 700 500 Z M500 100 A400 400 0 1 0 900 500 A250 250 0 0 1 500 100 Z');
+    const handI  = P('M140 700 L140 500 Q140 430 210 430 L360 600 V260 Q360 220 400 220 Q440 220 440 260 V520 L470 540 V240 Q470 200 510 200 Q550 200 550 240 V530 L580 550 V260 Q580 220 620 220 Q660 220 660 260 V600 L760 520 Q820 520 820 580 V700 Z');
+    const diskI  = P('M200 150 H800 V850 H200 Z');
+    const fullI  = P('M140 180 L140 140 L380 140 L380 180 L180 180 L180 380 L140 380 Z M620 140 L860 140 L860 380 L820 380 L820 180 L620 180 Z M140 620 L180 620 L180 820 L380 820 L380 860 L140 860 Z M820 620 L860 620 L860 860 L620 860 L620 820 L820 820 Z');
+    const curveI = P('M120 600 C300 300, 700 900, 880 600');
+    const menuI  = P('M180 300 H820 V360 H180 Z M180 480 H820 V540 H180 Z M180 660 H820 V720 H180 Z');
+    const sizeI  = P('M180 220 H420 V300 H260 V460 H180 Z M580 220 H820 V460 H740 V300 H580 Z M180 540 H260 V700 H420 V780 H180 Z M740 540 H820 V780 H580 V700 H740 Z');
+
+    /* ---------- CSV ---------- */
+    function csv(){
+      const F=filteredData(), X=F.X, S=F.S;
+      const cols=['"'+ATTR+'"'].concat(keys.map(k=>'"'+TIT[k]+'"')); const out=[cols.join(',')];
+      for(let i=0;i<X.length;i++){
+        const row=[`"${X[i]}"`];
+        for(const k of keys){ const v=S[k][i]; row.push(v==null?'':v); }
+        out.push(row.join(','));
+      }
+      const blob=new Blob([out.join('\n')],{type:'text/csv;charset=utf-8;'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download='multi_axis.csv';
+      a.click();
+    }
+
+    /* ---------- ZOOM MENU (dropdown) ---------- */
+    function closeZoomMenu(){ if(zoomMenuEl){ zoomMenuEl.remove(); zoomMenuEl=null; } }
+    function closeLineMenu(){ if(lineMenuEl){ lineMenuEl.remove(); lineMenuEl=null; } }
+    function closeSizeMenu(){ if(sizeMenuEl){ sizeMenuEl.remove(); sizeMenuEl=null; } }
+    function closeMenus(){ closeZoomMenu(); closeLineMenu(); closeSizeMenu(); }
+
+    function openZoomMenu(){
+      closeMenus();
+      const t = THEMES[CUR_THEME];
+      const el = document.createElement('div');
+      el.className='zoom-menu';
+      el.style.background = t.PBG;
+      el.style.color = t.TXT;
+      el.style.borderColor = t.BORDER;
+      el.innerHTML = `
+        <div class="hdr">Zoom</div>
+        <div class="btn" data-act="xin">X +</div>
+        <div class="btn" data-act="xout">X −</div>
+        <div class="btn" data-act="xreset">X reset</div>
+        <div class="btn" data-act="yin">Y +</div>
+        <div class="btn" data-act="yout">Y −</div>
+        <div class="btn" data-act="yreset">Y reset</div>
+        <div class="btn" data-act="both">Reset both</div>
+      `;
+      el.addEventListener('click', (e)=>{
+        const act = e.target?.getAttribute?.('data-act');
+        if(!act) return;
+        if(act==='xin') zoomX('in');
+        if(act==='xout') zoomX('out');
+        if(act==='xreset') resetX();
+        if(act==='yin') zoomAllY('in');
+        if(act==='yout') zoomAllY('out');
+        if(act==='yreset') resetY();
+        if(act==='both'){ resetX(); resetY(); }
+        closeZoomMenu();
+      });
+      sec.appendChild(el);
+      const onDoc=(e)=>{ if(!el.contains(e.target)){ closeZoomMenu(); document.removeEventListener('mousedown', onDoc); } };
+      setTimeout(()=>document.addEventListener('mousedown', onDoc),0);
+      addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ closeZoomMenu(); removeEventListener('keydown', esc);} });
+      zoomMenuEl = el;
+    }
+
+    /* ---------- LINE STYLE MENU (dropdown) ---------- */
+    function openLineMenu(){
+      closeMenus();
+      const t = THEMES[CUR_THEME];
+      const el = document.createElement('div');
+      el.className='zoom-menu';
+      el.style.background = t.PBG;
+      el.style.color = t.TXT;
+      el.style.borderColor = t.BORDER;
+      el.innerHTML = `
+        <div class="hdr">Line Style</div>
+        <div class="btn" data-mode="curved">Curved</div>
+        <div class="btn" data-mode="straight">Straight</div>
+        <div class="hint">Dash pattern</div>
+        <div class="btn" data-mode="default">Default</div>
+        <div class="btn" data-mode="dashed">Dashed</div>
+        <div class="btn" data-mode="dotted">Dotted</div>
+        <div class="btn" data-mode="dashdot">Dash-dot</div>
+      `;
+      el.addEventListener('click', (e)=>{
+        const mode = e.target?.getAttribute?.('data-mode');
+        if(!mode) return;
+        if(mode==='curved'){ curveMode='curved'; dashOverride='solid'; }
+        else if(mode==='straight'){ curveMode='straight'; }
+        else if(mode==='default'){ dashOverride=null; }
+        else if(mode==='dashed'){ dashOverride='dashed'; }
+        else if(mode==='dotted'){ dashOverride='dotted'; }
+        else if(mode==='dashdot'){ dashOverride='dashdot'; }
+        closeMenus();
+        redraw(false);
+      });
+      sec.appendChild(el);
+      const onDoc=(e)=>{ if(!el.contains(e.target)){ closeLineMenu(); document.removeEventListener('mousedown', onDoc); } };
+      setTimeout(()=>document.addEventListener('mousedown', onDoc),0);
+      addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ closeLineMenu(); removeEventListener('keydown', esc);} });
+      lineMenuEl = el;
+    }
+
+    /* ---------- SIZE MENU (dropdown) ---------- */
+    function openSizeMenu(){
+      closeMenus();
+      const t = THEMES[CUR_THEME];
+      const el = document.createElement('div');
+      el.className='zoom-menu';
+      el.style.background = t.PBG;
+      el.style.color = t.TXT;
+      el.style.borderColor = t.BORDER;
+
+      const wVal = (Number.isFinite(userSize.widthPx) && userSize.widthPx > 0) ? String(Math.round(userSize.widthPx)) : '';
+      const hVal = (Number.isFinite(userSize.heightPx) && userSize.heightPx > 0) ? String(Math.round(userSize.heightPx)) : '';
+      const pct = Math.round((userSize.scale||1)*100);
+
+      el.innerHTML = `
+        <div class="hdr">Size</div>
+        <div class="row">
+          <div class="btn" data-act="minus">−</div>
+          <div class="btn" data-act="plus">+</div>
+          <div data-role="pct" style="font-size:12px; opacity:.9; margin-left:auto">${pct}%</div>
+        </div>
+        <div class="row">
+          <input id="szW" inputmode="numeric" placeholder="W px" value="${wVal}" />
+          <input id="szH" inputmode="numeric" placeholder="H px" value="${hVal}" />
+          <div class="btn" data-act="apply">Apply</div>
+        </div>
+        <div class="hint">Leave W/H empty for auto-fit.</div>
+        <div class="btn" data-act="reset">Reset to auto</div>
+      `;
+
+      const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+      function applyFromInputs(){
+        const w = parseFloat(el.querySelector('#szW')?.value || '');
+        const h = parseFloat(el.querySelector('#szH')?.value || '');
+        userSize.widthPx = Number.isFinite(w) && w>0 ? clamp(w, 200, 5000) : null;
+        userSize.heightPx = Number.isFinite(h) && h>0 ? clamp(h, 200, 5000) : null;
+        scheduleResizeAndRelayout();
+      }
+
+      el.addEventListener('click', (e)=>{
+        const act = e.target?.getAttribute?.('data-act');
+        if(!act) return;
+        if(act==='minus'){
+          userSize.scale = clamp((userSize.scale||1) - 0.1, 0.5, 2.0);
+          scheduleResizeAndRelayout();
+          const pctEl = el.querySelector('[data-role="pct"]');
+          if(pctEl) pctEl.textContent = Math.round((userSize.scale||1)*100) + '%';
+        }
+        if(act==='plus'){
+          userSize.scale = clamp((userSize.scale||1) + 0.1, 0.5, 2.0);
+          scheduleResizeAndRelayout();
+          const pctEl = el.querySelector('[data-role="pct"]');
+          if(pctEl) pctEl.textContent = Math.round((userSize.scale||1)*100) + '%';
+        }
+        if(act==='apply'){
+          applyFromInputs();
+          closeSizeMenu();
+        }
+        if(act==='reset'){
+          userSize.scale = 1;
+          userSize.widthPx = null;
+          userSize.heightPx = null;
+          scheduleResizeAndRelayout();
+          closeSizeMenu();
+        }
+      });
+
+      el.addEventListener('keydown', (e)=>{
+        if(e.key==='Enter'){
+          applyFromInputs();
+          closeSizeMenu();
+        }
+      });
+
+      sec.appendChild(el);
+      const onDoc=(e)=>{ if(!el.contains(e.target)){ closeSizeMenu(); document.removeEventListener('mousedown', onDoc); } };
+      setTimeout(()=>document.addEventListener('mousedown', onDoc),0);
+      addEventListener('keydown', function esc(e){ if(e.key==='Escape'){ closeSizeMenu(); removeEventListener('keydown', esc);} });
+      sizeMenuEl = el;
+    }
+
+    /* ---------- OPTION BUILDERS ---------- */
+    function commonLegend(){
+      const T=THEMES[CUR_THEME];
+      return {
+        data: keys.map(k=>TIT[k]),
+        top:8, left:8, right: LEGEND_RIGHT_PAD,
+        textStyle:{ color:T.LEG, fontSize:12 },
+        orient:'horizontal'
+      };
+    }
+
+    function combinedOption(){
+      const T=THEMES[CUR_THEME];
+      const {X,S}=filteredData();
+      const labelCfg = xLabelConfig(X);
+      const {yAxis, grid} = makeCombinedYAxes(S, X.length, labelCfg);
+
+      const hasBar = barIdx>=0 && barIdx<keys.length;
+      const xAxis = makeXAxis(X,true,0,hasBar,true,labelCfg);
+
+      const series=[];
+      const showSymbols = X.length <= 180; // performance: hide symbols on large category counts
+      keys.forEach((k,i)=>{
+        if(i===barIdx) series.push( barTrace(i,S[k]) );
+        else series.push( lineTrace(i,S[k],0,i,showSymbols) );
+      });
+
+      const animate = FORCE_ANIMATE ? true : (X.length <= 120);
+
+      const feature = {
+        myHome:{show:true,title:'Reset to default',icon:homeI,onclick:()=>resetAllToDefaults()},
+        mySplit:{show:true,title:'Toggle Split/Combined',icon:splitI,onclick:()=>{ split=!split; redraw(false); }},
+        myBar:{show:true,title:'Cycle Bar Series',icon:barsI,onclick:()=>{ barIdx=(barIdx+1)%(keys.length+1); if(barIdx===keys.length) barIdx=-1; redraw(false); }},
+        myLine:{show:true,title:'Line Style',icon:curveI,onclick:()=>{ if(lineMenuEl) closeLineMenu(); else openLineMenu(); }},
+        mySize:{show:true,title:'Size (scale / W / H)',icon:sizeI,onclick:()=>{ if(sizeMenuEl) closeSizeMenu(); else openSizeMenu(); }},
+        myVals:{show:true,title:'Toggle Data Labels',icon:valsI,onclick:()=>{ showValues=!showValues; redraw(false); }},
+        myZoom:{show:true,title:'Zoom menu',icon:menuI,onclick:()=>{ if(zoomMenuEl) closeZoomMenu(); else openZoomMenu(); }},
+        myTheme:{show:true,title:'Light/Dark',icon:themeI,onclick:()=>{ CUR_THEME=(CUR_THEME==='light'?'dark':'light'); redraw(false); }},
+        myCSV:{show:true,title:'Download CSV',icon:diskI,onclick:csv},
+        saveAsImage:{show:true,title:'Save as image'},
+        myFull:{show:true,title:'Fullscreen',icon:fullI,onclick:()=>toggleFull()}
+      };
+
+      return {
+        backgroundColor:T.BG, textStyle:{color:T.TXT},
+        grid, xAxis, yAxis, series,
+        legend: commonLegend(),
+        tooltip: tooltipCombined(),
+        axisPointer:{
+          show:true, type:'line', triggerOn:'mousemove|click',
+          link:[{xAxisIndex:'all'}],
+          lineStyle:{ color:T.VL, width:1 },
+          label:{ show:true, backgroundColor:T.LBLBG, color:T.TXT, borderColor:T.BORDER, borderWidth:1 }
+        },
+        animation: animate,
+        animationDuration: animate ? 300 : 0,
+        animationDurationUpdate: animate ? 250 : 0,
+        dataZoom: [...dataZoomX([0]), ...dataZoomY(keys.map((_,i)=>i))],
+        toolbox:{ right:8, top:6, itemSize:TB_SIZE, itemGap:6,
+          iconStyle:{ borderColor:T.AX, borderWidth:1.5 },
+          emphasis:{ iconStyle:{ borderColor:T.TXT } },
+          feature }
+      };
+    }
+
+    function splitOption(){
+      const T=THEMES[CUR_THEME];
+      const {X,S}=filteredData();
+      const labelCfg = xLabelConfig(X);
+
+      const grids=[], xAxis=[], yAxis=[], series=[];
+      const H = sec.clientHeight || gd.clientHeight || 600;
+      const topStart=64, gap=10;
+      const bottomReserve = labelCfg.bottom; // reserve enough for visible x-axis labels
+      const paneH = Math.max(120, Math.floor((H - topStart - bottomReserve - gap*(keys.length-1)) / keys.length));
+
+      const showSymbols = X.length <= 180;
+      const animate = FORCE_ANIMATE ? true : (X.length <= 120);
+
+      keys.forEach((k,i)=>{
+        const top = topStart + i*(paneH+gap);
+        grids.push({ top, height:paneH, left:160, right:130, containLabel:false,
+          backgroundColor:T.PBG, id:'g'+i, show:true, borderColor:T.BORDER, borderWidth:1 });
+
+        xAxis.push( makeXAxis(X, i===keys.length-1, i, barIdx===i, i===keys.length-1, labelCfg) );
+        if(i!==keys.length-1){
+          xAxis[i].axisLabel.show=false;
+          xAxis[i].axisLine.show=false;
+          xAxis[i].axisTick.show=false;
+          xAxis[i].splitLine={show:false};
+          xAxis[i].name='';
+        }
+
+        const ex=extent(S[k]); const fmt=tickFmtFactory(ex);
+        yAxis.push({
+          type:'value', gridIndex:i, name: wrapName(TIT[k]), position:'left',
+          nameLocation:'middle', nameRotate:90, nameGap:12,
+          nameTextStyle:{ color:PAL[i], align:'center', verticalAlign:'middle', fontSize:13, lineHeight:16 },
+          axisLine:{ show:true, lineStyle:{ color:PAL[i] } },
+          axisLabel:{ color:PAL[i], align:'right', margin:4, formatter:fmt },
+          splitLine:{ show:true, lineStyle:{ color:(i===0?T.GRID:'#0000') }},
+          scale:true, min: ex.min, max: ex.max,
+          axisPointer:{ show:true, label:{ show:true, backgroundColor:T.LBLBG, color:T.TXT, borderColor:T.BORDER, borderWidth:1, formatter:(p)=>fmt(p.value) } }
+        });
+
+        if(i===barIdx) series.push( barTrace(i,S[k],i,i) );
+        else series.push( lineTrace(i,S[k],i,i,showSymbols) );
+      });
+
+      const tb = combinedOption().toolbox;
+
+      return {
+        backgroundColor:T.BG, textStyle:{color:T.TXT},
+        grid:grids, xAxis, yAxis, series,
+        legend: commonLegend(),
+        tooltip: tooltipSplit(),
+        axisPointer:{
+          show:true, type:'line', triggerOn:'mousemove|click',
+          link:[{xAxisIndex:'all'}],
+          lineStyle:{ color:T.VL, width:1 },
+          label:{ show:true, backgroundColor:T.LBLBG, color:T.TXT, borderColor:T.BORDER, borderWidth:1 }
+        },
+        animation: animate,
+        animationDuration: animate ? 300 : 0,
+        animationDurationUpdate: animate ? 250 : 0,
+        dataZoom: [...dataZoomX(keys.map((_,i)=>i)), ...dataZoomY(keys.map((_,i)=>i))],
+        toolbox: tb
+      };
+    }
+
+    /* ---------- FULLSCREEN ---------- */
+    function toggleFull(){
+      closeMenus();
+      if(gd._fs){
+        if (gd._fsResize) removeEventListener('resize', gd._fsResize);
+        gd._fs._host.appendChild(gd); gd._fs.remove(); gd._fs=null;
+        gd.style.width=''; gd.style.height='';
+        setTimeout(()=>{ scheduleResize(); redraw(false); },0);
+        return;
+      }
+      const ov=document.createElement('div');
+      ov._host=gd.parentNode;
+      Object.assign(ov.style,{position:'fixed', inset:'0', background:THEMES[CUR_THEME].BG, zIndex:2147483647});
+      document.body.appendChild(ov); ov.appendChild(gd); gd._fs=ov;
+      function fitFS(){ gd.style.width=innerWidth+'px'; gd.style.height=innerHeight+'px'; chart && chart.resize(); }
+      gd._fsResize=()=>fitFS(); addEventListener('resize', gd._fsResize); fitFS();
+      addEventListener('keydown', function esc(e){ if(e.key==='Escape' && gd._fs){ toggleFull(); removeEventListener('keydown', esc);} });
+    }
+
+    /* ---------- Right-click to remove the current x category ---------- */
+    gd.addEventListener('contextmenu', (ev)=>{
+      ev.preventDefault();
+      if(lastXValue==null) return;
+      let label = null;
+      const X = filteredX();
+      if(typeof lastXValue==='number'){
+        const idx=Math.max(0, Math.min(X.length-1, Math.round(lastXValue)));
+        label = X[idx];
+      }else{
+        label = String(lastXValue);
+      }
+      hiddenX.add(String(label));
+      redraw(false);
+    });
+
+    chart.on('updateAxisPointer', (e)=>{
+      const ax = (e.axesInfo && e.axesInfo[0]) ? e.axesInfo[0] : null;
+      lastXValue = ax ? ax.value : null;
+    });
+
+    function buildOption(){ return split ? splitOption() : combinedOption(); }
+
+    function redraw(){
+      applyTheme();
+      closeMenus();
+      chart.setOption(
+        buildOption(),
+        { notMerge:true, replaceMerge:['series','xAxis','yAxis','grid','legend','toolbox','axisPointer'] }
+      );
+      scheduleResize();
+    }
+
+    redraw();
+  }catch(err){
+    const el=document.getElementById('multiY');
+    if(el) el.innerHTML='<div style="color:#ef4444;font-weight:600">Runtime error: '+(err?.message||err)+'</div>';
+    console.error(err);
+  }
+})();
+</script>
