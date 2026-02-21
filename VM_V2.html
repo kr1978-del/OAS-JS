@@ -111,7 +111,7 @@
 
     .vm-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;}
 
-    .btn{
+    [data-vm-host] .btn{
       appearance:none; border:1px solid var(--vm-border);
       background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(248,250,252,.92));
       color:var(--vm-text);
@@ -121,17 +121,17 @@
       cursor:pointer;
       display:inline-flex; align-items:center; gap:8px;
     }
-    .btn:hover{border-color:rgba(0,0,0,.18)}
-    .btn:focus{outline:none; box-shadow: var(--vm-focus)}
-    .btn.primary{border-color: rgba(125,211,252,.35);}
-    .btn.danger{border-color: rgba(251,113,133,.35); color:#dc2626;}
-    .btn.danger:hover{background:rgba(251,113,133,.08); border-color:rgba(251,113,133,.5);}
+    [data-vm-host] .btn:hover{border-color:rgba(0,0,0,.18)}
+    [data-vm-host] .btn:focus{outline:none; box-shadow: var(--vm-focus)}
+    [data-vm-host] .btn.primary{border-color: rgba(125,211,252,.35);}
+    [data-vm-host] .btn.danger{border-color: rgba(251,113,133,.35); color:#dc2626;}
+    [data-vm-host] .btn.danger:hover{background:rgba(251,113,133,.08); border-color:rgba(251,113,133,.5);}
     [data-vm-host][data-theme="dark"] .btn.danger{color:#fb7185;}
     [data-vm-host][data-theme="dark"] .btn{ background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); }
     [data-vm-host][data-theme="dark"] .btn:hover{ border-color:rgba(255,255,255,.20); }
 
-    .btn.ico{width:30px;height:30px;padding:0;justify-content:center;gap:0;}
-    .btn.ico.small{width:28px;height:28px;}
+    [data-vm-host] .btn.ico{width:30px;height:30px;padding:0;justify-content:center;gap:0;}
+    [data-vm-host] .btn.ico.small{width:28px;height:28px;}
 
     .icon{width:16px;height:16px;display:inline-block;}
 
@@ -450,7 +450,11 @@
     [data-vm-host][data-theme="dark"] .vm-mini select option{background:#1f2937;color:#e5e7eb;}
     [data-vm-host][data-theme="dark"] .vm-mini{ background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); }
 
-    .vm-table-wrap{width:100%;height:100%;max-height:100%;overflow:auto;background:var(--vm-card)}
+    .vm-table-wrap{width:100%;height:100%;max-height:100%;overflow:auto;background:var(--vm-card);padding-top:6px;box-sizing:border-box}
+    .card[data-vtype="table"] .body{padding-top:8px}
+    .card[data-vtype="table"] .hdr{min-height:36px;overflow:visible;padding:6px 8px}
+    .card[data-vtype="table"] .hdr .right{max-width:none;overflow:visible}
+    .card[data-vtype="table"] .hdr .right .vm-vtb{overflow:visible}
     .vm-table{width:100%;border-collapse:collapse;font-size:12px;color:var(--vm-text)}
     .vm-table th,.vm-table td{border:1px solid var(--vm-border);padding:6px 10px;vertical-align:top;overflow-wrap:break-word;word-break:break-word}
     .vm-table th{position:sticky;top:0;background:var(--vm-card2);z-index:2;text-align:left;font-weight:600;white-space:normal}
@@ -469,12 +473,12 @@
 
     /* Modal */
     .modal-backdrop{
-      position:fixed; inset:0; z-index:10000;
+      position:fixed; inset:0; z-index:2147483646;
       display:none;
       background: var(--vm-overlay, rgba(0,0,0,.55));
       backdrop-filter: blur(6px);
     }
-    .modal{
+    [data-vm-host] .modal{
       position:fixed;
       left:50%; top:50%; transform: translate(-50%,-50%);
       width:min(980px, calc(100vw - 24px));
@@ -484,12 +488,12 @@
       border-radius: 16px;
       background: var(--vm-card);
       box-shadow: var(--vm-shadow);
-      z-index:10001;
+      z-index:2147483647;
     
     }
 
     [data-vm-host][data-theme="dark"] .modal{ background:linear-gradient(180deg, rgba(18,30,56,.96), rgba(10,16,30,.96)); }
-    .modal .m-hdr{
+    [data-vm-host] .modal .m-hdr{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px;
       padding:16px 18px;
@@ -500,11 +504,12 @@
       border-bottom-color:#2b3447;
       background:linear-gradient(180deg, rgba(30,46,77,.5), rgba(18,28,50,.3));
     }
-    .modal .m-hdr .ttl{font-size:15px; font-weight:600; flex:1; letter-spacing:-0.3px;}
-    .modal .m-hdr .btn{width:32px!important;height:32px;padding:0;border:none;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-size:20px;color:var(--vm-sub);transition:all 0.2s ease}
-    .modal .m-hdr .btn:hover{background:rgba(0,0,0,.08);color:var(--vm-text)}
+    [data-vm-host] .modal .m-hdr .ttl{font-size:15px; font-weight:600; flex:1; letter-spacing:-0.3px;}
+    [data-vm-host] .modal .m-hdr .btn{width:32px!important;height:32px;padding:0;border:none;background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;font-size:20px;color:var(--vm-sub);transition:all 0.2s ease}
+    [data-vm-host] .modal .m-hdr .btn:hover{background:rgba(0,0,0,.08);color:var(--vm-text)}
     [data-vm-host][data-theme="dark"] .modal .m-hdr .btn:hover{background:rgba(255,255,255,.08)}
-    .modal .m-body{
+    [data-vm-host] .modal .m-hdr .btn.vm-close-x{width:24px!important;height:24px;font-size:18px;line-height:1;border-radius:6px}
+    [data-vm-host] .modal .m-body{
       padding:18px;
       overflow-y:auto;
       overflow-x:hidden;
@@ -513,23 +518,23 @@
       scrollbar-width: thin;
       scrollbar-color: var(--vm-border) rgba(0,0,0,.05);
     }
-    .modal .m-body::-webkit-scrollbar{
+    [data-vm-host] .modal .m-body::-webkit-scrollbar{
       width: 8px;
     }
-    .modal .m-body::-webkit-scrollbar-track{
+    [data-vm-host] .modal .m-body::-webkit-scrollbar-track{
       background: rgba(0,0,0,.02);
     }
-    .modal .m-body::-webkit-scrollbar-thumb{
+    [data-vm-host] .modal .m-body::-webkit-scrollbar-thumb{
       background: var(--vm-border);
       border-radius: 4px;
     }
-    .modal .m-body::-webkit-scrollbar-thumb:hover{
+    [data-vm-host] .modal .m-body::-webkit-scrollbar-thumb:hover{
       background: var(--vm-text);
     }
     [data-vm-host][data-theme="dark"] .modal .m-body::-webkit-scrollbar-track{
       background: rgba(255,255,255,.02);
     }
-    .modal .m-ftr{
+    [data-vm-host] .modal .m-ftr{
       display:flex; gap:10px; justify-content:flex-end;
       padding:14px 18px;
       border-top:1px solid #f0f0f0;
@@ -541,16 +546,16 @@
       background:linear-gradient(180deg, rgba(30,46,77,.3), rgba(18,28,50,.2));
     }
 
-    .form{
+    [data-vm-host] .form{
       display:grid;
       grid-template-columns: 220px 1fr;
       gap:10px 12px;
       align-items:center;
     }
-    .form .lbl{font-size:12px;color:var(--vm-sub)}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+    [data-vm-host] .form .lbl{font-size:12px;color:var(--vm-sub)}
+    [data-vm-host] .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 
-    select,input,textarea{
+    [data-vm-host] select,[data-vm-host] input,[data-vm-host] textarea{
       font-family: var(--vm-sans);
       font-size:12px;
       color:var(--vm-text);
@@ -560,17 +565,17 @@
       padding:8px 10px;
       outline:none;
     }
-    select:focus,input:focus,textarea:focus{box-shadow: var(--vm-focus);border-color:rgba(125,211,252,.35)}
+    [data-vm-host] select:focus,[data-vm-host] input:focus,[data-vm-host] textarea:focus{box-shadow: var(--vm-focus);border-color:rgba(125,211,252,.35)}
 
     /* Fix: dropdown options can render on white background in Windows */
-    select option{ color:#111827; background:#ffffff; }
+    [data-vm-host] select option{ color:#111827; background:#ffffff; }
     [data-vm-host][data-theme="dark"] select option{ color:#e5e7eb; background:#0f172a; }
 
-    textarea{min-height:110px;width:100%;font-family:var(--vm-mono);font-size:11px;}
+    [data-vm-host] textarea{min-height:110px;width:100%;font-family:var(--vm-mono);font-size:11px;}
 
-    .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
-    .tab{padding:7px 10px;border-radius:12px;border:1px solid var(--vm-border);background:rgba(0,0,0,.03);cursor:pointer;font-size:12px;color:var(--vm-text);opacity:.88}
-    .tab.active{border-color:rgba(125,211,252,.35);background:rgba(125,211,252,.10)}
+    [data-vm-host] .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+    [data-vm-host] .tab{padding:7px 10px;border-radius:12px;border:1px solid var(--vm-border);background:rgba(0,0,0,.03);cursor:pointer;font-size:12px;color:var(--vm-text);opacity:.88}
+    [data-vm-host] .tab.active{border-color:rgba(125,211,252,.35);background:rgba(125,211,252,.10)}
     
     .vm-cb-label:hover{background:rgba(0,0,0,.03)}
     [data-vm-host][data-theme="dark"] .vm-cb-label:hover{background:rgba(255,255,255,.05)}
@@ -640,8 +645,8 @@
       .plot{min-height:240px;}
       .grid{margin:8px 0;gap:6px;padding:0 8px;}
       [data-vm-host] .vm-wrap{--vm-cols:1;--vm-gap:6px;--vm-border-radius:8px;padding:0;}
-      .form{grid-template-columns:1fr;gap:12px;}
-      .form .lbl{font-size:12px;}
+      [data-vm-host] .form{grid-template-columns:1fr;gap:12px;}
+      [data-vm-host] .form .lbl{font-size:12px;}
       .form select, .form input{font-size:13px;padding:6px;}
       .note{font-size:11px;}
       .vm-section{margin-bottom:12px;padding:0 8px;}
@@ -650,7 +655,7 @@
 
     /* tiny screens */
     @media (max-width: 840px){
-      .form{grid-template-columns: 1fr;}
+      [data-vm-host] .form{grid-template-columns: 1fr;}
       .vm-title{min-width:0}
       .grid{grid-template-columns:1fr;}
     }
@@ -746,12 +751,12 @@
     <div class="modal">
       <div class="m-hdr">
         <div class="ttl" id="vm-vis-ttl">Visual Settings</div>
-        <button class="btn" id="vm-visual-close">Close</button>
+        <button class="btn vm-close-x" id="vm-visual-close" aria-label="Close visual settings" title="Close">×</button>
       </div>
       <div class="m-body">
         <div class="tabs" id="vm-vis-tabs">
           <div class="tab active" data-tab="mapping">Mapping</div>
-          <div class="tab" data-tab="options">Options</div>
+          <div class="tab" data-tab="options">Visual Settings</div>
           <div class="tab" data-tab="filter">Filter</div>
           <div class="tab" data-tab="advanced">Advanced</div>
         </div>
@@ -759,6 +764,7 @@
       </div>
       <div class="m-ftr">
         <button class="btn" id="vm-visual-cancel">Cancel</button>
+        <button class="btn" id="vm-visual-reset">Reset (keep mapping)</button>
         <button class="btn primary" id="vm-visual-apply">Apply</button>
       </div>
     </div>
@@ -919,6 +925,38 @@ function escapeHtml(s){
 
     function asString(x){ return (x==null)?'':String(x); }
 
+    function fitPoly2(xs, ys){
+      try{
+        var n = Math.min(xs.length, ys.length);
+        if(n < 3) return null;
+        var Sx=0,Sx2=0,Sx3=0,Sx4=0,Sy=0,Sxy=0,Sx2y=0;
+        for(var i=0;i<n;i++){
+          var x=Number(xs[i]), y=Number(ys[i]);
+          if(!isFinite(x) || !isFinite(y)) continue;
+          var x2=x*x, x3=x2*x, x4=x2*x2;
+          Sx+=x; Sx2+=x2; Sx3+=x3; Sx4+=x4;
+          Sy+=y; Sxy+=x*y; Sx2y+=x2*y;
+        }
+        var A=[[Sx4,Sx3,Sx2],[Sx3,Sx2,Sx],[Sx2,Sx,n]], B=[Sx2y,Sxy,Sy];
+        // Gaussian elimination 3x3
+        for(var r=0;r<3;r++){
+          var piv=r;
+          for(var rr=r+1;rr<3;rr++) if(Math.abs(A[rr][r])>Math.abs(A[piv][r])) piv=rr;
+          if(Math.abs(A[piv][r])<1e-12) return null;
+          if(piv!==r){ var tA=A[r];A[r]=A[piv];A[piv]=tA; var tB=B[r];B[r]=B[piv];B[piv]=tB; }
+          var div=A[r][r];
+          for(var c=r;c<3;c++) A[r][c]/=div;
+          B[r]/=div;
+          for(var r2=0;r2<3;r2++) if(r2!==r){
+            var f=A[r2][r];
+            for(var c2=r;c2<3;c2++) A[r2][c2]-=f*A[r][c2];
+            B[r2]-=f*B[r];
+          }
+        }
+        return {a:B[0], b:B[1], c:B[2]};
+      }catch(e){ return null; }
+    }
+
     function objAssign(dst, src){
       dst = dst || {};
       if(!src) return dst;
@@ -951,8 +989,8 @@ function escapeHtml(s){
         paper_bgcolor:'rgba(0,0,0,0)',
         plot_bgcolor:'rgba(0,0,0,0)',
         font:{color: th.font},
-        xaxis:{gridcolor: th.grid, zerolinecolor: th.grid},
-        yaxis:{gridcolor: th.grid, zerolinecolor: th.grid}
+        xaxis:{gridcolor: th.grid, zeroline:false, zerolinecolor: th.grid, automargin:true, ticklabeloverflow:'allow', title:{standoff:26}},
+        yaxis:{gridcolor: th.grid, zeroline:false, zerolinecolor: th.grid, automargin:true, title:{standoff:16}}
       };
       if(extra){
         Object.keys(extra).forEach(function(k){
@@ -1011,11 +1049,33 @@ function escapeHtml(s){
       if(!s) return [];
       return s.split(/[,;\n]+/).map(function(x){ return x.trim(); }).filter(Boolean);
     }
+    var VM_PALETTE_PRESETS = {
+      tableau10: '#4e79a7,#f28e2b,#e15759,#76b7b2,#59a14f,#edc949,#af7aa1,#ff9da7,#9c755f,#bab0ab',
+      powerbi: '#118dff,#12239e,#e66c37,#6b007b,#e044a7,#744ec2,#d9b300,#d64550,#197278,#1aab40',
+      oracle: '#312782,#f80000,#ff9f00,#00a6a6,#8c6bb1,#d95f02,#66a61e,#1b9e77,#7570b3,#e7298a',
+      pastel: '#a1c9f4,#ffb482,#8de5a1,#ff9f9b,#d0bbff,#debb9b,#fab0e4,#cfcfcf,#fffea3,#b9f2f0',
+      vibrant: '#3b82f6,#ef4444,#10b981,#f59e0b,#8b5cf6,#06b6d4,#f43f5e,#84cc16,#14b8a6,#f97316'
+    };
+    function vmPalettePresetRaw(name){
+      var k = String(name||'').toLowerCase();
+      return VM_PALETTE_PRESETS[k] || '';
+    }
+    function vmPalettePresetNameFor(raw){
+      var t = String(raw||'').replace(/\s+/g,'').toLowerCase();
+      if(!t) return 'custom';
+      for(var k in VM_PALETTE_PRESETS){
+        if(!Object.prototype.hasOwnProperty.call(VM_PALETTE_PRESETS,k)) continue;
+        if(String(VM_PALETTE_PRESETS[k]).replace(/\s+/g,'').toLowerCase()===t) return k;
+      }
+      return 'custom';
+    }
 
     function vmGetPalette(v){
       var opts = (v && v.options) ? v.options : {};
       var theme = String(HOST.getAttribute('data-theme')||STATE.globals.theme||PV_THEME_DEFAULT||'light').toLowerCase();
-      var pal = vmParsePalette(opts.palette);
+      var pal = [];
+      if(opts.palettePreset && String(opts.palettePreset)!=='custom') pal = vmParsePalette(vmPalettePresetRaw(opts.palettePreset));
+      if(!pal.length) pal = vmParsePalette(opts.palette);
       if(pal.length) return pal;
       if(theme==='dark') pal = vmParsePalette(STATE.globals.paletteDark);
       else pal = vmParsePalette(STATE.globals.paletteLight);
@@ -1158,10 +1218,27 @@ function escapeHtml(s){
         // axis titles default to mapped columns (if not set)
         var m = v && v.mapping ? v.mapping : {};
         var meas = v && v.measures ? v.measures : {};
-        var xKey = m.x || m.category || m.label || '';
+        function firstKey(vv){
+          if(Array.isArray(vv)) return vv.length ? String(vv[0]||'') : '';
+          if(vv && typeof vv==='object'){
+            if(vv.colKey) return String(vv.colKey||'');
+            if(vv.key) return String(vv.key||'');
+          }
+          return vv ? String(vv) : '';
+        }
+        var xKey = firstKey(m.x || m.category || m.label || m.date || m.name || m.cols || m.col || m.row || '');
         var yKey = '';
-        if(meas && meas.y && meas.y.colKey) yKey = meas.y.colKey;
-        else if(m.y) yKey = m.y;
+        if(meas){
+          if(meas.y && meas.y.colKey) yKey = String(meas.y.colKey||'');
+          else {
+            for(var mk in meas){
+              if(!Object.prototype.hasOwnProperty.call(meas,mk)) continue;
+              var mo = meas[mk];
+              if(mo && mo.colKey){ yKey = String(mo.colKey||''); break; }
+            }
+          }
+        }
+        if(!yKey) yKey = firstKey(m.y || m.value || m.measure || m.target || m.values || '');
         // allow custom titles
         var xTitle = (opts && opts.xTitle) ? String(opts.xTitle) : (xKey ? vmColLabel(ctx, xKey) : '');
         var yTitle = (opts && opts.yTitle) ? String(opts.yTitle) : (yKey ? vmColLabel(ctx, yKey) : '');
@@ -1172,6 +1249,23 @@ function escapeHtml(s){
         if(yTitle){
           updates['yaxis.title.text'] = yTitle;
         }
+        updates['xaxis.automargin'] = true;
+        updates['yaxis.automargin'] = true;
+        updates['xaxis.title.standoff'] = 26;
+        updates['yaxis.title.standoff'] = 16;
+        updates['xaxis.ticklabeloverflow'] = 'allow';
+        var xAng = parseFloat(opts.xTickAngle);
+        if(isFinite(xAng)) updates['xaxis.tickangle'] = xAng;
+        var yAng = parseFloat(opts.yTickAngle);
+        if(isFinite(yAng)) updates['yaxis.tickangle'] = yAng;
+        try{
+          var curB = Number(gd.layout && gd.layout.margin && gd.layout.margin.b);
+          var reqB = (isFinite(xAng) && Math.abs(xAng)>=60) ? 140 : 96;
+          if(!isFinite(curB) || curB < reqB) updates['margin.b'] = reqB;
+          var curL = Number(gd.layout && gd.layout.margin && gd.layout.margin.l);
+          var reqL = (isFinite(yAng) && Math.abs(yAng)>=45) ? 88 : 64;
+          if(!isFinite(curL) || curL < reqL) updates['margin.l'] = reqL;
+        }catch(_mb){}
 
         // apply font options if present
         if(opts && opts.axisTitleFontSize){
@@ -1933,6 +2027,8 @@ function escapeHtml(s){
       if(!agg || agg.trim() === '') agg = 'none';
       var dec = (measure && measure.decimals != null) ? measure.decimals : '';
       var clr = (measure && measure.color) ? measure.color : '';
+      var clrMode = (measure && measure.colorMode) ? String(measure.colorMode) : 'palette';
+      if(clr && clrMode!=='custom') clrMode = 'custom';
       var ncols = (cols||[]).filter(function(c){ return c && c.kind==='number'; });
       if(!ncols.length) ncols = cols || [];
       return ''
@@ -1945,7 +2041,11 @@ function escapeHtml(s){
         + aggOptionsHtml(agg)
         + '</select>'
         + '<input data-measure="'+escapeHtml(keyName)+'" data-part="dec" type="number" min="" max="10" step="1" value="'+escapeHtml(String(dec))+'" placeholder="Dec" title="Decimal places (blank = auto)" style="width:58px" />'
-        + '<input data-measure="'+escapeHtml(keyName)+'" data-part="color" type="color" value="'+(clr||'#000000')+'" title="Series Color (optional)" style="width:32px;height:28px;padding:0;cursor:pointer;border:1px solid var(--vm-border);border-radius:4px;margin-left:4px;background:none" />'
+        + '<select data-measure="'+escapeHtml(keyName)+'" data-part="colorMode" title="Color source" style="min-width:90px">'
+        + '  <option value="palette" '+(clrMode==='palette'?'selected':'')+'>Palette</option>'
+        + '  <option value="custom" '+(clrMode==='custom'?'selected':'')+'>Custom</option>'
+        + '</select>'
+        + '<input data-measure="'+escapeHtml(keyName)+'" data-part="color" type="color" value="'+(clr||'#2563eb')+'" title="Custom series color" style="width:32px;height:28px;padding:0;cursor:pointer;border:1px solid var(--vm-border);border-radius:4px;margin-left:4px;background:none" />'
         + '</div>';
     }
 
@@ -2244,10 +2344,8 @@ function escapeHtml(s){
         var globalStyle = (v.options && v.options.style) ? String(v.options.style) : 'line';
         var perMeas = !!(v.options && v.options.perMeasureModes);
         var pointsMode = (v.options && v.options.pointsMode) ? String(v.options.pointsMode) : 'auto';
-        var labelsOn = !!(v.options && v.options.labelsOn);
-        var gapMode = (v.options && v.options.gapMode) ? String(v.options.gapMode) : 'break';
-        
-        console.log('[VM] Line render - pointsMode:', pointsMode, 'labelsOn:', labelsOn, 'gapMode:', gapMode);
+        var labelsOn = !!(v.options && (v.options.showLabels || v.options.labelsOn));
+        var gapMode = (v.options && (v.options.gapsMode || v.options.gapMode)) ? String(v.options.gapsMode || v.options.gapMode) : 'break';
         function styleFor(measureKey){
           if(!perMeas) return globalStyle;
           if(measureKey==='y') return String((v.options && v.options.style_y) || '') || globalStyle;
@@ -2258,6 +2356,7 @@ function escapeHtml(s){
 
         var anyBar = false;
         var showMeasureInName = (hasY2 || hasY3 || hasY4);
+        var hasSeriesField = !!seriesKey;
         var palette = vmGetPalette(v);
         var palIdx = 0;
 
@@ -2293,7 +2392,7 @@ function escapeHtml(s){
                 name:label,
                 x: xs,
                 y: ys,
-                connectgaps: (gapMode==='connect' || gapMode==='interp'),
+                connectgaps: (gapMode==='connect' || gapMode==='interp' || gapMode==='interpolate'),
                 line:{ shape: (v.options.shape||'spline'), dash: (v.options.dash||'solid') }
               };
               if(st==='area') tr.fill = 'tozeroy';
@@ -2320,7 +2419,8 @@ function escapeHtml(s){
             var mObj = v.measures[measureKey] || {};
             
             /* Apply color if set */
-            if(mObj.color){
+            var mColorMode = String((mObj && mObj.colorMode) || (mObj && mObj.color ? 'custom' : 'palette'));
+            if(mColorMode==='custom' && mObj.color){
               tr.marker = tr.marker || {};
               tr.marker.color = mObj.color;
               if(tr.line){ tr.line = tr.line || {}; tr.line.color = mObj.color; }
@@ -2342,26 +2442,29 @@ function escapeHtml(s){
             traces.push(tr);
           }
 
-          pushTrace('y', showMeasureInName ? (seriesName + ' � ' + (yM.colKey||'Y')) : seriesName, base.m.y, 'y');
-          if(hasY3) pushTrace('y3', seriesName + ' � ' + (y3M.colKey||'Y3'), base.m.y3, 'y');
-          if(hasY4) pushTrace('y4', seriesName + ' � ' + (y4M.colKey||'Y4'), base.m.y4, 'y');
-          if(hasY2) pushTrace('y2', seriesName + ' � ' + (y2M.colKey||'Y2'), base.m.y2, 'y2');
+          var yLbl = hasSeriesField ? (showMeasureInName ? (seriesName + ' � ' + (yM.colKey||'Y')) : seriesName) : (showMeasureInName ? (yM.colKey||'Y') : (yM.colKey||'Y'));
+          pushTrace('y', yLbl, base.m.y, 'y');
+          if(hasY3) pushTrace('y3', hasSeriesField ? (seriesName + ' � ' + (y3M.colKey||'Y3')) : (y3M.colKey||'Y3'), base.m.y3, 'y');
+          if(hasY4) pushTrace('y4', hasSeriesField ? (seriesName + ' � ' + (y4M.colKey||'Y4')) : (y4M.colKey||'Y4'), base.m.y4, 'y');
+          if(hasY2) pushTrace('y2', hasSeriesField ? (seriesName + ' � ' + (y2M.colKey||'Y2')) : (y2M.colKey||'Y2'), base.m.y2, 'y2');
         });
 
+        var xAutoTitle = xKey ? vmColLabel(ctx, xKey) : '';
+        var yAutoTitle = yM && yM.colKey ? vmColLabel(ctx, yM.colKey) : '';
         var layout = layoutBase({
-          margin:{l:48,r:18,t:28,b:42}
+          margin:{l:48,r:18,t:28,b:42},
+          xaxis:{title:{text:(v.options && v.options.xTitle) ? String(v.options.xTitle) : xAutoTitle}},
+          yaxis:{title:{text:(v.options && v.options.yTitle) ? String(v.options.yTitle) : yAutoTitle}}
         });
 
         if(anyBar) layout.barmode = 'group';
 
         // Apply hoverMode from menu options
         layout.hovermode = (v.options && v.options.hoverMode) ? String(v.options.hoverMode) : ((v.options && v.options.hovermode) ? String(v.options.hovermode) : 'closest');
-        console.log('[VM] Applied hovermode:', layout.hovermode);
         
         // Apply dragMode
         if(v.options && v.options.dragMode){
           layout.dragmode = v.options.dragMode;
-          console.log('[VM] Applied dragMode:', layout.dragmode);
         }
 
         if(v.options && v.options.xScrollbar){
@@ -2372,14 +2475,12 @@ function escapeHtml(s){
         // Apply legend settings from menu options
         if(v.options && typeof v.options.showLegend === 'boolean'){
           layout.showlegend = v.options.showLegend;
-          console.log('[VM] Applied showLegend:', layout.showlegend);
           if(v.options.showLegend && v.options.legendPos && v.options.legendPos !== 'auto'){
             layout.legend = layout.legend || {};
             if(v.options.legendPos === 'top') { layout.legend.x = 0.5; layout.legend.y = 1.1; layout.legend.xanchor = 'center'; layout.legend.yanchor = 'bottom'; }
             else if(v.options.legendPos === 'bottom') { layout.legend.x = 0.5; layout.legend.y = -0.1; layout.legend.xanchor = 'center'; layout.legend.yanchor = 'top'; }
             else if(v.options.legendPos === 'left') { layout.legend.x = -0.1; layout.legend.y = 0.5; layout.legend.xanchor = 'right'; layout.legend.yanchor = 'middle'; }
             else if(v.options.legendPos === 'right') { layout.legend.x = 1.1; layout.legend.y = 0.5; layout.legend.xanchor = 'left'; layout.legend.yanchor = 'middle'; }
-            console.log('[VM] Applied legendPos:', v.options.legendPos);
           }
         }
 
@@ -2388,7 +2489,16 @@ function escapeHtml(s){
         }
 
         // --- Statistics Overlay Logic ---
-        if(v.options && v.options.statsMode && v.options.statsMode !== 'none'){
+        var statsModes = [];
+        if(v.options){
+          if(Object.prototype.hasOwnProperty.call(v.options,'statsModes') && Array.isArray(v.options.statsModes)){
+            statsModes = v.options.statsModes.filter(function(m){ return m && m !== 'none'; });
+          }else if(v.options.statsMode && v.options.statsMode !== 'none'){
+            statsModes = [String(v.options.statsMode)];
+          }
+        }
+        // Keep regression overlays explicit: outliers should not auto-enable regression.
+        if(statsModes.length){
            try{
              // 1. Gather all numerical Y values for basic stats
              var allY = [];
@@ -2409,54 +2519,27 @@ function escapeHtml(s){
                allY.sort(function(a,b){ return a-b; });
                var median = allY[Math.floor(allY.length/2)];
                
-               if(v.options.statsMode==='mean'){
-                  layout.shapes = layout.shapes || [];
-                  layout.shapes.push({
-                    type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: mean, y1: mean,
-                    line: { color: 'rgba(255,0,0,0.7)', width: 2, dash: 'dash' }
-                  });
-                  layout.annotations = layout.annotations || [];
-                  layout.annotations.push({
-                    xref: 'paper', x: 1, yref: 'y', y: mean, text: 'Mean: '+mean.toFixed(2), 
-                    showarrow: false, xanchor: 'left', font:{color:'red', size:10}
-                  });
+               var statsColors = (v.options && v.options.statsColors) ? v.options.statsColors : {};
+               var meanColor = statsColors.mean || 'rgba(255,0,0,0.7)';
+               var medianColor = statsColors.median || 'rgba(0,0,255,0.7)';
+               var ciColor = statsColors.ci || 'rgba(0,128,0,0.8)';
+               var regColor = statsColors.regression || 'orange';
+               var outlierColor = statsColors.outlier || '#ef4444';
+
+               if(statsModes.indexOf('mean')>=0 && traces.length && traces[0].x){
+                  traces.push({type:'scatter',mode:'lines',name:'Mean',x:traces[0].x,y:traces[0].x.map(function(){return mean;}),line:{color:meanColor,width:2,dash:'dash'}});
                }
-               else if(v.options.statsMode==='median'){
-                  layout.shapes = layout.shapes || [];
-                  layout.shapes.push({
-                    type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: median, y1: median,
-                    line: { color: 'rgba(0,0,255,0.7)', width: 2, dash: 'dot' }
-                  });
-                  layout.annotations = layout.annotations || [];
-                  layout.annotations.push({
-                    xref: 'paper', x: 1, yref: 'y', y: median, text: 'Median: '+median.toFixed(2), 
-                    showarrow: false, xanchor: 'left', font:{color:'blue', size:10}
-                  });
+               if(statsModes.indexOf('median')>=0 && traces.length && traces[0].x){
+                  traces.push({type:'scatter',mode:'lines',name:'Median',x:traces[0].x,y:traces[0].x.map(function(){return median;}),line:{color:medianColor,width:2,dash:'dot'}});
                }
-               else if(v.options.statsMode==='ci'){
-                  // Mean +/- 2SD (approx 95% CI)
-                  var sqSum = 0; 
-                  for(var k=0;k<allY.length;k++) sqSum += Math.pow(allY[k]-mean, 2);
-                  var sd = Math.sqrt(sqSum / allY.length);
-                  var upper = mean + 2*sd;
-                  var lower = mean - 2*sd;
-                  
-                  layout.shapes = layout.shapes || [];
-                  // Mean line
-                  layout.shapes.push({ 
-                    type: 'line', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: mean, y1: mean, 
-                    line: { color: 'rgba(0,128,0,0.8)', width: 1.5 } 
-                  });
-                  // 2SD Band
-                  layout.shapes.push({
-                    type: 'rect', xref: 'paper', x0: 0, x1: 1, yref: 'y', y0: lower, y1: upper,
-                    fillcolor: 'rgba(0,128,0,0.1)', line: { width: 0 }, layer: 'below'
-                  });
-                  layout.annotations = layout.annotations || [];
-                  layout.annotations.push({ xref: 'paper', x: 1, yref: 'y', y: upper, text: '+2SD', showarrow:false, xanchor:'left', font:{size:9,color:'green'}});
-                  layout.annotations.push({ xref: 'paper', x: 1, yref: 'y', y: lower, text: '-2SD', showarrow:false, xanchor:'left', font:{size:9,color:'green'}});
+               if(statsModes.indexOf('ci')>=0 && traces.length && traces[0].x){
+                  var sq2 = 0; for(var kk2=0;kk2<allY.length;kk2++) sq2 += Math.pow(allY[kk2]-mean,2);
+                  var sd2 = Math.sqrt(sq2 / allY.length);
+                  var u2 = mean + 2*sd2, l2 = mean - 2*sd2;
+                  traces.push({type:'scatter',mode:'lines',name:'CI Upper',x:traces[0].x,y:traces[0].x.map(function(){return u2;}),line:{color:ciColor,width:1,dash:'dot'},hoverinfo:'skip'});
+                  traces.push({type:'scatter',mode:'lines',name:'CI Band',x:traces[0].x,y:traces[0].x.map(function(){return l2;}),line:{color:ciColor,width:1,dash:'dot'},fill:'tonexty',fillcolor:String(ciColor).indexOf('rgba(')===0?ciColor.replace('0.8','0.12'):'rgba(16,185,129,.12)',hoverinfo:'skip'});
                }
-               else if(v.options.statsMode==='regression'){
+               if(statsModes.indexOf('regression')>=0){
                   // Simple Linear Regression on valid (x,y) pairs
                   // We need numerical X.
                   var n=0, sx=0, sy=0, sxy=0, sx2=0;
@@ -2506,9 +2589,58 @@ function escapeHtml(s){
                      traces.push({
                         type: 'scatter', mode: 'lines', name: 'Trend (Linear)',
                         x: [minX, maxX], y: [y1, y2],
-                        line: { color: 'orange', width: 3, dash: 'dot' },
+                        line: { color: regColor, width: 3, dash: 'dot' },
                         hoverinfo: 'skip'
                      });
+
+                     if(v.options.regressionShowOutliers){
+                       var method = String(v.options.outlierMethod || 'std');
+                       var kVal = parseFloat(v.options.outlierK);
+                       if(!isFinite(kVal) || kVal<=0) kVal = 2;
+                       var residuals = regPts.map(function(p){ return p.y - (tm*p.x + tb); });
+                       var outlierFlags = residuals.map(function(){ return false; });
+                       if(method==='iqr'){
+                         var rs = residuals.slice().sort(function(a,b){ return a-b; });
+                         var q1 = rs[Math.floor((rs.length-1)*0.25)];
+                         var q3 = rs[Math.floor((rs.length-1)*0.75)];
+                         var iqr = q3 - q1;
+                         var low = q1 - kVal*iqr;
+                         var high = q3 + kVal*iqr;
+                         for(var rr=0;rr<residuals.length;rr++) outlierFlags[rr] = (residuals[rr] < low || residuals[rr] > high);
+                       }else{
+                         var meanR = 0;
+                         for(var mr=0;mr<residuals.length;mr++) meanR += residuals[mr];
+                         meanR = residuals.length ? (meanR / residuals.length) : 0;
+                         var absDev = [];
+                         for(var ar=0;ar<residuals.length;ar++) absDev.push(Math.abs(residuals[ar] - meanR));
+                         var scale = 0;
+                         if(method==='mad'){
+                           absDev.sort(function(a,b){ return a-b; });
+                           scale = absDev[Math.floor(absDev.length/2)] * 1.4826;
+                         }else{
+                           var sq=0;
+                           for(var sr=0;sr<residuals.length;sr++) sq += Math.pow(residuals[sr]-meanR,2);
+                           scale = Math.sqrt(sq / Math.max(1,residuals.length));
+                         }
+                         var thr = kVal * (scale || 1e-9);
+                         for(var trr=0;trr<residuals.length;trr++) outlierFlags[trr] = Math.abs(residuals[trr]-meanR) > thr;
+                       }
+                       var ox=[], oy=[];
+                       for(var op=0;op<regPts.length;op++){
+                         if(outlierFlags[op]){ ox.push(regPts[op].x); oy.push(regPts[op].y); }
+                       }
+                       if(ox.length){
+                         traces.push({
+                           type:'scatter',
+                           mode:'markers',
+                           name:'Regression Outliers',
+                           x:ox,
+                           y:oy,
+                           marker:{size:8,color:outlierColor,line:{width:1,color:'#ffffff'}},
+                           hovertemplate:'Outlier<br>X: %{x}<br>Y: %{y}<extra></extra>'
+                         });
+                       }
+                     }
                   }
                }
              }
@@ -2518,6 +2650,33 @@ function escapeHtml(s){
           // --- Target Lines / Bands ---
           try{ vmAddTargetsToLayout(layout, v, ctx, dataRows); }catch(_){ }
           try{ vmAddReferenceLinesToLayout(layout, v); }catch(_){ }
+
+          // Add legend-aware helper traces for targets/reference lines (line visual)
+          try{
+            var targetMin = Number.isFinite(v.options && v.options.targetMin) ? v.options.targetMin : null;
+            var targetMax = Number.isFinite(v.options && v.options.targetMax) ? v.options.targetMax : null;
+            var tx = (traces.length && traces[0].x) ? traces[0].x : [];
+            var tColor = (v.options && v.options.targetColor) ? String(v.options.targetColor) : '#dc2626';
+            var tDash = (v.options && v.options.targetDash) ? String(v.options.targetDash) : 'dash';
+            if(tx.length && (targetMin!=null || targetMax!=null)){
+              if(targetMin!=null && targetMax!=null){
+                traces.push({type:'scatter',mode:'lines',name:'Target Max',x:tx,y:tx.map(function(){return targetMax;}),line:{color:tColor,dash:tDash,width:1.5},hoverinfo:'skip'});
+                traces.push({type:'scatter',mode:'lines',name:'Target Band',x:tx,y:tx.map(function(){return targetMin;}),line:{color:tColor,dash:tDash,width:1.5},fill:'tonexty',fillcolor:'rgba(220,38,38,0.12)',hoverinfo:'skip'});
+              }else{
+                var tv = (targetMin!=null)?targetMin:targetMax;
+                traces.push({type:'scatter',mode:'lines',name:'Target',x:tx,y:tx.map(function(){return tv;}),line:{color:tColor,dash:tDash,width:2},hoverinfo:'skip'});
+              }
+            }
+            var refs = Array.isArray(v.options && v.options.refLines) ? v.options.refLines : [];
+            if(tx.length && refs.length){
+              for(var ri=0;ri<refs.length;ri++){
+                var rr = refs[ri] || {};
+                var rv = parseFloat(rr.value);
+                if(!isFinite(rv)) continue;
+                traces.push({type:'scatter',mode:'lines',name:String(rr.label||('Reference '+(ri+1))),x:tx,y:tx.map(function(){return rv;}),line:{color:String(rr.color||'#111827'),dash:String(rr.dash||'dash'),width:1.8},hoverinfo:'skip'});
+              }
+            }
+          }catch(_){ }
 
         if(v.title){ layout.margin = layout.margin || {}; layout.margin.t = 4; }
         Plotly.newPlot(el, traces, layout, plotlyCfg(v));
@@ -2796,22 +2955,22 @@ function escapeHtml(s){
           measures:{ y:{ colKey:'', agg:'avg' } },
           transform: defaultTransform('raw'),
           filter: defaultFilter(),
-          options:{ view:'box', points:'outliers', targetsEnabled:false, targets:'' }
+          options:{ view:'box', points:'outliers', targetsEnabled:false, targets:'', boxMeanLine:false, boxNotch:false, boxJitter:0.3, violinSide:'both' }
         };
       },
       buildMappingUI:function(v, ctx){
         var cols=ctx.cols;
         ensureMeasure(v,'y');
-        return ''
-          + '<div class="form">'
-          + mappingField('Group (optional)', 'x', cols, v.mapping.x, true)
-          + measureField('Y (value)', 'y', cols, v.measures.y)
         v.mapping = v.mapping || {};
         v.mapping.x = Array.isArray(v.mapping.x) ? v.mapping.x : (v.mapping.x ? [v.mapping.x] : []);
         return ''
           + '<div class="form">'
           + mappingFieldMulti('Group (optional)', 'x', cols, v.mapping.x, true, 'Select one or more columns to group by.')
           + measureField('Y (value)', 'y', cols, v.measures.y)
+          + '</div>';
+      },
+      buildOptionsUI:function(v){
+        return ''
           + '<div class="form">'
           + '<div class="lbl">View</div>'
           + '<div><select data-opt="view">'
@@ -2827,8 +2986,16 @@ function escapeHtml(s){
           + '<div><select data-opt="points">'
           + '<option value="outliers" '+(v.options.points==='outliers'?'selected':'')+'>Outliers</option>'
           + '<option value="all" '+(v.options.points==='all'?'selected':'')+'>All</option>'
-          + '<option value="false" '+(String(v.options.points)==='false'?'selected':'')+'>null</option>'
+          + '<option value="false" '+(String(v.options.points)==='false'?'selected':'')+'>None</option>'
           + '</select></div>'
+          + '<div class="lbl">Mean line</div>'
+          + '<div><label class="note"><input type="checkbox" data-opt="boxMeanLine" '+(v.options.boxMeanLine?'checked':'')+'> Show mean line</label></div>'
+          + '<div class="lbl">Notched box</div>'
+          + '<div><label class="note"><input type="checkbox" data-opt="boxNotch" '+(v.options.boxNotch?'checked':'')+'> Enable notch</label></div>'
+          + '<div class="lbl">Point jitter</div>'
+          + '<div><input data-opt="boxJitter" type="number" step="0.05" min="0" max="1" value="'+escapeHtml(String(v.options.boxJitter!=null?v.options.boxJitter:0.3))+'" style="width:90px" /></div>'
+          + '<div class="lbl">Violin side</div>'
+          + '<div><select data-opt="violinSide"><option value="both" '+((v.options.violinSide||'both')==='both'?'selected':'')+'>Both</option><option value="positive" '+(v.options.violinSide==='positive'?'selected':'')+'>Positive</option><option value="negative" '+(v.options.violinSide==='negative'?'selected':'')+'>Negative</option></select></div>'
           + '<div class="lbl">Targets</div>'
           + '<div class="row">'
           + '<label class="note"><input type="checkbox" data-opt="targetsEnabled" '+(v.options.targetsEnabled?'checked':'')+'> Show target lines</label>'
@@ -2920,6 +3087,13 @@ function escapeHtml(s){
 
         var view = (v.options && v.options.view) ? String(v.options.view) : 'box';
         var pts = (v.options.points==='false') ? false : v.options.points;
+        var boxMeanLine = !!(v.options && v.options.boxMeanLine);
+        var boxNotch = !!(v.options && v.options.boxNotch);
+        var boxJitter = parseFloat(v.options && v.options.boxJitter);
+        if(!isFinite(boxJitter) || boxJitter<0) boxJitter = 0.3;
+        if(boxJitter>1) boxJitter = 1;
+        var violinSide = (v.options && v.options.violinSide) ? String(v.options.violinSide) : 'both';
+        if(['both','positive','negative'].indexOf(violinSide)<0) violinSide='both';
         var traces=[];
 
         Object.keys(byGroup).forEach(function(name){
@@ -2941,7 +3115,7 @@ function escapeHtml(s){
           }
 
           if(view==='violin'){
-            traces.push({type:'violin', name:name, y:vals, points: pts, box:{visible:true}, meanline:{visible:false}});
+            traces.push({type:'violin', name:name, y:vals, side:violinSide, points: pts, box:{visible:true}, meanline:{visible:boxMeanLine}});
             return;
           }
 
@@ -2950,12 +3124,12 @@ function escapeHtml(s){
               type:'violin',
               name:name,
               y:vals,
-              side:'positive',
+              side:violinSide==='both'?'positive':violinSide,
               points: (pts===false) ? false : 'all',
-              jitter: 0.25,
+              jitter: boxJitter,
               pointpos: 0,
               box:{visible:true},
-              meanline:{visible:false}
+              meanline:{visible:boxMeanLine}
             });
             return;
           }
@@ -2968,8 +3142,10 @@ function escapeHtml(s){
               name:name,
               y:vals,
               boxpoints: (pts===false) ? false : 'all',
-              jitter: jit,
+              jitter: Math.max(jit, boxJitter),
               pointpos: 0,
+              boxmean: boxMeanLine ? true : false,
+              notched: boxNotch,
               fillcolor:'rgba(0,0,0,0)',
               line:{width:0},
               whiskerwidth: 0.0001,
@@ -2979,7 +3155,7 @@ function escapeHtml(s){
           }
 
           // default: box
-          traces.push({type:'box', name:name, y:vals, boxpoints: pts});
+          traces.push({type:'box', name:name, y:vals, boxpoints: pts, notched:boxNotch, boxmean:(boxMeanLine?true:false), jitter:boxJitter});
         });
 
         var layout = layoutBase({
@@ -3035,7 +3211,7 @@ function escapeHtml(s){
           type:'scatter',
           title:'Scatter',
           show:true,
-          mapping:{ x:'', y:'', color:'' },
+          mapping:{ x:'', y:'', y2:'', color:'' },
           measures:{},
           transform: defaultTransform('raw'),
           filter: defaultFilter(),
@@ -3048,10 +3224,12 @@ function escapeHtml(s){
         if(!ncols.length) ncols = cols;
         v.mapping = v.mapping || {};
         v.mapping.color = v.mapping.color || '';
+        v.mapping.y2 = v.mapping.y2 || '';
         return ''
           + '<div class="form">'
           + mappingField('X (measure)', 'x', ncols, v.mapping.x, true)
           + mappingField('Y (measure)', 'y', ncols, v.mapping.y, true)
+          + mappingField('Y2 (optional measure)', 'y2', ncols, v.mapping.y2, true)
           + mappingField('Color (optional)', 'color', cols, v.mapping.color, true)
           + hoverColsField(v, cols)
           + '</div>';
@@ -3082,7 +3260,7 @@ function escapeHtml(s){
         }
 
         var filtered=applyFilter(rows, v.filter);
-        var xKey=map.x, yKey=map.y, cKey=map.color||'';
+        var xKey=map.x, yKey=map.y, y2Key=(map.y2||''), cKey=map.color||'';
 
         var hoverKeys = Array.isArray(map.hoverCols) ? map.hoverCols.filter(function(k){return !!k;}) : [];
         var useHover = (hoverKeys.length>0);
@@ -3169,6 +3347,121 @@ function escapeHtml(s){
           traces.push(tr0);
         }
 
+        // Optional second Y measure plotted against same X
+        if(y2Key){
+          var ys2=[];
+          var xs2=[];
+          for(var j2=0;j2<dataRows.length;j2++){
+            xs2.push(toNumber(dataRows[j2][xKey]));
+            ys2.push(toNumber(dataRows[j2][y2Key]));
+          }
+          var tr2={type:pickScatterType(xs2.length), mode:v.options.mode||'markers', name:(y2Key||'Y2'), x:xs2, y:ys2};
+          var pal2 = vmGetPalette(v);
+          if((!tr2.marker || !tr2.marker.color) && pal2.length){ tr2.marker = tr2.marker || {}; tr2.marker.color = pal2[Math.min(1,pal2.length-1)]; }
+          traces.push(tr2);
+        }
+
+        // Scatter statistics overlays (per series or combined, with axis controls)
+        var sm = [];
+        if(v.options){
+          if(Array.isArray(v.options.statsModes)) sm = v.options.statsModes.filter(function(m){ return m && m!=='none'; });
+          else if(v.options.statsMode && v.options.statsMode!=='none') sm = [String(v.options.statsMode)];
+          // Keep regression overlays explicit: outliers should not auto-enable regression.
+        }
+        if(sm.length){
+          var sc = (v.options && v.options.statsColors) ? v.options.statsColors : {};
+          var cMean = sc.mean || '#ff0000', cMedian = sc.median || '#0000ff', cCI = sc.ci || '#008000', cReg = sc.regression || '#ffa500', cOut = sc.outlier || '#ef4444';
+          var statsMode = String((v.options && v.options.scatterStatsMode) || 'per-series');
+          var axisStats = String((v.options && v.options.scatterAxisStats) || 'y');
+          var regAxes = String((v.options && v.options.scatterRegressionAxes) || 'y');
+
+          function buildPtsFromTrace(trBase){
+            if(!trBase || !trBase.x || !trBase.y || String(trBase.mode||'').indexOf('markers')<0) return [];
+            var pts=[];
+            for(var pi=0; pi<trBase.x.length; pi++){
+              var xv=Number(trBase.x[pi]), yv=Number(trBase.y[pi]);
+              if(isFinite(xv) && isFinite(yv)) pts.push({x:xv,y:yv});
+            }
+            return pts;
+          }
+
+          function addStatsForPts(pts, nameBase){
+            if(!pts || pts.length<2) return;
+            var xs = pts.map(function(p){return p.x;}).slice().sort(function(a,b){return a-b;});
+            var ys = pts.map(function(p){return p.y;}).slice().sort(function(a,b){return a-b;});
+            var sumX=0,sumY=0; for(var i=0;i<pts.length;i++){ sumX+=pts[i].x; sumY+=pts[i].y; }
+            var meanX=sumX/pts.length, meanY=sumY/pts.length;
+            var medX=xs[Math.floor(xs.length/2)], medY=ys[Math.floor(ys.length/2)];
+            var minX=xs[0], maxX=xs[xs.length-1], minY=ys[0], maxY=ys[ys.length-1];
+
+            if(sm.indexOf('mean')>=0){
+              traces.push({type:'scatter',mode:'lines',name:nameBase+' Mean Y',x:[minX,maxX],y:[meanY,meanY],line:{color:cMean,width:2,dash:'dash'}});
+              if(axisStats==='xy') traces.push({type:'scatter',mode:'lines',name:nameBase+' Mean X',x:[meanX,meanX],y:[minY,maxY],line:{color:cMean,width:2,dash:'dash'}});
+            }
+            if(sm.indexOf('median')>=0){
+              traces.push({type:'scatter',mode:'lines',name:nameBase+' Median Y',x:[minX,maxX],y:[medY,medY],line:{color:cMedian,width:2,dash:'dot'}});
+              if(axisStats==='xy') traces.push({type:'scatter',mode:'lines',name:nameBase+' Median X',x:[medX,medX],y:[minY,maxY],line:{color:cMedian,width:2,dash:'dot'}});
+            }
+            if(sm.indexOf('ci')>=0){
+              var varSum=0; for(var vi=0; vi<pts.length; vi++) varSum += Math.pow(pts[vi].y-meanY,2);
+              var std = Math.sqrt(varSum/Math.max(1,pts.length));
+              var up = meanY + 2*std, lo = meanY - 2*std;
+              traces.push({type:'scatter',mode:'lines',name:nameBase+' CI Upper',x:[minX,maxX],y:[up,up],line:{color:cCI,width:1,dash:'dot'},hoverinfo:'skip'});
+              traces.push({type:'scatter',mode:'lines',name:nameBase+' CI Band',x:[minX,maxX],y:[lo,lo],line:{color:cCI,width:1,dash:'dot'},fill:'tonexty',fillcolor:'rgba(16,185,129,.12)',hoverinfo:'skip'});
+            }
+            if(sm.indexOf('regression')>=0){
+              var n=0,sx=0,sy=0,sxx=0,sxy=0;
+              for(var rk=0; rk<pts.length; rk++){ n++; sx+=pts[rk].x; sy+=pts[rk].y; sxx+=pts[rk].x*pts[rk].x; sxy+=pts[rk].x*pts[rk].y; }
+              var den=(n*sxx-sx*sx);
+              if(Math.abs(den)>1e-12){
+                var b=(n*sxy-sx*sy)/den, a=(sy-b*sx)/n;
+                traces.push({type:'scatter',mode:'lines',name:nameBase+' Regression Y~X',x:[minX,maxX],y:[a+b*minX,a+b*maxX],line:{color:cReg,width:2,dash:'dot'}});
+                if(regAxes==='both'){
+                  var by=0, ay=0, syy=0, syx=0;
+                  for(var rk2=0; rk2<pts.length; rk2++){ syy += pts[rk2].y*pts[rk2].y; syx += pts[rk2].y*pts[rk2].x; }
+                  var den2=(n*syy-sy*sy);
+                  if(Math.abs(den2)>1e-12){ by=(n*syx-sy*sx)/den2; ay=(sx-by*sy)/n; traces.push({type:'scatter',mode:'lines',name:nameBase+' Regression X~Y',x:[ay+by*minY,ay+by*maxY],y:[minY,maxY],line:{color:cReg,width:2,dash:'dash'}}); }
+                }
+                if(v.options && v.options.regressionShowOutliers){
+                  var method=String(v.options.outlierMethod||'std');
+                  var kVal=parseFloat(v.options.outlierK); if(!isFinite(kVal)||kVal<=0) kVal=2;
+                  var residuals=pts.map(function(p){ return p.y-(a+b*p.x); });
+                  var flags=residuals.map(function(){ return false; });
+                  if(method==='iqr'){
+                    var rs=residuals.slice().sort(function(a,b){return a-b;});
+                    var q1=rs[Math.floor((rs.length-1)*0.25)], q3=rs[Math.floor((rs.length-1)*0.75)], iqr=q3-q1;
+                    var low=q1-kVal*iqr, high=q3+kVal*iqr;
+                    for(var rr=0; rr<residuals.length; rr++) flags[rr]=(residuals[rr]<low||residuals[rr]>high);
+                  }else{
+                    var mr=0; for(var mri=0;mri<residuals.length;mri++) mr+=residuals[mri]; mr = residuals.length?mr/residuals.length:0;
+                    var scale=0;
+                    if(method==='mad'){ var ad=[]; for(var ai=0;ai<residuals.length;ai++) ad.push(Math.abs(residuals[ai]-mr)); ad.sort(function(a,b){return a-b;}); scale = ad[Math.floor(ad.length/2)]*1.4826; }
+                    else { var sq=0; for(var qi=0;qi<residuals.length;qi++) sq += Math.pow(residuals[qi]-mr,2); scale = Math.sqrt(sq/Math.max(1,residuals.length)); }
+                    var thr=kVal*(scale||1e-9);
+                    for(var fi=0;fi<residuals.length;fi++) flags[fi]=Math.abs(residuals[fi]-mr)>thr;
+                  }
+                  var ox=[],oy=[];
+                  for(var oi=0;oi<pts.length;oi++){ if(flags[oi]){ ox.push(pts[oi].x); oy.push(pts[oi].y); } }
+                  if(ox.length) traces.push({type:'scatter',mode:'markers',name:nameBase+' Regression Outliers',x:ox,y:oy,marker:{size:8,color:cOut,line:{width:1,color:'#fff'}}});
+                }
+              }
+            }
+          }
+
+          if(statsMode==='combined'){
+            var allPts=[];
+            for(var ti=0; ti<traces.length; ti++) allPts = allPts.concat(buildPtsFromTrace(traces[ti]));
+            addStatsForPts(allPts, 'Combined');
+          }else{
+            for(var ti2=0; ti2<traces.length; ti2++){
+              var trBase = traces[ti2];
+              var pts2 = buildPtsFromTrace(trBase);
+              var nm = trBase && trBase.name ? String(trBase.name) : ('Series '+(ti2+1));
+              addStatsForPts(pts2, nm);
+            }
+          }
+        }
+
         // simple trendline on first trace only
         if(v.options.showTrend && traces.length && traces[0].x && traces[0].x.length>=2){
           var x=traces[0].x, y=traces[0].y;
@@ -3190,7 +3483,9 @@ function escapeHtml(s){
         }
 
         var layout = layoutBase({
-          margin:{l:52,r:18,t:28,b:44}
+          margin:{l:52,r:18,t:28,b:44},
+          xaxis:{title:{text:(v.options && v.options.xTitle) ? String(v.options.xTitle) : vmColLabel(ctx, xKey)}},
+          yaxis:{title:{text:(v.options && v.options.yTitle) ? String(v.options.yTitle) : vmColLabel(ctx, yKey)}}
         });
         try{ vmAddTargetsToLayout(layout, v, ctx, dataRows); }catch(_){ }
         try{ vmAddReferenceLinesToLayout(layout, v); }catch(_){ }
@@ -4693,7 +4988,7 @@ function escapeHtml(s){
         return {id:uid(), type:'regHist', title:'Regression', show:true,
           mapping:{}, measures:{x:{colKey:'',agg:'none'}, y:{colKey:'',agg:'none'}},
           transform:defaultTransform('raw'), filter:defaultFilter(),
-          options:{mode:'scatter', showTrend:true, trendMethod:'linear', showHist:false}};
+          options:{mode:'scatter', showTrend:false, trendMethod:'linear', showHist:false}};
       },
       buildMappingUI:function(v,ctx){
         ensureMeasure(v,'x'); ensureMeasure(v,'y');
@@ -4711,8 +5006,10 @@ function escapeHtml(s){
           + '<div class="lbl">Show trend line</div><div><label class="note"><input data-opt="showTrend" type="checkbox" '+(v.options.showTrend!==false?'checked':'')+'> Overlay regression</label></div>'
           + '<div class="lbl">Trend method</div><div><select data-opt="trendMethod">'
           + '<option value="linear" '+(v.options.trendMethod==='linear'?'selected':'')+'>Linear</option>'
-          + '<option value="poly2" '+(v.options.trendMethod==='poly2'?'selected':'')+'>Quadratic</option>'
+          + '<option value="poly2" '+(v.options.trendMethod==='poly2'?'selected':'')+'>Quadratic (Poly2)</option>'
           + '</select></div>'
+          + '<div class="lbl">Histogram bins</div><div><input data-opt="histBins" type="number" min="5" max="200" step="1" value="'+escapeHtml(String(v.options.histBins!=null?v.options.histBins:30))+'" style="width:90px" /></div>'
+          + '<div class="note">Statistics/Regression options below apply here too (Mean/Median/CI/Regression/Outliers).</div>'
           + '</div>';
       },
       render:function(v,rows,ctx,el){
@@ -4734,45 +5031,128 @@ function escapeHtml(s){
         var traces=[];
 
         if(mode==='histogram'){
-          traces.push({type:'histogram', x:ys, nbinsx:30, marker:{color:th.accent, opacity:0.7}, name:yM.colKey});
+          var hBins = clamp(parseInt(v.options.histBins||30,10)||30,5,200);
+          traces.push({type:'histogram', x:ys, nbinsx:hBins, marker:{color:th.accent, opacity:0.7}, name:yM.colKey});
         }else{
           traces.push({type:'scatter', mode:'markers', x:xs, y:ys, marker:{size:5, color:th.accent, opacity:0.7}, name:'Data'});
-          if(v.options.showTrend!==false && xs.length>=2){
-            // Simple linear regression
-            var n=xs.length, sx=0,sy=0,sxx=0,sxy=0;
-            for(var j=0;j<n;j++){sx+=xs[j];sy+=ys[j];sxx+=xs[j]*xs[j];sxy+=xs[j]*ys[j];}
-            var denom=n*sxx-sx*sx;
-            if(Math.abs(denom)>1e-15){
-              var slope=(n*sxy-sx*sy)/denom;
-              var intercept=(sy-slope*sx)/n;
-              var xMin=Math.min.apply(null,xs), xMax=Math.max.apply(null,xs);
-              var lineX=[], lineY=[];
-              for(var p=0;p<=50;p++){
-                var xp=xMin+p*(xMax-xMin)/50;
-                lineX.push(xp);
-                if(v.options.trendMethod==='poly2'){
-                  // quick poly2 via normal equations not trivial; fallback to linear
-                  lineY.push(slope*xp+intercept);
-                }else{
-                  lineY.push(slope*xp+intercept);
-                }
-              }
-              // R�
-              var yMean=sy/n, ssTot=0, ssRes=0;
-              for(var q=0;q<n;q++){var pred=slope*xs[q]+intercept;ssTot+=(ys[q]-yMean)*(ys[q]-yMean);ssRes+=(ys[q]-pred)*(ys[q]-pred);}
-              var r2= ssTot>0 ? 1-ssRes/ssTot : 0;
+        }
 
-              traces.push({type:'scatter', mode:'lines', x:lineX, y:lineY,
-                line:{color:th.accent2, width:2.5, dash:'dash'},
-                name:'Trend (R�='+r2.toFixed(3)+')'});
+        // Stats/Regression overlays from common Statistics section
+        var sm=[];
+        if(v.options){
+          if(Array.isArray(v.options.statsModes)) sm=v.options.statsModes.filter(function(m){ return m && m!=='none'; });
+          else if(v.options.statsMode && v.options.statsMode!=='none') sm=[String(v.options.statsMode)];
+          // Keep regression overlays explicit: outliers should not auto-enable regression.
+        }
+        var sc=(v.options&&v.options.statsColors)?v.options.statsColors:{};
+        var cMean=sc.mean||'#ef4444', cMedian=sc.median||'#2563eb', cCI=sc.ci||'#16a34a', cReg=sc.regression||'#f59e0b', cOut=sc.outlier||'#ef4444';
+
+        if(sm.length){
+          var n=ys.length, sum=0;
+          for(var si=0;si<n;si++) sum+=ys[si];
+          var mean = n ? sum/n : 0;
+          var ysSorted=ys.slice().sort(function(a,b){return a-b;});
+          var median=ysSorted[Math.floor(ysSorted.length/2)];
+          var minX=Math.min.apply(null,xs), maxX=Math.max.apply(null,xs);
+          var minY=Math.min.apply(null,ys), maxY=Math.max.apply(null,ys);
+
+          if(mode==='scatter'){
+            if(sm.indexOf('mean')>=0) traces.push({type:'scatter',mode:'lines',name:'Mean Y',x:[minX,maxX],y:[mean,mean],line:{color:cMean,width:2,dash:'dash'}});
+            if(sm.indexOf('median')>=0) traces.push({type:'scatter',mode:'lines',name:'Median Y',x:[minX,maxX],y:[median,median],line:{color:cMedian,width:2,dash:'dot'}});
+            if(sm.indexOf('ci')>=0){
+              var vSum=0; for(var vi=0;vi<n;vi++) vSum += Math.pow(ys[vi]-mean,2);
+              var std=Math.sqrt(vSum/Math.max(1,n));
+              var u=mean+2*std, l=mean-2*std;
+              traces.push({type:'scatter',mode:'lines',name:'CI Upper',x:[minX,maxX],y:[u,u],line:{color:cCI,width:1,dash:'dot'},hoverinfo:'skip'});
+              traces.push({type:'scatter',mode:'lines',name:'CI Band',x:[minX,maxX],y:[l,l],line:{color:cCI,width:1,dash:'dot'},fill:'tonexty',fillcolor:'rgba(22,163,74,.12)',hoverinfo:'skip'});
+            }
+          }else{
+            // histogram stats as vertical lines on X axis (distribution of Y values)
+            var ymaxCount = Math.max(1, Math.ceil(Math.sqrt(n)));
+            if(sm.indexOf('mean')>=0) traces.push({type:'scatter',mode:'lines',name:'Mean',x:[mean,mean],y:[0,ymaxCount],line:{color:cMean,width:2,dash:'dash'},yaxis:'y2'});
+            if(sm.indexOf('median')>=0) traces.push({type:'scatter',mode:'lines',name:'Median',x:[median,median],y:[0,ymaxCount],line:{color:cMedian,width:2,dash:'dot'},yaxis:'y2'});
+          }
+
+          if(sm.indexOf('regression')>=0 && mode==='scatter' && n>=2){
+            var predicted=[];
+            var trendName='Trend (Linear)';
+            var slope=0, intercept=0;
+            if(String(v.options.trendMethod||'linear')==='poly2' && n>=3){
+              var f = fitPoly2(xs, ys);
+              if(f){
+                trendName='Trend (Poly2)';
+                var px = xs.slice().sort(function(a,b){return a-b;});
+                var py = px.map(function(xv){ return f.a*xv*xv + f.b*xv + f.c; });
+                traces.push({type:'scatter', mode:'lines', x:px, y:py, line:{color:cReg, width:2.5, dash:'dash'}, name:trendName});
+                predicted = xs.map(function(xv){ return f.a*xv*xv + f.b*xv + f.c; });
+              }
+            }
+            if(!predicted.length){
+              var sx=0,sy=0,sxx=0,sxy=0;
+              for(var j=0;j<n;j++){sx+=xs[j];sy+=ys[j];sxx+=xs[j]*xs[j];sxy+=xs[j]*ys[j];}
+              var denom=n*sxx-sx*sx;
+              if(Math.abs(denom)>1e-15){
+                slope=(n*sxy-sx*sy)/denom;
+                intercept=(sy-slope*sx)/n;
+                var lineX=[minX,maxX], lineY=[slope*minX+intercept,slope*maxX+intercept];
+                traces.push({type:'scatter', mode:'lines', x:lineX, y:lineY, line:{color:cReg, width:2.5, dash:'dash'}, name:trendName});
+                predicted = xs.map(function(xv){ return slope*xv+intercept; });
+              }
+            }
+            if(predicted.length){
+              if(v.options && v.options.regressionShowOutliers){
+                var method=String(v.options.outlierMethod||'std');
+                var kVal=parseFloat(v.options.outlierK); if(!isFinite(kVal)||kVal<=0) kVal=2;
+                var residuals=ys.map(function(yv,idx){ return yv-predicted[idx]; });
+                var flags=residuals.map(function(){ return false; });
+                if(method==='iqr'){
+                  var rs=residuals.slice().sort(function(a,b){return a-b;});
+                  var q1=rs[Math.floor((rs.length-1)*0.25)], q3=rs[Math.floor((rs.length-1)*0.75)], iqr=q3-q1;
+                  var low=q1-kVal*iqr, high=q3+kVal*iqr;
+                  for(var rr=0; rr<residuals.length; rr++) flags[rr]=(residuals[rr]<low||residuals[rr]>high);
+                }else{
+                  var mr=0; for(var mi=0;mi<residuals.length;mi++) mr+=residuals[mi]; mr=residuals.length?mr/residuals.length:0;
+                  var scale=0;
+                  if(method==='mad'){ var ad=[]; for(var ai=0;ai<residuals.length;ai++) ad.push(Math.abs(residuals[ai]-mr)); ad.sort(function(a,b){return a-b;}); scale=ad[Math.floor(ad.length/2)]*1.4826; }
+                  else { var sq=0; for(var qi=0;qi<residuals.length;qi++) sq += Math.pow(residuals[qi]-mr,2); scale=Math.sqrt(sq/Math.max(1,residuals.length)); }
+                  var thr=kVal*(scale||1e-9);
+                  for(var fi=0;fi<residuals.length;fi++) flags[fi]=Math.abs(residuals[fi]-mr)>thr;
+                }
+                var ox=[],oy=[];
+                for(var oi=0;oi<xs.length;oi++){ if(flags[oi]){ ox.push(xs[oi]); oy.push(ys[oi]); } }
+                if(ox.length) traces.push({type:'scatter',mode:'markers',name:'Regression Outliers',x:ox,y:oy,marker:{size:8,color:cOut,line:{width:1,color:'#fff'}}});
+              }
             }
           }
         }
-        var layout=layoutBase({margin:{l:48,r:16,t:4,b:42}});
+
+        // legacy quick trend only if explicit and regression not already requested
+        if(mode==='scatter' && v.options.showTrend===true && sm.indexOf('regression')<0 && xs.length>=2){
+          var n2=xs.length, sx2=0,sy2=0,sxx2=0,sxy2=0;
+          for(var j2=0;j2<n2;j2++){sx2+=xs[j2];sy2+=ys[j2];sxx2+=xs[j2]*xs[j2];sxy2+=xs[j2]*ys[j2];}
+          var den2=n2*sxx2-sx2*sx2;
+          if(Math.abs(den2)>1e-15){
+            var slope2=(n2*sxy2-sx2*sy2)/den2;
+            var intercept2=(sy2-slope2*sx2)/n2;
+            var xMin2=Math.min.apply(null,xs), xMax2=Math.max.apply(null,xs);
+            traces.push({type:'scatter', mode:'lines', x:[xMin2,xMax2], y:[slope2*xMin2+intercept2,slope2*xMax2+intercept2], line:{color:th.accent2, width:2.5, dash:'dash'}, name:'Trend'});
+          }
+        }
+
+        var layout=layoutBase({
+          margin:{l:56,r:18,t:8,b:58},
+          xaxis:{title:{text:(v.options&&v.options.xTitle)?String(v.options.xTitle):vmColLabel(ctx,xM.colKey)},automargin:true},
+          yaxis:{title:{text:(v.options&&v.options.yTitle)?String(v.options.yTitle):vmColLabel(ctx,yM.colKey)},automargin:true}
+        });
+        if(mode==='histogram') layout.yaxis.title = {text:'Count'};
+        if(mode==='histogram' && sm.length){ layout.yaxis2 = {overlaying:'y', side:'right', visible:false, range:[0, Math.max(1, Math.ceil(Math.sqrt(ys.length)))]}; }
+        var xang2 = parseFloat(v.options && v.options.xTickAngle);
+        layout.xaxis.tickangle = isFinite(xang2) ? xang2 : undefined;
         if(v.title){layout.margin.t=4;}
         Plotly.newPlot(el,traces,layout,plotlyCfg(v));
         bindLegendHover(el);
       }
+
     });
 
     // --- Implemented: correlation ---
@@ -5325,6 +5705,7 @@ function escapeHtml(s){
       v.transform = v.transform || base.transform || defaultTransform('raw');
       v.filter = v.filter || base.filter || defaultFilter();
       v.layout = v.layout || base.layout || {};
+      if(!v.__settingsBaseline || typeof v.__settingsBaseline!=='object'){ v.__settingsBaseline = deepClone(v.options || {}); }
       return v;
     }
 
@@ -5443,7 +5824,7 @@ function escapeHtml(s){
     }
     
     /* Default set of modebar icons (all enabled). Keys match vmIcons above. */
-    var VM_DEFAULT_MODEBAR_ICONS = ['reset','points','filter','zoom','remove','download','fs','settings'];
+    var VM_DEFAULT_MODEBAR_ICONS = ['reset','points','yaxis','targets','filter','zoom','status','remove','download','fs','settings'];
 
     function allowedModebarIconsForType(type){
       /* Return list of icon keys that apply to this visual type */
@@ -5455,15 +5836,15 @@ function escapeHtml(s){
       
       if(dataTypes.indexOf(t) >= 0){
         /* Table/Pivot: reset, download, fs, settings */
-        return ['reset','download','fs','settings'];
+        return ['reset','status','download','fs','settings'];
       }
       if(kpiTypes.indexOf(t) >= 0){
         /* KPI visuals: minimal modebar */
-        return ['download','fs','settings'];
+        return ['status','download','fs','settings'];
       }
       if(cartesianTypes.indexOf(t) >= 0){
         /* Full modebar for cartesian */
-        return ['reset','points','filter','zoom','remove','download','fs','settings'];
+        return ['reset','points','yaxis','targets','filter','zoom','status','remove','download','fs','settings'];
       }
       if(allCharts.indexOf(t) >= 0){
         /* Other charts: moderate modebar */
@@ -5520,9 +5901,12 @@ function escapeHtml(s){
       html += '<div class="vm-vtb" data-vid="'+escapeHtml(vid)+'">';
       if(icons.indexOf('reset')>=0) html += vmTbBtn('home','Reset',vid);
       if(icons.indexOf('points')>=0) html += vmTbBtn('points','Points / Labels / Styles',vid);
+      if(icons.indexOf('yaxis')>=0) html += vmTbBtn('yaxis','Y-axis',vid);
+      if(icons.indexOf('targets')>=0) html += vmTbBtn('targets','Targets',vid);
       if(icons.indexOf('filter')>=0) html += vmTbBtn('filter','Outliers',vid);
       if(icons.indexOf('zoom')>=0) html += vmTbBtn('zoommenu','Zoom controls',vid);
       if(icons.indexOf('remove')>=0) html += vmTbBtn('remove','Remove data point',vid,true);
+      if(icons.indexOf('status')>=0) html += vmTbBtn('status','Show statistics table',vid);
       if(icons.indexOf('download')>=0) html += vmTbBtn('export','Download',vid);
       if(icons.indexOf('settings')>=0 && SHOW_VISUAL_SETTINGS_ICON){
         html += vmTbBtn('settings','Visual settings',vid);
@@ -5571,18 +5955,14 @@ function escapeHtml(s){
     
     var __vmOpenMenu=null;
     function vmToggleMenu(kind,build){
-      console.log('[VM] vmToggleMenu called, kind:', kind, 'current:', __vmOpenMenu);
       if(__vmOpenMenu===kind){
-        console.log('[VM] Closing menu (same kind)');
         vmCloseMenus();
         __vmOpenMenu=null;
         return;
       }
       vmCloseMenus();
-      console.log('[VM] Building menu:', kind);
       build();
       __vmOpenMenu=kind;
-      console.log('[VM] Menu built');
     }
     
     /* Listen for Escape key to close menus */
@@ -5746,6 +6126,7 @@ function escapeHtml(s){
     /* Toggle status table below a visual */
     function vmToggleStatusTable(vid, gd){
       var card = gd ? gd.closest('.card') : null;
+      if(!card && vid){ card = document.querySelector('.card[data-vid="'+cssEscape(String(vid))+'"]'); }
       if(!card) return;
       var existing = card.querySelector('.vm-status-table');
       if(existing){
@@ -5759,7 +6140,25 @@ function escapeHtml(s){
       var html = '<table style="width:100%;border-collapse:collapse;font-size:11px">';
       html += '<tr><th style="text-align:left;padding:2px 4px">Trace</th><th>N</th><th>Min</th><th>Max</th><th>Mean</th></tr>';
       try{
-        var data = gd.data || [];
+        var data = (gd && gd.data) ? gd.data : [];
+        if((!data || !data.length) && card){
+          var tableRows = card.querySelectorAll('table tbody tr');
+          if(tableRows && tableRows.length){
+            html = '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+            html += '<tr><th style="text-align:left;padding:2px 4px">Column</th><th>Sample Value</th></tr>';
+            var first = tableRows[0].querySelectorAll('td');
+            var ths = card.querySelectorAll('table thead th');
+            for(var ci=0; ci<first.length; ci++){
+              var cn = ths[ci] ? String(ths[ci].textContent||('Col '+(ci+1))) : ('Col '+(ci+1));
+              var cv = first[ci] ? String(first[ci].textContent||'') : '';
+              html += '<tr><td style="padding:2px 4px">'+escapeHtml(cn)+'</td><td style="padding:2px 4px">'+escapeHtml(cv)+'</td></tr>';
+            }
+            html += '</table>';
+            tbl.innerHTML = html;
+            card.appendChild(tbl);
+            return;
+          }
+        }
         for(var di=0;di<data.length;di++){
           var tr = data[di];
           var vals = tr.y || tr.x || tr.values || [];
@@ -5788,6 +6187,17 @@ function escapeHtml(s){
       }catch(e){
         console.error('applySettingChanges error:', e);
       }
+    }
+
+    var __vmRenderQueue = Object.create(null);
+    function requestVisualRender(vid){
+      if(!vid) return;
+      if(__vmRenderQueue[vid]) return;
+      __vmRenderQueue[vid] = true;
+      window.requestAnimationFrame(function(){
+        __vmRenderQueue[vid] = false;
+        vmRenderSingle(vid);
+      });
     }
 
     /* Comprehensive Points/Labels/Legend menu (V2 template style) */
@@ -5856,7 +6266,7 @@ function escapeHtml(s){
         html += '<div class="hdr" style="margin-top:8px">Hover Mode</div>';
         html += '<div class="row" style="flex-wrap:wrap">';
         html += '<label class="seg"><input type="radio" name="hover" value="closest" '+(hoverMode==='closest'?'checked':'')+'><span>Focused</span></label>';
-        html += '<label class="seg"><input type="radio" name="hover" value="x" '+(hoverMode==='x'?'checked':'')+'><span>Compare</span></label>';
+        html += '<label class="seg"><input type="radio" name="hover" value="x" '+(hoverMode==='x'?'checked':'')+'><span>Compare (all lines)</span></label>';
         html += '<label class="seg"><input type="radio" name="hover" value="x unified" '+(hoverMode==='x unified'?'checked':'')+'><span>Unified</span></label>';
         html += '</div>';
         html += '</div>'; // Close body-inner
@@ -5880,7 +6290,7 @@ function escapeHtml(s){
           
           if(changed){
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
           }
         });
         
@@ -5920,19 +6330,37 @@ function escapeHtml(s){
         if(!visual) return;
         
         var opts = visual.options || {};
-        var statsMode = String(opts.statsMode || 'none');
+        var statsModes = Array.isArray(opts.statsModes) ? opts.statsModes.slice() : [];
+        if(!statsModes.length && opts.statsMode && opts.statsMode!=='none') statsModes = [String(opts.statsMode)];
         var statsScope = String(opts.statsScope || 'by-group');
         var showMA = !!(opts.showMovingAvg);
         var maWindow = parseInt(opts.maWindow || 3);
+        opts.statsColors = opts.statsColors || {};
+        var regOut = !!opts.regressionShowOutliers;
+        var outMethod = String(opts.outlierMethod || 'std');
+        var outK = parseFloat(opts.outlierK);
+        if(!isFinite(outK) || outK<=0) outK = 2;
         
         var pop = document.createElement('div');
         pop.className = 'oas-pop';
         
         var html = '<div class="hdr hdr-top"><span class="ttl">Status Lines</span><button class="xbtn" data-act="close" title="Close">×</button></div>';
         html += '<div class="body-inner">';
-        html += '<label class="seg"><input type="radio" name="mode" value="none" '+(statsMode==='none'?'checked':'')+'><span>None</span></label>';
-        html += '<label class="seg"><input type="radio" name="mode" value="median" '+(statsMode==='median'?'checked':'')+'><span>Median</span></label>';
-        html += '<label class="seg"><input type="radio" name="mode" value="regression" '+(statsMode==='regression'?'checked':'')+'><span>Regression</span></label>';
+        html += '<div class="hdr">Statistics (multi-select)</div>';
+        function chk(mode,label){
+          return '<label style="display:flex;align-items:center;gap:8px;margin:4px 0"><input type="checkbox" name="sm" value="'+mode+'" '+(statsModes.indexOf(mode)>=0?'checked':'')+'><span>'+label+'</span></label>';
+        }
+        html += chk('mean','Mean');
+        html += chk('median','Median');
+        html += chk('ci','CI / Band');
+        html += chk('regression','Regression');
+
+        html += '<div class="hdr" style="margin-top:8px">Line Colors</div>';
+        html += '<div class="row" style="gap:8px;flex-wrap:wrap">';
+        html += '<label style="font-size:11px">Mean <input type="color" name="c-mean" value="'+escapeHtml(opts.statsColors.mean || '#ff0000')+'"></label>';
+        html += '<label style="font-size:11px">Median <input type="color" name="c-median" value="'+escapeHtml(opts.statsColors.median || '#0000ff')+'"></label>';
+        html += '<label style="font-size:11px">CI <input type="color" name="c-ci" value="'+escapeHtml(opts.statsColors.ci || '#008000')+'"></label>';
+        html += '<label style="font-size:11px">Regression <input type="color" name="c-reg" value="'+escapeHtml(opts.statsColors.regression || '#ffa500')+'"></label>';
         html += '</div>';
         
         html += '<div class="hdr" style="margin-top:8px">Scope</div>';
@@ -5945,6 +6373,14 @@ function escapeHtml(s){
         html += '<div class="row">';
         html += '<label style="display:flex;align-items:center;gap:8px"><input type="checkbox" name="ma" '+(showMA?'checked':'')+'> Show MA</label>';
         html += '<input type="number" name="ma-window" min="2" max="100" value="'+maWindow+'" placeholder="Window" style="width:80px;padding:4px" '+(showMA?'':'disabled')+'>';
+        html += '</div>';
+
+        html += '<div class="hdr" style="margin-top:8px">Regression Outliers</div>';
+        html += '<div class="row" style="align-items:center;gap:8px;flex-wrap:wrap">';
+        html += '<label style="display:flex;align-items:center;gap:8px"><input type="checkbox" name="reg-out" '+(regOut?'checked':'')+'> Highlight outliers</label>';
+        html += '<select name="out-method"><option value="std" '+(outMethod==='std'?'selected':'')+'>STD</option><option value="iqr" '+(outMethod==='iqr'?'selected':'')+'>IQR</option><option value="mad" '+(outMethod==='mad'?'selected':'')+'>MAD</option></select>';
+        html += '<input type="number" step="0.1" min="0.5" max="5" name="out-k" value="'+outK+'" title="Threshold">';
+        html += '<label style="font-size:11px">Outlier color <input type="color" name="c-out" value="'+escapeHtml(opts.statsColors.outlier || '#ef4444')+'"></label>';
         html += '</div>';
         html += '</div>'; // Close body-inner
         
@@ -5964,14 +6400,29 @@ function escapeHtml(s){
           if(!t) return;
           var changed = false;
           
-          if(t.name==='mode'){ opts.statsMode = t.value; changed = true; }
+          if(t.name==='sm'){
+            var modes = [];
+            pop.querySelectorAll('input[name="sm"]:checked').forEach(function(elm){ modes.push(elm.value); });
+            opts.statsModes = modes;
+            opts.statsMode = modes.length ? modes[0] : 'none';
+            if(modes.indexOf('regression')<0) opts.regressionShowOutliers = false;
+            changed = true;
+          }
           else if(t.name==='scope'){ opts.statsScope = t.value; changed = true; }
           else if(t.name==='ma'){ opts.showMovingAvg = t.checked; changed = true; }
           else if(t.name==='ma-window'){ opts.maWindow = parseInt(t.value)||3; changed = true; }
+          else if(t.name==='reg-out'){ opts.regressionShowOutliers = t.checked; changed = true; }
+          else if(t.name==='out-method'){ opts.outlierMethod = t.value; changed = true; }
+          else if(t.name==='out-k'){ opts.outlierK = parseFloat(t.value)||2; changed = true; }
+          else if(t.name==='c-mean'){ opts.statsColors.mean = t.value; changed = true; }
+          else if(t.name==='c-median'){ opts.statsColors.median = t.value; changed = true; }
+          else if(t.name==='c-ci'){ opts.statsColors.ci = t.value; changed = true; }
+          else if(t.name==='c-reg'){ opts.statsColors.regression = t.value; changed = true; }
+          else if(t.name==='c-out'){ opts.statsColors.outlier = t.value; changed = true; }
           
           if(changed){
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
           }
         });
         
@@ -6035,7 +6486,7 @@ function escapeHtml(s){
             opts.yScaleMode = e.target.value;
             if(opts.yScaleMode!=='manual'){ opts.yMin=null; opts.yMax=null; }
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
           }
         });
         
@@ -6049,7 +6500,7 @@ function escapeHtml(s){
             opts.yMax = Number.isFinite(ma) ? ma : null;
             opts.yScaleMode = 'manual';
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
             vmCloseMenus();
             __vmOpenMenu=null;
           } else if(act==='clear'){
@@ -6057,7 +6508,7 @@ function escapeHtml(s){
             opts.yMax = null;
             opts.yScaleMode = 'auto';
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
             vmCloseMenus();
             __vmOpenMenu=null;
           }
@@ -6121,7 +6572,7 @@ function escapeHtml(s){
           if(e.target.name==='band'){
             opts.targetBand = (e.target.value==='area');
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
           }
         });
         
@@ -6135,7 +6586,7 @@ function escapeHtml(s){
             opts.maxTarget = Number.isFinite(ma) ? ma : null;
             opts.showTargets = true;
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
             vmCloseMenus();
             __vmOpenMenu=null;
           } else if(act==='clear'){
@@ -6143,7 +6594,7 @@ function escapeHtml(s){
             opts.maxTarget = null;
             opts.showTargets = false;
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
             vmCloseMenus();
             __vmOpenMenu=null;
           }
@@ -6288,7 +6739,7 @@ function escapeHtml(s){
             opts.excludeExtremes = extremes;
             
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
             vmCloseMenus();
             __vmOpenMenu=null;
           } else if(act==='clear'){
@@ -6297,7 +6748,7 @@ function escapeHtml(s){
             opts.excludeOutliers = false;
             opts.excludeExtremes = false;
             applySettingChanges();
-            renderGrid();
+            requestVisualRender(vid);
             vmCloseMenus();
             __vmOpenMenu=null;
           }
@@ -6317,78 +6768,6 @@ function escapeHtml(s){
         document.body.appendChild(pop);
         setTimeout(function(){ vmPlaceMenu(pop, btnRect(gd)); }, 10);
       });
-    }
-    
-    /* Legacy compatibility */
-    function vmAddFilterCondition(conditionsContainer){
-      /* Deprecated - kept for backwards compatibility */
-    }
-    
-    function vmApplyQuickFilter(vid, filterDialog){
-      /* Deprecated - kept for backwards compatibility */
-      
-      var conditionsHtml = '';
-      var clauses = Array.isArray(filterCfg.clauses) ? filterCfg.clauses : [];
-      
-      for(var ci=0;ci<clauses.length;ci++){
-        var c = clauses[ci];
-        var colKey = c && c.colKey ? String(c.colKey) : '';
-        var op = c && c.op ? String(c.op) : 'eq';
-        var val = c && c.value != null ? String(c.value) : '';
-        var val2 = c && c.value2 != null ? String(c.value2) : '';
-        
-        conditionsHtml += '<div style="padding:12px;background:var(--vm-bg-sec);border-radius:4px;margin-bottom:12px;border:1px solid var(--vm-border);">'
-          + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:center">'
-          + '<select data-filter-col="'+ci+'" style="padding:4px;border-radius:3px;border:1px solid var(--vm-border)">'
-          + '<option value="">-- Select Column --</option>';
-        
-        for(var cj=0;cj<cols.length;cj++){
-          conditionsHtml += '<option value="'+escapeHtml(cols[cj])+'" '+(cols[cj]===colKey?'selected':'')+'>'+escapeHtml(cols[cj])+'</option>';
-        }
-        
-        conditionsHtml += '</select>'
-          + '<select data-filter-op="'+ci+'" style="padding:4px;border-radius:3px;border:1px solid var(--vm-border)">'
-          + '<option value="eq" '+(op==='eq'?'selected':'')+'>Equals</option>'
-          + '<option value="neq" '+(op==='neq'?'selected':'')+'>Not equals</option>'
-          + '<option value="gt" '+(op==='gt'?'selected':'')+'>Greater than</option>'
-          + '<option value="gte" '+(op==='gte'?'selected':'')+'>≥</option>'
-          + '<option value="lt" '+(op==='lt'?'selected':'')+'>Less than</option>'
-          + '<option value="lte" '+(op==='lte'?'selected':'')+'>≤</option>'
-          + '<option value="contains" '+(op==='contains'?'selected':'')+'>Contains</option>'
-          + '<option value="starts" '+(op==='starts'?'selected':'')+'>Starts with</option>'
-          + '<option value="between" '+(op==='between'?'selected':'')+'>Between</option>'
-          + '<option value="isnull" '+(op==='isnull'?'selected':'')+'>Is null</option>'
-          + '<option value="notnull" '+(op==='notnull'?'selected':'')+'>Is not null</option>'
-          + '</select>'
-          + '<input type="text" data-filter-val="'+ci+'" placeholder="Value" value="'+escapeHtml(val)+'" style="padding:4px;border-radius:3px;border:1px solid var(--vm-border)" />'
-          + '<button class="btn" onclick="this.parentElement.parentElement.remove();" style="padding:4px 8px;margin:0">−</button>'
-          + '</div>'
-          + (op==='between'?('<div style="margin-top:8px"><input type="text" data-filter-val2="'+ci+'" placeholder="Value 2 (upper bound)" value="'+escapeHtml(val2)+'" style="padding:4px;border-radius:3px;border:1px solid var(--vm-border);width:100%" /></div>'):'')
-          + '</div>';
-      }
-      
-      modal.innerHTML = ''
-        + '<div style="margin-bottom:16px"><strong style="font-size:16px">Quick Filter: '+escapeHtml(visual.title||'Untitled')+'</strong></div>'
-        + '<div style="font-size:12px;color:var(--vm-sub);margin-bottom:16px">Build filter conditions to refine your data in real-time.</div>'
-        + '<div style="margin-bottom:12px">'
-        + '<div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">'
-        + '<span style="font-size:12px;font-weight:500">Logic:</span>'
-        + '<label style="margin:0"><input type="radio" name="filter-logic" value="and" '+(filterCfg.logic!=='or'?'checked':'')+' /> AND (all match)</label>'
-        + '<label style="margin:0;margin-left:12px"><input type="radio" name="filter-logic" value="or" '+(filterCfg.logic==='or'?'checked':'')+' /> OR (any match)</label>'
-        + '</div>'
-        + '<div id="filter-conditions" style="margin-bottom:12px">'+conditionsHtml+'</div>'
-        + '<button class="btn" onclick="vmAddFilterCondition(this.closest(\'div\'));" style="padding:6px 12px;width:100%;margin-bottom:12px">+ Add Condition</button>'
-        + '</div>'
-        + '<div style="display:flex;gap:8px;justify-content:flex-end">'
-        + '<button class="btn" onclick="this.closest(\'div[style*=\\\"position:fixed\\\"]\').remove();" style="padding:8px 16px">Cancel</button>'
-        + '<button class="btn primary" onclick="vmApplyQuickFilter(\''+escapeHtml(vid)+'\',this.closest(\'div[style*=\\\"position:fixed\\\"]\'));applySettingChanges();redraw();" style="padding:8px 16px">Apply Filter</button>'
-        + '</div>';
-      
-      filterUI.appendChild(modal);
-      filterUI.onclick = function(e){
-        if(e.target === filterUI) filterUI.remove();
-      };
-      document.body.appendChild(filterUI);
     }
     
     function vmAddFilterCondition(conditionsContainer){
@@ -6462,6 +6841,8 @@ function escapeHtml(s){
       
       if(visual){
         visual.filter = {logic: logic, clauses: clauses};
+        applySettingChanges();
+        requestVisualRender(vid);
       }
       
       filterDialog.remove();
@@ -6718,7 +7099,7 @@ function escapeHtml(s){
           var dataGroupKey = getDataGroupKey(v);
           var groupKeyAttr = dataGroupKey ? (' data-group-key="'+escapeHtml(dataGroupKey)+'"') : '';
           return ''
-            + '<div class="card" data-vid="'+escapeHtml(v.id)+'" data-sec="'+escapeHtml(secKey||'')+'"'+groupKeyAttr+' style="'+escapeHtml(bits.join(';'))+'">'
+            + '<div class="card" data-vid="'+escapeHtml(v.id)+'" data-vtype="'+escapeHtml(v.type||'')+'" data-sec="'+escapeHtml(secKey||'')+'"'+groupKeyAttr+' style="'+escapeHtml(bits.join(';'))+'">'
             + '  <div class="hdr">'
             + (SHOW_VISUAL_HEADER_TEXT ? ('    <div class="left"' + (titleVisible ? '' : ' style="visibility:hidden"') + '>'
                                     + '      <div class="title" title="'+escapeHtml(v.title||'')+'" style="'+titleStyle+'">'+escapeHtml(v.title||'')+'</div>'
@@ -6958,7 +7339,7 @@ function escapeHtml(s){
           var titleVisC = (vObj.showTitle !== false);
           var gs = 'grid-column:'+(t.x+1)+'/span '+t.w+';grid-row:'+(t.y+1)+'/span '+t.h;
           gs += ';height:auto;min-height:0';
-          html += '<div class="card" data-vid="'+escapeHtml(vObj.id)+'" data-sec="" style="'+escapeHtml(gs)+'">';
+          html += '<div class="card" data-vid="'+escapeHtml(vObj.id)+'" data-vtype="'+escapeHtml(vObj.type||'')+'" data-sec="" style="'+escapeHtml(gs)+'">';
           html += '  <div class="hdr"' + (titleVisC ? '' : ' style="display:none"') + '>';
           html += (SHOW_VISUAL_HEADER_TEXT ? ('    <div class="left">'
             + '      <span class="type">'+escapeHtml(typeLabelC)+'</span>'
@@ -7298,6 +7679,16 @@ function escapeHtml(s){
     var mgrTab = 'layout';
 
     var mgrDraft = null;
+    var _mgrRenderReq = 0;
+
+    function requestManagerRender(){
+      if(_mgrRenderReq) return;
+      _mgrRenderReq = 1;
+      window.requestAnimationFrame(function(){
+        _mgrRenderReq = 0;
+        if(mgrDraft) renderManager();
+      });
+    }
 
     function openManager(){
       mgrDraft = deepClone(STATE);
@@ -7325,6 +7716,11 @@ function escapeHtml(s){
         var mode = mgrDraft.globals.layoutMode || 'auto';
         var g = mgrDraft.globals;
         var h = '';
+
+        h += '<div class="row" style="justify-content:flex-end;gap:6px;margin-bottom:8px">'
+           + '<button class="btn" type="button" data-mgr-sections="expand">Expand all</button>'
+           + '<button class="btn" type="button" data-mgr-sections="collapse">Collapse all</button>'
+           + '</div>';
 
         // === SECTION: General ===
         h += '<div class="section-hdr" data-section="general"><span class="arrow">&#9660;</span> General</div>'
@@ -7486,7 +7882,7 @@ function escapeHtml(s){
           + '<div class="section-body" data-section="modebar">'
           + '<div class="form">'
           + '<div class="note" style="margin-bottom:8px">Control which icons are shown in the Plotly modebar across all visuals by default. Per-visual overrides can be set in each visual\'s Options tab.</div>';
-        var mbDefNames = {reset:'Reset / Home', points:'Points / Labels / Styles', filter:'Outliers', zoom:'Zoom / Pan', remove:'Remove Point', download:'Download', fs:'Fullscreen'};
+        var mbDefNames = {reset:'Reset / Home', points:'Points / Labels / Styles', filter:'Outliers', zoom:'Zoom / Pan', status:'Statistics Table', remove:'Remove Point', download:'Download', fs:'Fullscreen'};
         for(var mbi=0; mbi<VM_DEFAULT_MODEBAR_ICONS.length; mbi++){
           var mbk = VM_DEFAULT_MODEBAR_ICONS[mbi];
           var mbChecked = (gMb[mbk] !== false) ? 'checked' : '';
@@ -7525,6 +7921,21 @@ function escapeHtml(s){
         mgrBody.innerHTML = h;
 
         // Wire collapsible sections
+        mgrBody.querySelectorAll('[data-mgr-sections]').forEach(function(btn){
+          btn.onclick = function(){
+            var mode = btn.getAttribute('data-mgr-sections');
+            mgrBody.querySelectorAll('.section-hdr').forEach(function(h){
+              var sec = h.getAttribute('data-section');
+              var b = mgrBody.querySelector('.section-body[data-section="'+sec+'"]');
+              if(!b) return;
+              var collapse = (mode==='collapse');
+              h.classList.toggle('collapsed', collapse);
+              b.classList.toggle('collapsed', collapse);
+              b.style.maxHeight = collapse ? '0' : 'none';
+            });
+          };
+        });
+
         mgrBody.querySelectorAll('.section-hdr').forEach(function(hdr){
           hdr.onclick = function(){
             var sec = hdr.getAttribute('data-section');
@@ -7582,7 +7993,7 @@ function escapeHtml(s){
         if(modeSelEl){
           modeSelEl.onchange = function(){
             mgrDraft.globals.layoutMode = String(modeSelEl.value || 'auto');
-            renderManager();
+            requestManagerRender();
           };
         }
 
@@ -7628,7 +8039,7 @@ function escapeHtml(s){
             } else {
               mgrDraft.globals[cfg.key] = String(el.value||'');
             }
-            renderManager();
+            /* Keep draft only; apply on Save to avoid heavy menu redraws */
           };
         });
 
@@ -7639,7 +8050,7 @@ function escapeHtml(s){
             ev.preventDefault();
             mgrDraft.globals.titleBold = !mgrDraft.globals.titleBold;
             btnTitleBold.style.background = mgrDraft.globals.titleBold ? 'rgba(0,0,0,.15)' : 'var(--vm-input)';
-            renderGrid();
+            /* Defer grid redraw until Apply for better manager performance */
           };
         }
         var btnTitleItalic = document.getElementById('mgr-title-italic');
@@ -7648,7 +8059,7 @@ function escapeHtml(s){
             ev.preventDefault();
             mgrDraft.globals.titleItalic = !mgrDraft.globals.titleItalic;
             btnTitleItalic.style.background = mgrDraft.globals.titleItalic ? 'rgba(0,0,0,.15)' : 'var(--vm-input)';
-            renderGrid();
+            /* Defer grid redraw until Apply for better manager performance */
           };
         }
         var btnTitleUnderline = document.getElementById('mgr-title-underline');
@@ -7657,7 +8068,7 @@ function escapeHtml(s){
             ev.preventDefault();
             mgrDraft.globals.titleUnderline = !mgrDraft.globals.titleUnderline;
             btnTitleUnderline.style.background = mgrDraft.globals.titleUnderline ? 'rgba(0,0,0,.15)' : 'var(--vm-input)';
-            renderGrid();
+            /* Defer grid redraw until Apply for better manager performance */
           };
         }
 
@@ -7668,7 +8079,7 @@ function escapeHtml(s){
             ev.preventDefault();
             mgrDraft.globals.subtitleBold = !mgrDraft.globals.subtitleBold;
             btnSubBold.style.background = mgrDraft.globals.subtitleBold ? 'rgba(0,0,0,.15)' : 'var(--vm-input)';
-            renderGrid();
+            /* Defer grid redraw until Apply for better manager performance */
           };
         }
         var btnSubItalic = document.getElementById('mgr-subtitle-italic');
@@ -7677,7 +8088,7 @@ function escapeHtml(s){
             ev.preventDefault();
             mgrDraft.globals.subtitleItalic = !mgrDraft.globals.subtitleItalic;
             btnSubItalic.style.background = mgrDraft.globals.subtitleItalic ? 'rgba(0,0,0,.15)' : 'var(--vm-input)';
-            renderGrid();
+            /* Defer grid redraw until Apply for better manager performance */
           };
         }
         var btnSubUnderline = document.getElementById('mgr-subtitle-underline');
@@ -7686,7 +8097,7 @@ function escapeHtml(s){
             ev.preventDefault();
             mgrDraft.globals.subtitleUnderline = !mgrDraft.globals.subtitleUnderline;
             btnSubUnderline.style.background = mgrDraft.globals.subtitleUnderline ? 'rgba(0,0,0,.15)' : 'var(--vm-input)';
-            renderGrid();
+            /* Defer grid redraw until Apply for better manager performance */
           };
         }
 
@@ -8237,6 +8648,10 @@ function escapeHtml(s){
       }
 
       var html='';
+      html += '<div class="row" style="justify-content:flex-end;gap:6px;margin-bottom:8px">'
+           + '<button class="btn" type="button" data-vis-sections="expand">Expand all</button>'
+           + '<button class="btn" type="button" data-vis-sections="collapse">Collapse all</button>'
+           + '</div>';
       html += '<div class="form">'
         + '<div class="lbl">Title</div>'
         + '<div><input data-core="title" value="'+escapeHtml(visDraft.title||'')+'" /></div>'
@@ -8290,7 +8705,7 @@ function escapeHtml(s){
              + '</div></details>';
       } else if(visTab==='options'){
         html += '<details class="vm-sec"'+detOpen('Chart Options', true)+'>'
-             + '<summary class="lbl" style="font-weight:700;cursor:pointer">Chart Options</summary>'
+             + '<summary class="lbl" style="font-weight:700;cursor:pointer">Visual Behavior & Style</summary>'
              + '<div style="margin-top:8px">'
              + def.buildOptionsUI(visDraft, ctx)
              + '</div></details>';
@@ -8324,20 +8739,37 @@ function escapeHtml(s){
         }
 
         // --- Statistics / Regression ---
+        var visStatsModes = Array.isArray(visDraft.options.statsModes) ? visDraft.options.statsModes.slice() : [];
+        if(!visStatsModes.length && visDraft.options.statsMode && visDraft.options.statsMode!=='none') visStatsModes=[String(visDraft.options.statsMode)];
+        visDraft.options.statsColors = visDraft.options.statsColors || {};
         html += '<div class="sep"></div>';
         html += '<details '+detOpen('Statistics / Regression', false)+'>';
         html += '<summary class="lbl" style="font-weight:700;cursor:pointer">Statistics / Regression</summary>';
         html += '<div class="form" style="margin-top:8px">';
-        html += '<div class="row" style="gap:8px">'
-              + '  <select data-opt="statsMode" style="min-width:220px">'
-              + '    <option value="none" '+((visDraft.options.statsMode||'none')==='none'?'selected':'')+'>None</option>'
-              + '    <option value="mean" '+(visDraft.options.statsMode==='mean'?'selected':'')+'>Mean (Y)</option>'
-              + '    <option value="median" '+(visDraft.options.statsMode==='median'?'selected':'')+'>Median (Y)</option>'
-              + '    <option value="regression" '+(visDraft.options.statsMode==='regression'?'selected':'')+'>Regression Line</option>'
-              + '    <option value="ci" '+(visDraft.options.statsMode==='ci'?'selected':'')+'>95% CI (approx)</option>'
-              + '  </select>'
+        function vsChk(mode,label){
+          return '<label class="note" style="display:flex;align-items:center;gap:8px"><input type="checkbox" data-opt-statsmode="'+mode+'" '+(visStatsModes.indexOf(mode)>=0?'checked':'')+'> '+label+'</label>';
+        }
+        html += '<div class="row" style="gap:12px;flex-wrap:wrap">' + vsChk('mean','Mean') + vsChk('median','Median') + vsChk('ci','CI / Band') + vsChk('regression','Regression') + '</div>';
+        html += '<div class="row" style="gap:8px;flex-wrap:wrap;margin-top:6px">'
+              + '<label class="note">Mean <input type="color" data-opt="statsColorMean" value="'+escapeHtml(visDraft.options.statsColors.mean||'#ff0000')+'"></label>'
+              + '<label class="note">Median <input type="color" data-opt="statsColorMedian" value="'+escapeHtml(visDraft.options.statsColors.median||'#0000ff')+'"></label>'
+              + '<label class="note">CI <input type="color" data-opt="statsColorCi" value="'+escapeHtml(visDraft.options.statsColors.ci||'#008000')+'"></label>'
+              + '<label class="note">Regression <input type="color" data-opt="statsColorRegression" value="'+escapeHtml(visDraft.options.statsColors.regression||'#ffa500')+'"></label>'
               + '</div>';
-        html += '<div class="note">Statistics are drawn on supported cartesian charts.</div>';
+        html += '<div class="row" style="gap:8px;flex-wrap:wrap;margin-top:6px">'
+              + '<label class="note"><input type="checkbox" data-opt="regressionShowOutliers" '+(visDraft.options.regressionShowOutliers?'checked':'')+'> Show regression outliers</label>'
+              + '<select data-opt="outlierMethod" style="min-width:100px"><option value="std" '+((visDraft.options.outlierMethod||'std')==='std'?'selected':'')+'>STD</option><option value="iqr" '+(visDraft.options.outlierMethod==='iqr'?'selected':'')+'>IQR</option><option value="mad" '+(visDraft.options.outlierMethod==='mad'?'selected':'')+'>MAD</option></select>'
+              + '<input data-opt="outlierK" type="number" step="0.1" min="0.5" max="5" value="'+escapeHtml(String(visDraft.options.outlierK!=null?visDraft.options.outlierK:2))+'" style="width:80px" />'
+              + '<label class="note">Outlier color <input type="color" data-opt="statsColorOutlier" value="'+escapeHtml(visDraft.options.statsColors.outlier||'#ef4444')+'"></label>'
+              + '</div>';
+        if(visDraft.type==='scatter'){
+          html += '<div class="row" style="gap:8px;flex-wrap:wrap;margin-top:6px">'
+                + '<label class="note">Stats apply <select data-opt="scatterStatsMode"><option value="per-series" '+((visDraft.options.scatterStatsMode||'per-series')==='per-series'?'selected':'')+'>Per series</option><option value="combined" '+((visDraft.options.scatterStatsMode||'per-series')==='combined'?'selected':'')+'>Combined</option></select></label>'
+                + '<label class="note">Mean / Median axes <select data-opt="scatterAxisStats"><option value="y" '+((visDraft.options.scatterAxisStats||'y')==='y'?'selected':'')+'>Y only</option><option value="xy" '+((visDraft.options.scatterAxisStats||'y')==='xy'?'selected':'')+'>X + Y</option></select></label>'
+                + '<label class="note">Regression axes <select data-opt="scatterRegressionAxes"><option value="y" '+((visDraft.options.scatterRegressionAxes||'y')==='y'?'selected':'')+'>Y on X</option><option value="both" '+((visDraft.options.scatterRegressionAxes||'y')==='both'?'selected':'')+'>Both</option></select></label>'
+                + '</div>';
+        }
+        html += '<div class="note">Multiple overlays can be shown together (Power BI/Tableau style).</div>';
         html += '</div>';
         html += '</details>';
 
@@ -8567,7 +8999,17 @@ function escapeHtml(s){
         html += '<details>';
         html += '<summary class="lbl" style="font-weight:700;cursor:pointer">Palette</summary>';
         html += '<div class="form" style="margin-top:8px">';
-        html += '<div class="note">Comma-separated hex colors. Leave blank to use global palette.</div>';
+        var palPreset = (visDraft.options && visDraft.options.palettePreset) ? String(visDraft.options.palettePreset) : vmPalettePresetNameFor(visDraft.options.palette||'');
+        html += '<div class="note">Choose a preset palette or Custom to provide your own colors.</div>';
+        html += '<select data-opt="palettePreset" style="min-width:220px">'
+              + '<option value="tableau10" '+(palPreset==='tableau10'?'selected':'')+'>Tableau 10</option>'
+              + '<option value="powerbi" '+(palPreset==='powerbi'?'selected':'')+'>Power BI</option>'
+              + '<option value="oracle" '+(palPreset==='oracle'?'selected':'')+'>Oracle Analytics</option>'
+              + '<option value="pastel" '+(palPreset==='pastel'?'selected':'')+'>Pastel</option>'
+              + '<option value="vibrant" '+(palPreset==='vibrant'?'selected':'')+'>Vibrant</option>'
+              + '<option value="custom" '+(palPreset==='custom'?'selected':'')+'>Custom</option>'
+              + '</select>';
+        html += '<div class="note">Custom colors (comma-separated hex). Used only when preset is Custom.</div>';
         html += '<input data-opt="palette" value="'+escapeHtml(String(visDraft.options.palette||''))+'" placeholder="#2563eb,#059669,#f59e0b" style="min-width:320px" />';
         html += '</div>';
         html += '</details>';
@@ -8584,8 +9026,9 @@ function escapeHtml(s){
         /* --- Axis Settings (Cartesian only) --- */
         if(isCartesianType(visDraft.type)){
           html += '<div class="sep"></div>';
-          html += '<div class="form">';
-          html += '<div class="lbl" style="font-weight:700">Axis Settings</div>';
+          html += '<details class="vm-sec"'+detOpen('Axis Settings', false)+'>';
+          html += '<summary class="lbl" style="font-weight:700;cursor:pointer">Axis Settings</summary>';
+          html += '<div class="form" style="margin-top:8px">';
           var opts = visDraft.options || {};
           html += '<div class="row" style="gap:12px; align-items:flex-end;">'
                 + '  <div>'
@@ -8611,15 +9054,17 @@ function escapeHtml(s){
                 + '  </div>'
                 + '</div>';
           html += '</div>';
+          html += '</details>';
         }
 
         /* --- Modebar icons section (common to all visuals) --- */
         html += '<div class="sep"></div>';
-        html += '<div class="form">';
-        html += '<div class="lbl" style="font-weight:700">Modebar Icons</div>';
+        html += '<details class="vm-sec"'+detOpen('Modebar Icons', false)+'>';
+        html += '<summary class="lbl" style="font-weight:700;cursor:pointer">Modebar Icons</summary>';
+        html += '<div class="form" style="margin-top:8px">';
         html += '<div class="note" style="margin-bottom:8px">Control which icons appear in the Plotly modebar for this visual. Only applicable icons are shown.</div>';
         var mbIcons = (visDraft.options && visDraft.options.modebarIcons) ? visDraft.options.modebarIcons : {};
-        var mbNames = {reset:'Reset / Home', points:'Points / Labels / Styles', filter:'Outliers', zoom:'Zoom / Pan', remove:'Remove Point', download:'Download', fs:'Fullscreen', settings:'Settings'};
+        var mbNames = {reset:'Reset / Home', points:'Points / Labels / Styles', yaxis:'Y-axis', targets:'Targets', filter:'Outliers', zoom:'Zoom / Pan', status:'Statistics Table', remove:'Remove Point', download:'Download', fs:'Fullscreen', settings:'Settings'};
         /* Get list of icons applicable to this visual type */
         var applicableIcons = allowedModebarIconsForType(visDraft.type);
         for(var mi=0; mi<applicableIcons.length; mi++){
@@ -8631,12 +9076,14 @@ function escapeHtml(s){
         }
         html += '<div class="note" style="margin-top:8px;font-style:italic;color:var(--vm-sub)">Note: Settings icon visibility is controlled by the PV_VM_ShowVisualSettingsIcon parameter.</div>';
         html += '</div>';
+        html += '</details>';
 
         /* --- Conditional Formatting (common to all visuals except table which has its own) --- */
         if(visDraft.type !== 'table'){
         html += '<div class="sep"></div>';
-        html += '<div class="form">';
-        html += '<div class="lbl" style="font-weight:700">Conditional Formatting</div>';
+        html += '<details class="vm-sec"'+detOpen('Conditional Formatting', false)+'>';
+        html += '<summary class="lbl" style="font-weight:700;cursor:pointer">Conditional Formatting</summary>';
+        html += '<div class="form" style="margin-top:8px">';
         html += '<div class="note" style="margin-bottom:8px">Apply colors based on data conditions. For charts: bar/marker color changes. For tables: cell highlighting.</div>';
         var visCfRules = Array.isArray(visDraft.options.cfRules) ? visDraft.options.cfRules : [];
         var cfCols = ctx.cols || [];
@@ -8684,6 +9131,7 @@ function escapeHtml(s){
         }
         html += '<button class="btn" data-act="add-viscf" style="margin-top:4px;font-size:12px">+ Add Rule</button>';
         html += '</div>';
+        html += '</details>';
         } /* end if not table */
 
       } else if(visTab==='filter'){
@@ -8893,8 +9341,23 @@ function escapeHtml(s){
 
     var btnVisClose = q('#vm-visual-close');
     var btnVisCancel = q('#vm-visual-cancel');
+    var btnVisReset = q('#vm-visual-reset');
     if(btnVisClose) btnVisClose.onclick = closeVisualSettings;
     if(btnVisCancel) btnVisCancel.onclick = closeVisualSettings;
+    if(btnVisReset) btnVisReset.onclick = function(){
+      if(!visDraft) return;
+      var keepMap = deepClone(visDraft.mapping||{});
+      var keepMeasures = deepClone(visDraft.measures||{});
+      var keepId = visDraft.id;
+      var keepType = visDraft.type;
+      var def = Registry[keepType] && Registry[keepType].defaultVisual ? Registry[keepType].defaultVisual() : {options:{}, filter:defaultFilter(), transform:defaultTransform('raw'), layout:{}};
+      visDraft = ensureVisualDefaults(def);
+      visDraft.id = keepId;
+      visDraft.type = keepType;
+      visDraft.mapping = keepMap;
+      visDraft.measures = keepMeasures;
+      renderVisualSettings();
+    };
 
     var btnVisApply = q('#vm-visual-apply');
     if(btnVisApply) btnVisApply.onclick = function(){
@@ -8971,9 +9434,11 @@ function escapeHtml(s){
           visDraft.measures[key].decimals = (dv !== '' && isFinite(parseInt(dv,10))) ? clamp(parseInt(dv,10), 0, 10) : null;
         }
         
+        if(part==='colorMode') visDraft.measures[key].colorMode = String(el.value||'palette');
         if(part==='color'){
            var clr = String(el.value||'');
-           visDraft.measures[key].color = (clr && clr!=='#000000') ? clr : null;
+           var mode = String((visDraft.measures[key] && visDraft.measures[key].colorMode) || 'palette');
+           visDraft.measures[key].color = (mode==='custom' && clr) ? clr : null;
         }
       });
 
@@ -8996,13 +9461,13 @@ function escapeHtml(s){
             visDraft.options.showLegend = (String(el.value||'') !== 'false');
             return;
           }
-          if(k==='yMin' || k==='yMax' || k==='targetMin' || k==='targetMax'){
+          if(k==='yMin' || k==='yMax' || k==='targetMin' || k==='targetMax' || k==='xTickAngle' || k==='yTickAngle'){
             var n = parseFloat(String(el.value||''));
             visDraft.options[k] = isFinite(n) ? n : null;
           } else if(k==='labelDecimals' || k==='xTickDecimals' || k==='yTickDecimals'){
             var nd = parseInt(String(el.value||''),10);
             visDraft.options[k] = isFinite(nd) ? nd : null;
-          } else if(k==='labelCfVal' || k==='xTickCount' || k==='yTickCount' || k==='xTickAngle'){
+          } else if(k==='labelCfVal' || k==='xTickCount' || k==='yTickCount'){
             var nv = parseFloat(String(el.value||''));
             visDraft.options[k] = isFinite(nv) ? nv : null;
           } else {
@@ -9159,6 +9624,27 @@ function escapeHtml(s){
         visDraft.filter.clauses = clauses;
       }
 
+      // stats mode multi-select and color mappings
+      var smEls = visBody.querySelectorAll('input[data-opt-statsmode]');
+      if(smEls && smEls.length){
+        visDraft.options = visDraft.options || {};
+        var sm = [];
+        smEls.forEach(function(el){ if(el.checked){ var v=String(el.getAttribute('data-opt-statsmode')||''); if(v) sm.push(v); } });
+        if(sm.indexOf('regression')<0) visDraft.options.regressionShowOutliers = false;
+        visDraft.options.statsModes = sm;
+        visDraft.options.statsMode = sm.length ? sm[0] : 'none';
+      }
+      if(visDraft.options){
+        var pp = String(visDraft.options.palettePreset||'custom');
+        if(pp && pp!=='custom') visDraft.options.palette = vmPalettePresetRaw(pp);
+        visDraft.options.statsColors = visDraft.options.statsColors || {};
+        if(visDraft.options.statsColorMean){ visDraft.options.statsColors.mean = visDraft.options.statsColorMean; delete visDraft.options.statsColorMean; }
+        if(visDraft.options.statsColorMedian){ visDraft.options.statsColors.median = visDraft.options.statsColorMedian; delete visDraft.options.statsColorMedian; }
+        if(visDraft.options.statsColorCi){ visDraft.options.statsColors.ci = visDraft.options.statsColorCi; delete visDraft.options.statsColorCi; }
+        if(visDraft.options.statsColorRegression){ visDraft.options.statsColors.regression = visDraft.options.statsColorRegression; delete visDraft.options.statsColorRegression; }
+        if(visDraft.options.statsColorOutlier){ visDraft.options.statsColors.outlier = visDraft.options.statsColorOutlier; delete visDraft.options.statsColorOutlier; }
+      }
+
       // layout
       var layoutEls = visBody.querySelectorAll('[data-layout]');
       if(layoutEls && layoutEls.length){
@@ -9188,11 +9674,15 @@ function escapeHtml(s){
       var idx = STATE.visuals.findIndex(function(v){return v && v.id===visId;});
       if(idx>=0){
         visDraft = ensureVisualDefaults(visDraft);
+        visDraft.__settingsBaseline = deepClone(visDraft.options || {});
         STATE.visuals[idx] = visDraft;
         saveState();
+        var applyVid = visId;
         closeVisualSettings();
-        if(visTab==='layout') renderGrid();
-        else vmRenderSingle(visId);
+        /* Always repaint grid after Apply so Answers page reflects updates immediately
+           (mapping/type/options) without waiting for analysis save/refresh. */
+        renderGrid();
+        if(applyVid) requestVisualRender(applyVid);
       }
     };
 
@@ -9542,7 +10032,7 @@ function escapeHtml(s){
 
     // Close modals on backdrop click
     mgrBackdrop.addEventListener('click', function(ev){ if(ev.target===mgrBackdrop) closeManager(); });
-    visBackdrop.addEventListener('click', function(ev){ if(ev.target===visBackdrop) closeVisualSettings(); });
+    visBackdrop.addEventListener('click', function(ev){ if(ev.target===visBackdrop){ /* keep open until explicit close */ ev.preventDefault(); } });
 
     function initAfterPlotly(){
       if(CLEAR_PERSISTENCE_ONLOAD){
@@ -9682,7 +10172,7 @@ function escapeHtml(s){
       }
     }
 
-    function vmCloseMenus(exceptVid){
+    function vmCloseCardMenus(exceptVid){
       try{
         var menus = gridEl.querySelectorAll('.vm-menu.open');
         for(var i=0;i<menus.length;i++){
@@ -9694,11 +10184,11 @@ function escapeHtml(s){
       }catch(e){}
     }
 
-    function vmToggleMenu(vid){
+    function vmToggleLegacyCardMenu(vid){
       var menu = q('#vm-menu-'+vid);
       if(!menu) return;
       var open = menu.classList.contains('open');
-      vmCloseMenus();
+      vmCloseCardMenus();
       if(!open){
         menu.classList.add('open');
         // close on outside click
@@ -9752,7 +10242,8 @@ function escapeHtml(s){
 
       try{
         if(act==='home' || act==='reset'){
-          Plotly.relayout(gd, {'xaxis.autorange':true,'yaxis.autorange':true,'yaxis2.autorange':true});
+          vmResetVisual(vid);
+          return;
         } else if(act==='autoscale'){
           Plotly.relayout(gd, {'xaxis.autorange':true,'yaxis.autorange':true,'yaxis2.autorange':true});
         } else if(act==='zoom'){
@@ -9787,7 +10278,7 @@ function escapeHtml(s){
             Plotly.relayout(gd, objAssign({showlegend:true}, vmLegendLayoutFor(nxt)));
           }
         } else if(act==='export' || act==='more'){
-          vmToggleMenu(vid);
+          vmToggleLegacyCardMenu(vid);
         } else if(act==='export-png'){
           Plotly.downloadImage(gd, {format:'png', filename: (vid||'visual')});
         } else if(act==='export-svg'){
@@ -9841,25 +10332,18 @@ function escapeHtml(s){
     function vmResetVisual(vid){
       var v = vmFindVisual(vid);
       if(!v) return;
-      // Reset options to default but keep mapping/measures
-      if(v.defaultVisual){
-         var def = v.defaultVisual();
-         v.options = def.options || {};
-         // Preserve some keys if needed, but "Reset" usually means FULL reset of view options
-         // We should probably keep things like title?
-         // For now, let's just clear specific view options
-         v.options.zoom = null;
-         v.options.pan = null;
-         v.filter = null;
-         v.options.yMin = null; 
-         v.options.yMax = null;
-         v.options.showLegend = true;
-         v.options.statsMode = 'none';
+      var def = (Registry[v.type] && Registry[v.type].defaultVisual) ? Registry[v.type].defaultVisual() : null;
+      var base = deepClone((v.__settingsBaseline && typeof v.__settingsBaseline==='object') ? v.__settingsBaseline : ((def && def.options) ? def.options : {}));
+      v.options = base || {};
+      v.filter = deepClone((def && def.filter) ? def.filter : defaultFilter());
+
+      if(v.options){
         v.options.removedPoints = [];
-        vmRemoveActive[v.id] = false;
+        if(typeof v.options.showLegend!=='boolean') v.options.showLegend = true;
       }
+      vmRemoveActive[v.id] = false;
       saveState();
-      renderGrid();
+      vmRenderSingle(vid);
     }
 
     function vmToggleTheme(){
@@ -9931,7 +10415,11 @@ function escapeHtml(s){
       pop.style.left = left + 'px';
     }
 
-    function vmOpenPopover(vid, act, btnEl){
+        function vmOpenPopover(vid, act, btnEl){
+      if(act==='points'){
+        vmOpenPointsMenu(vid, vmGetPlotDivByVid(vid));
+        return;
+      }
       var pop = vmPopEl();
       if(!pop) return;
       
@@ -10008,23 +10496,30 @@ function escapeHtml(s){
     function vmHandleToolbarClick(btn, vid, act){
       if(!vid || !act) return false;
 
-      if(['points','filter','zoommenu','export'].indexOf(act)>=0){
-        vmOpenPopover(vid, act, btn);
-      } else {
-        vmCloseOverlays();
-        if(act==='theme'){ vmToggleTheme(); }
-        else if(act==='reset'){ vmResetVisual(vid); }
-        else if(act==='settings'){ openVisualSettings(vid); }
-        else if(act==='remove'){ vmToggleRemoveMode(vid); }
-        else if(act==='fs'){
-          if(document.fullscreenElement) { document.exitFullscreen(); }
-          else {
-            var card = document.querySelector('.card[data-vid="'+vid+'"]');
-            if(card && card.requestFullscreen) card.requestFullscreen();
-          }
+      var gdHost = vmGetPlotDivByVid(vid);
+      var gd = gdHost && gdHost.querySelector ? (gdHost.querySelector('.js-plotly-plot') || gdHost) : gdHost;
+
+      if(act==='points'){ vmCloseOverlays(); vmOpenPointsMenu(vid, gd); return true; }
+      if(act==='yaxis'){ vmCloseOverlays(); vmOpenYAxisMenu(vid, gd); return true; }
+      if(act==='targets'){ vmCloseOverlays(); vmOpenTargetsMenu(vid, gd); return true; }
+      if(act==='zoommenu'){ vmCloseOverlays(); vmOpenZoomMenu(vid, gd); return true; }
+      if(act==='filter'){ vmCloseOverlays(); vmShowQuickFilterDialog(vid, gd); return true; }
+      if(act==='status'){ vmCloseOverlays(); vmToggleStatusTable(vid, gd); return true; }
+      if(act==='export'){ vmCloseOverlays(); vmOpenPopover(vid, act, btn); return true; }
+
+      vmCloseOverlays();
+      if(act==='theme'){ vmToggleTheme(); }
+      else if(act==='reset'){ vmResetVisual(vid); }
+      else if(act==='settings'){ openVisualSettings(vid); }
+      else if(act==='remove'){ vmToggleRemoveMode(vid); }
+      else if(act==='fs'){
+        if(document.fullscreenElement) { document.exitFullscreen(); }
+        else {
+          var card = document.querySelector('.card[data-vid="'+vid+'"]');
+          if(card && card.requestFullscreen) card.requestFullscreen();
         }
-        else { vmDoAction(vid, act); }
       }
+      else { vmDoAction(vid, act); }
       return true;
     }
 
@@ -10140,7 +10635,12 @@ function escapeHtml(s){
            // Stats overlay (needs rebuild)
            if(idc.indexOf('st-')===0){
              var nextStat = idc.replace('st-','');
-             if(nextStat !== v.options.statsMode){ v.options.statsMode = nextStat; changed=true; needsRender=true; }
+             if(nextStat !== v.options.statsMode){
+               v.options.statsMode = nextStat;
+               v.options.statsModes = (nextStat && nextStat!=='none') ? [nextStat] : [];
+               if(nextStat!=='regression') v.options.regressionShowOutliers = false;
+               changed=true; needsRender=true;
+             }
            }
 
            // Y-axis scale shortcuts; prefer relayout to avoid full render
