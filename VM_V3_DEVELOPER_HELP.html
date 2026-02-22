@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VM V3 Developer Help</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:20px;line-height:1.45;color:#1f2937}
+    h1,h2,h3{margin:16px 0 8px}
+    .toc a{display:block;margin:3px 0}
+    code,pre{background:#f3f4f6;padding:2px 6px;border-radius:4px}
+    table{border-collapse:collapse;width:100%;margin:8px 0}
+    th,td{border:1px solid #d1d5db;padding:6px;font-size:13px;vertical-align:top}
+    .note{padding:10px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px}
+  </style>
+</head>
+<body>
+  <h1>Visual Manager V3 — Developer Help</h1>
+  <p class="note">Purpose: Comprehensive developer guide for Visual Manager, Visual Settings, Modebar icons, navigation, and expected behavior in OAS Narrative Postfix.</p>
+
+  <h2>Table of Contents</h2>
+  <div class="toc">
+    <a href="#files">1) Files to use</a>
+    <a href="#workflow">2) How Visual Manager works</a>
+    <a href="#manager-tabs">3) Visual Manager tabs & buttons</a>
+    <a href="#visual-settings">4) Visual Settings tabs & functions</a>
+    <a href="#modebar">5) Modebar icons and actions</a>
+    <a href="#auto-map">6) Auto Visual + Candidate Columns mapping</a>
+    <a href="#targets">7) Targets and reference lines</a>
+    <a href="#testdata">8) Test data and test approach for all visual types</a>
+    <a href="#known">9) Known limitations / unwired areas to watch</a>
+  </div>
+
+  <h2 id="files">1) Files to use</h2>
+  <ul>
+    <li><b>Main Postfix template:</b> <code>VM_V3_FOR_OAS_POSTFIX.html</code></li>
+    <li><b>Direct copy file:</b> <code>VM_V3_FOR_OAS_POSTFIX_COPY_READY.txt</code></li>
+    <li><b>Sample test data:</b> <code>VM_V3_TEST_DATA.json</code></li>
+  </ul>
+
+  <h2 id="workflow">2) How Visual Manager works</h2>
+  <ol>
+    <li>Open <b>Visual Manager</b> from title bar.</li>
+    <li>In <b>Visual Catalog</b>, add visuals and reorder/toggle visibility.</li>
+    <li>Use <b>Auto</b> add with <b>Candidate Columns</b> for auto-selection + auto-mapping.</li>
+    <li>Open per-visual <b>Visual Settings</b> to fine-tune mapping/options/filter/advanced.</li>
+    <li>Click <b>Apply</b> (menu remains open); close by <b>Close</b> button or backdrop click.</li>
+  </ol>
+
+  <h2 id="manager-tabs">3) Visual Manager tabs & buttons</h2>
+  <table>
+    <tr><th>Tab</th><th>Primary purpose</th><th>Important controls</th></tr>
+    <tr><td>Layout & Appearance</td><td>Global dashboard layout/look</td><td>Layout mode, spacing, theme, palettes, modebar defaults, sections split.</td></tr>
+    <tr><td>Visual Catalog</td><td>Add/manage visuals</td><td>Type dropdown, Auto add, Candidate Columns multi-select (✓ selected), move/clone/delete.</td></tr>
+    <tr><td>Data & Defaults</td><td>Load/paste local JSON test data</td><td>JSON textarea override.</td></tr>
+    <tr><td>Help & Roadmap</td><td>Operational guide</td><td>Usage notes + config import/export.</td></tr>
+  </table>
+
+  <h2 id="visual-settings">4) Visual Settings tabs & functions</h2>
+  <table>
+    <tr><th>Tab</th><th>Function</th></tr>
+    <tr><td>Mapping</td><td>Assign columns to x/y/series/labels and measure slots.</td></tr>
+    <tr><td>Format</td><td>Styling, legends, titles, axis ticks, targets, conditional formatting.</td></tr>
+    <tr><td>Filter</td><td>Per-visual filter clauses with logic and operators.</td></tr>
+    <tr><td>Advanced</td><td>Layout grouping, transform/stats/diagnostic options by visual.</td></tr>
+  </table>
+
+  <h2 id="modebar">5) Modebar icons and actions</h2>
+  <p>Modebar is per-visual; global defaults are configured from Layout & Appearance → Modebar.</p>
+  <table>
+    <tr><th>Icon key</th><th>Behavior</th></tr>
+    <tr><td>reset</td><td>Reset/home view.</td></tr>
+    <tr><td>points</td><td>Points/labels quick style mode.</td></tr>
+    <tr><td>filter</td><td>Outlier filtering quick controls.</td></tr>
+    <tr><td>zoom</td><td>Zoom/Pan controls.</td></tr>
+    <tr><td>status</td><td>Show statistics table.</td></tr>
+    <tr><td>remove</td><td>Remove point workflow (where supported).</td></tr>
+    <tr><td>download</td><td>Export/download actions.</td></tr>
+    <tr><td>fs</td><td>Fullscreen toggle.</td></tr>
+  </table>
+
+  <h2 id="auto-map">6) Auto Visual + Candidate Columns mapping</h2>
+  <p>Auto visual now performs two steps:</p>
+  <ol>
+    <li><b>Select visual type</b> from candidate profile (numeric/date/dimension mix).</li>
+    <li><b>Auto-map</b> matching mapping/measures slots (x/y/series/value/etc.) where empty.</li>
+  </ol>
+  <p>If mapping is still incomplete, open Visual Settings → Mapping and adjust manually.</p>
+
+  <h2 id="targets">7) Targets and reference lines</h2>
+  <ul>
+    <li>Target mode supports <b>manual</b> and <b>columns</b> (min/max columns averaged over rows).</li>
+    <li>Target lines/bands render on cartesian visuals where wired.</li>
+    <li>Line visual adds legend helper traces for target/reference lines.</li>
+  </ul>
+
+  <h2 id="testdata">8) Test data and test approach for all visual types</h2>
+  <p>Use <code>VM_V3_TEST_DATA.json</code> and paste into Data & Defaults tab.</p>
+  <ol>
+    <li>Add one visual per available type from Visual Catalog.</li>
+    <li>Use Auto + Candidate Columns first, then verify Mapping tab values.</li>
+    <li>For each visual: test Format, Filter, Advanced and Apply behavior.</li>
+    <li>Validate modebar actions and legend/targets for cartesian types.</li>
+  </ol>
+
+  <h2 id="known">9) Known limitations / unwired areas to watch</h2>
+  <ul>
+    <li>Not all advanced options apply to every visual type; some are type-specific by design.</li>
+    <li>Auto-map is best-effort and may need manual correction for specialized visuals.</li>
+    <li>Target legend helper traces are explicitly added for line visual path; other visuals rely on layout shapes.</li>
+  </ul>
+
+
+  <h2 id="option-matrix">10) Settings option matrix (by UI area)</h2>
+  <table>
+    <tr><th>Area</th><th>Option groups</th><th>Apply behavior</th></tr>
+    <tr><td>Manager → Layout & Appearance</td><td>General, Layout mode, Spacing, Appearance, Modebar defaults, Sections</td><td>Draft-only until Manager <b>Apply</b>.</td></tr>
+    <tr><td>Manager → Visual Catalog</td><td>Add visual type, Auto add, Candidate Columns, reorder/clone/delete</td><td>Catalog edits are in draft; committed on Manager <b>Apply</b>.</td></tr>
+    <tr><td>Visual Settings → Mapping</td><td>Per-type mapping fields + measure slots</td><td>Saved to visual only on Visual Settings <b>Apply</b>.</td></tr>
+    <tr><td>Visual Settings → Format</td><td>Style, axes, ticks, legend, targets, palette, conditional formatting</td><td>Saved to visual only on Visual Settings <b>Apply</b>.</td></tr>
+    <tr><td>Visual Settings → Filter/Advanced</td><td>Clause filters, layout grouping, advanced behavior</td><td>Saved to visual only on Visual Settings <b>Apply</b>.</td></tr>
+  </table>
+
+  <h2 id="navigation-links">11) Quick navigation links (in-app)</h2>
+  <ul>
+    <li>Manager Layout quick-jump chips: General / Layout / Appearance / Modebar / Sections.</li>
+    <li>Visual Settings quick-jump chips in Format tab: Style / Type / Axes / Ticks / Stats / Cond. Format / Filter.</li>
+    <li>Both Manager and Visual Settings support section collapse/expand controls.</li>
+  </ul>
+
+</body>
+</html>

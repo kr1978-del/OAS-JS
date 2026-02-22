@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OAS Narrative JSON Generator</title>
+  <style>
+    body{font-family:Arial,sans-serif;margin:12px;color:#111}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+    textarea{width:100%;min-height:220px;font-family:Consolas,monospace;font-size:12px;padding:8px}
+    pre{background:#f6f8fa;border:1px solid #ddd;padding:10px;white-space:pre-wrap;word-break:break-word}
+    button{padding:6px 10px;border:1px solid #bbb;background:#fff;cursor:pointer}
+    input[type="number"],select{padding:4px 6px}
+    .note{font-size:12px;color:#555}
+  </style>
+</head>
+<body>
+  <h3>OAS Advanced SQL → Narrative JSON</h3>
+  <div class="note">Paste OAS Advanced SQL or XML from <code>&lt;saw:columns&gt;</code>. SQL mode parses <code>s_#</code>; XML mode uses <code>&lt;saw:columnHeading&gt;</code> captions (best for formula columns).</div>
+
+  <div class="row">
+    <label>Placeholder style:</label>
+    <select id="fmt">
+      <option value="brace">Brace format</option>
+      <option value="plain">@n</option>
+    </select>
+    <label>Index offset:</label>
+    <input id="offset" type="number" value="0" step="1" style="width:70px" />
+    <label><input id="skipS0" type="checkbox" checked /> Skip s_0</label>
+    <label>Source:</label>
+    <select id="sourceMode">
+      <option value="sql">SQL (Advanced tab)</option>
+      <option value="xml">XML (&lt;saw:columns&gt;)</option>
+    </select>
+    <button id="btnGen">Generate</button>
+    <button id="btnCopy">Copy</button>
+  </div>
+
+  <textarea id="sql" placeholder="Paste SQL here..."></textarea>
+  <h4>Generated Narrative JSON</h4>
+  <pre id="out">{}</pre>
+
+  <script>
+    function esc(s){ return String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"'); }
+
+    function labelFromExpr(expr, idx){
+      var e = String(expr||'').trim();
+      // Prefer final quoted object name: "Subject"."Table"."Column" -> Column
+      var q = e.match(/"([^"]+)"\s*$/);
+      if(q) return q[1];
+      var all = [...e.matchAll(/"([^"]+)"/g)].map(function(m){ return m[1]; });
+      if(all.length) return all[all.length-1];
+      // fallback readable expression
+      return 'Expr ' + idx;
+    }
+
+    function parseSelectItems(sql){
+      var s = String(sql||'');
+      var mSel = s.match(/\bSELECT\b([\s\S]*?)\bFROM\b/i);
+      var body = mSel ? mSel[1] : s;
+      var lines = body.split(/\r?\n/);
+      var items = [];
+      for(var i=0;i<lines.length;i++){
+        var ln = lines[i].trim();
+        if(!ln) continue;
+        ln = ln.replace(/,$/, '');
+        // capture expression ending with s_<n>
+        var m = ln.match(/^(.*)\s+s_(\d+)\s*$/i);
+        if(!m) continue;
+        items.push({ expr:m[1].trim(), idx:parseInt(m[2],10) });
+      }
+      return items;
+    }
+
+
+
+    function decodeXmlText(v){
+      return String(v||'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&#39;/g,"'").replace(/&quot;/g,'"');
+    }
+
+    function parseXmlColumns(xml){
+      var src = String(xml||'');
+      var colBlocks = src.match(/<saw:column\b[\s\S]*?<\/saw:column>/g) || [];
+      var items = [];
+      for(var i=0;i<colBlocks.length;i++){
+        var b = colBlocks[i];
+        var heading = b.match(/<saw:columnHeading>[\s\S]*?<saw:text>([\s\S]*?)<\/saw:text>[\s\S]*?<\/saw:columnHeading>/);
+        var formula = b.match(/<sawx:expr[^>]*>([\s\S]*?)<\/sawx:expr>/);
+        var expr = formula ? decodeXmlText(formula[1].trim()) : '';
+        var label = heading ? decodeXmlText(heading[1].trim()) : labelFromExpr(expr, i+1);
+        items.push({ expr: expr, idx: i+1, label: label });
+      }
+      return items;
+    }
+
+    function generate(){
+      var src = document.getElementById('sql').value;
+      var offset = parseInt(document.getElementById('offset').value||'0',10) || 0;
+      var fmt = document.getElementById('fmt').value;
+      var skipS0 = document.getElementById('skipS0').checked;
+      var mode = document.getElementById('sourceMode').value || 'sql';
+      var items = (mode==='xml') ? parseXmlColumns(src) : parseSelectItems(src);
+      var lines = [];
+      var seen = Object.create(null);
+      for(var i=0;i<items.length;i++){
+        var it = items[i];
+        if(skipS0 && it.idx===0) continue;
+        var lblBase = it.label ? String(it.label) : labelFromExpr(it.expr, it.idx);
+        var lbl = lblBase;
+        if(seen[lblBase]) lbl = lblBase + ' [s_' + it.idx + ']';
+        seen[lblBase] = (seen[lblBase]||0) + 1;
+        var n = it.idx + offset;
+        var ph = (fmt==='brace') ? ('@' + '{' + n + '}') : ('@' + n);
+        lines.push('  "' + esc(lbl) + '":"' + ph + '"');
+      }
+      document.getElementById('out').textContent = '{\n' + lines.join(',\n') + '\n}';
+    }
+
+    document.getElementById('btnGen').onclick = generate;
+    document.getElementById('btnCopy').onclick = function(){
+      var txt = document.getElementById('out').textContent;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(txt);
+      } else {
+        var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); }catch(_e){}
+        document.body.removeChild(ta);
+      }
+    };
+  </script>
+</body>
+</html>
